@@ -44,6 +44,8 @@ import sqlancer.mysql.MySQLProvider;
 import sqlancer.oceanbase.OceanBaseProvider;
 import sqlancer.postgres.PostgresProvider;
 import sqlancer.questdb.QuestDBProvider;
+import sqlancer.sqlite3.SQLite3GlobalState;
+import sqlancer.sqlite3.SQLite3Options;
 import sqlancer.sqlite3.SQLite3Provider;
 import sqlancer.tidb.TiDBProvider;
 import sqlancer.timescaledb.TimescaleDBProvider;
@@ -315,7 +317,7 @@ public final class Main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AssertionError, Exception {
         System.exit(executeMain(args));
     }
 
@@ -383,7 +385,10 @@ public final class Main {
                 Reproducer<G> reproducer = null;
                 if (options.enableQPG()) {
                     provider.generateAndTestDatabaseWithQueryPlanGuidance(state);
-                } else {
+                } else { // here, we could add an option for differential testing and add a method to call provider.generateDatabase and then copy it to other providers using generateDatabaseFromExistingState.
+                	// open questions:
+                	// is this the right place to add? we don't have access to the other providers, so perhaps we need to implement our own executeMain method, which would perhaps be simpler
+                	// how do we decide which provider to use to generate the database?
                     reproducer = provider.generateAndTestDatabase(state);
                 }
                 try {
@@ -475,10 +480,48 @@ public final class Main {
 
     }
 
-    public static int executeMain(String... args) throws AssertionError {
+    public static int executeMain(String... args) throws AssertionError, Exception {
+    	
+    	
+    	SQLite3Provider p1 = new SQLite3Provider();
+    	MySQLProvider p2 = new MySQLProvider();
+    	PostgresProvider p3 = new PostgresProvider();
+
+    	
+    	SQLite3GlobalState state = new SQLite3GlobalState();
+         StateToReproduce stateToRepro = p1.getStateToReproduce("test");
+         stateToRepro.seedValue = 0;
+         state.setState(stateToRepro);
+         String databaseName2 = "asdf";
+         MainOptions options = new MainOptions();
+
+		StateLogger logger = new StateLogger(databaseName2, p1, options);
+         state.setRandomly(new Randomly());
+         state.setDatabaseName(databaseName2);
+         System.out.println("asdf");
+         state.setMainOptions(options);
+         state.setDbmsSpecificOptions(new SQLite3Options());
+         try (SQLConnection con = p1.createDatabase(state)) {
+             QueryManager<SQLConnection> manager = new QueryManager<>(state);
+             try {
+                 stateToRepro.databaseVersion = con.getDatabaseVersion();
+             } catch (Exception e) {
+                 // ignore
+             }
+             state.setConnection(con);
+             state.setStateLogger(logger);
+             state.setManager(manager);
+             p1.generateDatabase(state);
+             List<Query<?>> statements = state.getState().getStatements();
+             System.out.println(statements);
+             p2.executeDatabaseCreate(statements, null);
+             
+             
+         }
+         
+    	
         List<DatabaseProvider<?, ?, ?>> providers = getDBMSProviders();
         Map<String, DBMSExecutorFactory<?, ?, ?>> nameToProvider = new HashMap<>();
-        MainOptions options = new MainOptions();
         Builder commandBuilder = JCommander.newBuilder().addObject(options);
         for (DatabaseProvider<?, ?, ?> provider : providers) {
             String name = provider.getDBMSName();
@@ -539,6 +582,13 @@ public final class Main {
         }
         final AtomicBoolean someOneFails = new AtomicBoolean(false);
 
+        // if we decide to replace the main run method, perhaps we could do so here (and reuse some of the existing code above?)
+        // steps:
+        // 1. create the different providers
+        // 2. use one provider to create the database state
+        // 3. copy it to the others
+        // 4. use one provider to create a query (perhaps extracting some code from TLP)
+        // 5. execute it on all systems
         for (int i = 0; i < options.getTotalNumberTries(); i++) {
             final String databaseName = options.getDatabasePrefix() + i;
             final long seed;

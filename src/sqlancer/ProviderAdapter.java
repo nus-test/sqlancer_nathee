@@ -109,6 +109,16 @@ public abstract class ProviderAdapter<G extends GlobalState<O, ? extends Abstrac
     }
 
     public abstract void generateDatabase(G globalState) throws Exception;
+    
+    
+    // globalState.getState().getStatements()
+    // Another DBMS has already executed these statements. This method extracts the executed statements and re-executes them on the current DBMS, so we can create the same DBMS state for multiple providers for differential testing.
+    // open questions:
+    // 1. the expected errors of one database system do not apply to another. perhaps we need to add all errors to the QueryAdapter before executing. e.g., when MySQL creates a query statement, it adds the errors from MySQLErrors. these errors are different from,  e.g., DuckDB (see DuckDBErrors)
+    public void generateDatabaseFromExistingState(G globalState) throws Exception {
+    	throw new UnsupportedOperationException();
+    }
+
 
     // QPG: entry function
     @Override

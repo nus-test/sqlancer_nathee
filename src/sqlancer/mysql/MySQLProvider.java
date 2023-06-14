@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import com.google.auto.service.AutoService;
 
@@ -16,6 +17,8 @@ import sqlancer.SQLConnection;
 import sqlancer.SQLProviderAdapter;
 import sqlancer.StatementExecutor;
 import sqlancer.common.DBMSCommon;
+import sqlancer.common.query.ExpectedErrors;
+import sqlancer.common.query.Query;
 import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.common.query.SQLQueryProvider;
 import sqlancer.mysql.gen.MySQLAlterTable;
@@ -187,5 +190,20 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
     public String getDBMSName() {
         return "mysql";
     }
+
+	public void executeDatabaseCreate(List<Query<?>> statements, MySQLGlobalState g) {
+		for (Query<?> q : statements) {
+			try {
+				ExpectedErrors errors = new ExpectedErrors();
+				if (q.getQueryString().startsWith("INSERT")) {
+					MySQLErrors.addInsertErrors(errors);
+				}
+				g.executeStatement(new SQLQueryAdapter(q.getQueryString(), errors));
+			} catch (Exception e) {
+				throw new AssertionError(e);
+			}
+		}
+		
+	}
 
 }
