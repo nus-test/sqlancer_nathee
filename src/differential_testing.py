@@ -10,7 +10,7 @@ import sqlite3
 import threading
 
 
-def run_from_file(files):
+def run_from_file(files, conn):
     for file in files:
         errors = []
         logs = open(file, 'r')
@@ -20,7 +20,7 @@ def run_from_file(files):
         database_name = names[len(names) - 2][0] + logs.readline().split(':')[1].strip() # prefix with databases' first letter
         database_version = logs.readline()
         database_seed = logs.readline()
-        statements = ""
+        statements = list()
         select_statements = list()
         while True:
             line = logs.readline().strip().split(';')[0]
@@ -29,7 +29,7 @@ def run_from_file(files):
             if line.upper().startswith("SELECT"):
                 select_statements.append(line + ';')
             else:
-                statements += line + ';'
+                statements.append(line + ';')
 
 
         # ## drop existing database from mysql with command line
@@ -63,7 +63,7 @@ def run_from_file(files):
             
             
         ## drop existing database from mysql with python lib
-        mysql_con = mysql.connector.connect(user="root", password="root")
+        mysql_con = mysql.connector.connect(user="sqlancer", password="sqlancer")
         mysql_cur = mysql_con.cursor()
         mysql_cur.execute(f"DROP DATABASE IF EXISTS {database_name};")
         # mysql_cur.execute("""SELECT schema_name FROM information_schema.schemata WHERE schema_name LIKE 'database%'; """)
@@ -71,8 +71,7 @@ def run_from_file(files):
         #     mysql_cur.execute(f"DROP DATABASE {res[0]};")
 
         ## drop existing database from postgres with python lib
-        postgres_con = psycopg.connect("dbname=postgres user=sqlancer password=sqlancer")
-        postgres_con.autocommit = True
+        postgres_con = conn
         postgres_cur = postgres_con.cursor()
         postgres_cur.execute(f"DROP DATABASE IF EXISTS {database_name};")
         # postgres_cur.execute("SELECT datname FROM pg_database WHERE datname LIKE 'database%';")
@@ -104,78 +103,135 @@ def run_from_file(files):
         # sqlite_console = subprocess.Popen(sqlite_command, shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
         # sqlite_result = sqlite_console.communicate(statements.encode())[0].decode()
 
-
-        ## create database and execute statements on mysql with python lib
-        mysql_list = list()
-        mysql_set = set()
+        
         try:
+            ## create database on mysql with python lib
             mysql_cur.execute(f"CREATE DATABASE {database_name};")
-            mysql_con = mysql.connector.connect(user="root", password="root", database=database_name)
+            mysql_con = mysql.connector.connect(user="sqlancer", password="sqlancer", database=database_name, client_flags=[mysql.connector.constants.ClientFlag.FOUND_ROWS])
             mysql_con.autocommit = True #not actually needed
             mysql_cur = mysql_con.cursor()
-            mysql_cur.execute(statements, multi=True)
-            for cur in mysql_cur.execute(statements, multi=True):
-                pass
-            for select in select_statements:
-                mysql_cur.execute(select)
-                for res in mysql_cur.fetchall():
-                    pass
-                #     mysql_list.append(res[0])
-                #     mysql_set.add(res[0])
-                #     print("MySQL: " + res[0])
-                # print("\n")
-        except mysql.connector.Error as e: #mysql stop executing after finding an error
-            errors.append({
-                "where": f"\nMySQL error at {database_name}:",
-                "error": e,
-                "syntax": "sql syntax" in str(e).lower()
-            })
+            mysql_list = list()
+            mysql_set = set()
 
-        ## create database and execute statements on postgres with python lib
-        postgres_list = list()
-        postgres_set = set()
-        try:
+            ## create database on postgres with python lib
             postgres_cur.execute(f"CREATE DATABASE {database_name};")
             postgres_con = psycopg.connect(f"dbname={database_name} user=sqlancer password=sqlancer")
             postgres_con.autocommit = True
             postgres_cur = postgres_con.cursor()
-            postgres_cur.execute(statements)
-            for select in select_statements:
-                postgres_cur.execute(select)
-                for res in postgres_cur.fetchall():
-                    pass
-                #     postgres_list.append(res[0])
-                #     postgres_set.add(res[0])
-                #     print("PostgreSQL: " + res[0])
-                # print("\n")
-        except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-            errors.append({
-                "where": f"\nPostgreSQL error at {database_name}:",
-                "error": e,
-                "syntax": "syntax error" in str(e).lower()
-            })
+            postgres_list = list()
+            postgres_set = set()
 
-        ## create database and execute statements on sqlite with python lib
-        sqlite_list = list()
-        sqlite_set = set()
-        try:
+            ## create database on sqlite with python lib
             sqlite_con = sqlite3.connect(f"./target/databases/{database_name}.db")
             sqlite_cur = sqlite_con.cursor()
-            res = sqlite_cur.executescript(statements)
+            sqlite_list = list()
+            sqlite_set = set()
+
+            for statement in statements:
+                is_successful = True
+                ## execute statements on mysql with python lib
+                try:
+                    mysql_cur.execute(statement)
+                    mysql_count = mysql_cur.rowcount
+                except mysql.connector.Error as e: #mysql stop executing after finding an error
+                    errors.append({
+                        "where": f"\nMySQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                ## execute statements on postgres with python lib
+                try:
+                    postgres_cur.execute(statement)
+                    postgres_count = postgres_cur.rowcount
+                except psycopg.Error as e: #postgres will not execute from the start if an error is detected
+                    errors.append({
+                        "where": f"\nPostgreSQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "syntax error" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                ## execute statements on sqlite with python lib
+                try:
+                    sqlite_cur.execute(statement)
+                    sqlite_count = sqlite_cur.rowcount
+                except sqlite3.Error as e: #sqlite stop executing after finding an error
+                    errors.append({
+                        "where": f"\nSQLite error at {database_name}: ",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "syntax error" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                if not statement.upper().startswith('CREATE'):
+                    if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
+                        errors.append({
+                            "where": f"\nDifference error at {database_name}:",
+                            "statement": statement,
+                            "error": f'Errors: Different number of affected rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
+                            "syntax": False,
+                            "diff": True
+                        })
+                    
             for select in select_statements:
-                res = sqlite_cur.execute(select)
-                for tuple in res.fetchall():
-                    pass
-                #     sqlite_list.append(tuple[0])
-                #     sqlite_set.add(tuple[0])
-                #     print("SQLite: " + tuple[0])
-                # print("\n")
-        except sqlite3.Error as e: #sqlite stop executing after finding an error
-            errors.append({
-                "where": f"\nSQLite error at {database_name}: ",
-                "error": e,
-                "syntax": "syntax error" in str(e).lower()
-            })
+                is_successful = True
+                ## execute select statements on mysql with python lib
+                try:
+                    mysql_cur.execute(select)
+                    mysql_results = mysql_cur.fetchall()
+                    mysql_count = len(mysql_results)
+                except mysql.connector.Error as e: #mysql stop executing after finding an error
+                    errors.append({
+                        "where": f"\nMySQL error at {database_name}:",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                ## execute select statements on postgres with python lib
+                try:
+                    postgres_cur.execute(select)
+                    postgres_results = postgres_cur.fetchall()
+                    postgres_count = len(postgres_results)
+                except psycopg.Error as e: #postgres will not execute from the start if an error is detected
+                    errors.append({
+                        "where": f"\nPostgreSQL error at {database_name}:",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "syntax error" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                ## execute select statements on sqlite with python lib
+                try:
+                    sqlite_cur.execute(select)
+                    sqlite_results = sqlite_cur.fetchall()
+                    sqlite_count = len(sqlite_results)
+                except sqlite3.Error as e: #sqlite stop executing after finding an error
+                    errors.append({
+                        "where": f"\nSQLite error at {database_name}: ",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "syntax error" in str(e).lower(),
+                        "diff": False
+                    })
+                    is_successful = False
+                if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
+                    errors.append({
+                        "where": f"\nDifference error at {database_name}:",
+                        "statement": select,
+                        "error": f'Errors: Different number of returned rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
+                        "syntax": False,
+                        "diff": True
+                    })
+        except Exception as e:
+            print(e)
 
         # print("Check number of rows")
         # print(len(mysql_list) == len(postgres_list), len(sqlite_list) == len(postgres_list), len(mysql_list) == len(sqlite_list))
@@ -196,11 +252,13 @@ def run_from_file(files):
         # print(mysql_set == postgres_set, postgres_set == sqlite_set, mysql_set == sqlite_set)
 
         # mysql always escape \ but the other two do not. SET GLOBAL/SESSION sql_mode = 'NO_BACKSLASH_ESCAPES'; mode can disable it
+        # print errors here all at once so errors from same threads are grouped together
         for error in errors:
-            print(error["where"])
-            print(error["error"])
+            print(error["where"] + '\n' + error["statement"] + '\n', error["error"])
             if error["syntax"]:
                 print("^-----------------------------------Syntax error-----------------------------------^")
+            if error["diff"]:
+                print("^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
 
 
 if __name__ == '__main__':
@@ -263,7 +321,9 @@ if __name__ == '__main__':
         if remains > 0:
             remains = remains - 1
             files.append(log_files.pop(0))
-        t = threading.Thread(target=run_from_file, args=[files])
+        postgres_con = psycopg.connect("dbname=postgres user=sqlancer password=sqlancer")
+        postgres_con.autocommit = True
+        t = threading.Thread(target=run_from_file, args=[files, postgres_con])
         threads.append(t)
         t.start()
     
