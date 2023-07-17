@@ -8,7 +8,7 @@ import mysql.connector #This needs to be downloaded: pip install mysql-connector
 import psycopg #This needs to be downloaded: pip install "psycopg[binary]"
 import sqlite3
 import threading
-
+from collections import Counter
 
 def run_from_file(files, conn):
     for file in files:
@@ -104,161 +104,158 @@ def run_from_file(files, conn):
         # sqlite_result = sqlite_console.communicate(statements.encode())[0].decode()
 
         
-        try:
-            ## create database on mysql with python lib
-            mysql_cur.execute(f"CREATE DATABASE {database_name};")
-            mysql_con = mysql.connector.connect(user="sqlancer", password="sqlancer", database=database_name, client_flags=[mysql.connector.constants.ClientFlag.FOUND_ROWS])
-            mysql_con.autocommit = True #not actually needed
-            mysql_cur = mysql_con.cursor()
-            mysql_list = list()
-            mysql_set = set()
+        ## create database on mysql with python lib
+        mysql_cur.execute(f"CREATE DATABASE {database_name};")
+        sql_mode = ["NO_BACKSLASH_ESCAPES", "PIPES_AS_CONCAT"]
+        mysql_con = mysql.connector.connect(user="sqlancer", password="sqlancer", database=database_name, client_flags=[mysql.connector.constants.ClientFlag.FOUND_ROWS], sql_mode=sql_mode)
+        mysql_con.autocommit = True #not actually needed
+        mysql_cur = mysql_con.cursor()
 
-            ## create database on postgres with python lib
-            postgres_cur.execute(f"CREATE DATABASE {database_name};")
-            postgres_con = psycopg.connect(f"dbname={database_name} user=sqlancer password=sqlancer")
-            postgres_con.autocommit = True
-            postgres_cur = postgres_con.cursor()
-            postgres_list = list()
-            postgres_set = set()
+        ## create database on postgres with python lib
+        postgres_cur.execute(f"CREATE DATABASE {database_name};")
+        postgres_con = psycopg.connect(f"dbname={database_name} user=sqlancer password=sqlancer")
+        postgres_con.autocommit = True
+        postgres_cur = postgres_con.cursor()
 
-            ## create database on sqlite with python lib
-            sqlite_con = sqlite3.connect(f"./target/databases/{database_name}.db")
-            sqlite_cur = sqlite_con.cursor()
-            sqlite_list = list()
-            sqlite_set = set()
+        ## create database on sqlite with python lib
+        sqlite_con = sqlite3.connect(f"./target/databases/{database_name}.db")
+        sqlite_cur = sqlite_con.cursor()
 
-            for statement in statements:
-                is_successful = True
-                ## execute statements on mysql with python lib
-                try:
-                    mysql_cur.execute(statement)
-                    mysql_count = mysql_cur.rowcount
-                except mysql.connector.Error as e: #mysql stop executing after finding an error
-                    errors.append({
-                        "where": f"\nMySQL error at {database_name}:",
-                        "statement": statement,
-                        "error": e,
-                        "syntax": "sql syntax" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
-                ## execute statements on postgres with python lib
-                try:
-                    postgres_cur.execute(statement)
-                    postgres_count = postgres_cur.rowcount
-                except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-                    errors.append({
-                        "where": f"\nPostgreSQL error at {database_name}:",
-                        "statement": statement,
-                        "error": e,
-                        "syntax": "syntax error" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
-                ## execute statements on sqlite with python lib
-                try:
-                    sqlite_cur.execute(statement)
-                    sqlite_count = sqlite_cur.rowcount
-                except sqlite3.Error as e: #sqlite stop executing after finding an error
-                    errors.append({
-                        "where": f"\nSQLite error at {database_name}: ",
-                        "statement": statement,
-                        "error": e,
-                        "syntax": "syntax error" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
-                if not statement.upper().startswith('CREATE'):
-                    if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
-                        errors.append({
-                            "where": f"\nDifference error at {database_name}:",
-                            "statement": statement,
-                            "error": f'Errors: Different number of affected rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
-                            "syntax": False,
-                            "diff": True
-                        })
-                    
-            for select in select_statements:
-                is_successful = True
-                ## execute select statements on mysql with python lib
-                try:
-                    mysql_cur.execute(select)
-                    mysql_results = mysql_cur.fetchall()
-                    mysql_count = len(mysql_results)
-                except mysql.connector.Error as e: #mysql stop executing after finding an error
-                    errors.append({
-                        "where": f"\nMySQL error at {database_name}:",
-                        "statement": select,
-                        "error": e,
-                        "syntax": "sql syntax" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
-                ## execute select statements on postgres with python lib
-                try:
-                    postgres_cur.execute(select)
-                    postgres_results = postgres_cur.fetchall()
-                    postgres_count = len(postgres_results)
-                except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-                    errors.append({
-                        "where": f"\nPostgreSQL error at {database_name}:",
-                        "statement": select,
-                        "error": e,
-                        "syntax": "syntax error" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
-                ## execute select statements on sqlite with python lib
-                try:
-                    sqlite_cur.execute(select)
-                    sqlite_results = sqlite_cur.fetchall()
-                    sqlite_count = len(sqlite_results)
-                except sqlite3.Error as e: #sqlite stop executing after finding an error
-                    errors.append({
-                        "where": f"\nSQLite error at {database_name}: ",
-                        "statement": select,
-                        "error": e,
-                        "syntax": "syntax error" in str(e).lower(),
-                        "diff": False
-                    })
-                    is_successful = False
+        is_successful = True
+        for statement in statements:
+            # if one statement fails, no point in executing any further
+            if not is_successful:
+                break
+            ## execute statements on mysql with python lib
+            try:
+                mysql_cur.execute(statement)
+                mysql_count = mysql_cur.rowcount
+            except mysql.connector.Error as e: #mysql stop executing after finding an error
+                errors.append({
+                    "where": f"\nMySQL error at {database_name}:",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "sql syntax" in str(e).lower(),
+                    "diff": False
+                })
+                is_successful = False
+            ## execute statements on postgres with python lib
+            try:
+                postgres_cur.execute(statement)
+                postgres_count = postgres_cur.rowcount
+            except psycopg.Error as e: #postgres will not execute from the start if an error is detected
+                errors.append({
+                    "where": f"\nPostgreSQL error at {database_name}:",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_successful = False
+            ## execute statements on sqlite with python lib
+            try:
+                sqlite_cur.execute(statement)
+                sqlite_count = sqlite_cur.rowcount
+            except sqlite3.Error as e: #sqlite stop executing after finding an error
+                errors.append({
+                    "where": f"\nSQLite error at {database_name}: ",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_successful = False
+            if not statement.upper().startswith('CREATE'):
                 if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
                     errors.append({
                         "where": f"\nDifference error at {database_name}:",
-                        "statement": select,
-                        "error": f'Errors: Different number of returned rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
+                        "statement": statement,
+                        "error": f'Errors: Different number of affected rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
                         "syntax": False,
                         "diff": True
                     })
-        except Exception as e:
-            print(e)
+                
+        for select in select_statements:
+            # if one statement fails, no point in executing any further
+            if not is_successful:
+                break
+            is_select_successful = True
+            ## execute select statements on mysql with python lib
+            try:
+                mysql_cur.execute(select)
+                mysql_results = mysql_cur.fetchall()
+                mysql_count = len(mysql_results)
+                mysql_multiset = Counter()
+                for res in mysql_results:
+                    mysql_multiset[res] += 1
+            except mysql.connector.Error as e: #mysql stop executing after finding an error
+                errors.append({
+                    "where": f"\nMySQL error at {database_name}:",
+                    "statement": select,
+                    "error": e,
+                    "syntax": "sql syntax" in str(e).lower(),
+                    "diff": False
+                })
+                is_select_successful = False
+            ## execute select statements on postgres with python lib
+            try:
+                postgres_cur.execute(select)
+                postgres_results = postgres_cur.fetchall()
+                postgres_count = len(postgres_results)
+                postgres_multiset = Counter()
+                for res in postgres_results:
+                    postgres_multiset[res] += 1
+            except psycopg.Error as e: #postgres will not execute from the start if an error is detected
+                errors.append({
+                    "where": f"\nPostgreSQL error at {database_name}:",
+                    "statement": select,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_select_successful = False
+            ## execute select statements on sqlite with python lib
+            try:
+                sqlite_cur.execute(select)
+                sqlite_results = sqlite_cur.fetchall()
+                sqlite_count = len(sqlite_results)
+                sqlite_multiset = Counter()
+                for res in sqlite_results:
+                    sqlite_multiset[res] += 1
+            except sqlite3.Error as e: #sqlite stop executing after finding an error
+                errors.append({
+                    "where": f"\nSQLite error at {database_name}: ",
+                    "statement": select,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_select_successful = False
+            if is_select_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
+                errors.append({
+                    "where": f"\nDifference error at {database_name}:",
+                    "statement": select,
+                    "error": f'Errors: Different number of returned rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
+                    "syntax": False,
+                    "diff": True
+                })
+                continue
+            if is_select_successful and (mysql_multiset != postgres_multiset or postgres_multiset != sqlite_multiset or mysql_multiset != sqlite_multiset):
+                errors.append({
+                    "where": f"\nDifference error at {database_name}:",
+                    "statement": select,
+                    "error": f'Errors: Different elements in returned rows\nSQLite: {sqlite_multiset} | MySQL: {mysql_multiset} | PostgreSQL: {postgres_multiset}',
+                    "syntax": False,
+                    "diff": True
+                })
 
-        # print("Check number of rows")
-        # print(len(mysql_list) == len(postgres_list), len(sqlite_list) == len(postgres_list), len(mysql_list) == len(sqlite_list))
-        # len = len(sqlite_list)
-        # # for i in range(len):
-        # #     print("'" + mysql_list[i] + "'")
-        # #     print("'" + postgres_list[i] + "'")
-        # #     print("'" + sqlite_list[i] + "'")
-        
-        # for element in mysql_set:
-        #     print("'" + element + "'")
-        # for element in postgres_set:
-        #     print("'" + element + "'")
-        # for element in sqlite_set:
-        #     print("'" + element + "'")
-
-        # print("Check content of rows")
-        # print(mysql_set == postgres_set, postgres_set == sqlite_set, mysql_set == sqlite_set)
-
-        # mysql always escape \ but the other two do not. SET GLOBAL/SESSION sql_mode = 'NO_BACKSLASH_ESCAPES'; mode can disable it
         # print errors here all at once so errors from same threads are grouped together
         for error in errors:
             print(error["where"] + '\n' + error["statement"] + '\n', error["error"])
             if error["syntax"]:
                 print("^-----------------------------------Syntax error-----------------------------------^")
             if error["diff"]:
-                print("^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
+                print("^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
 
 
 if __name__ == '__main__':
