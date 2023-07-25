@@ -113,7 +113,7 @@ def run_from_file(files, conn):
 
         ## create database on postgres with python lib
         postgres_cur.execute(f"CREATE DATABASE {database_name};")
-        postgres_con = psycopg.connect(f"dbname={database_name} user=sqlancer password=sqlancer")
+        postgres_con = psycopg.connect(f"dbname={database_name} user=sqlancer password=sqlancer host=127.0.0.1")
         postgres_con.autocommit = True
         postgres_cur = postgres_con.cursor()
 
@@ -186,8 +186,13 @@ def run_from_file(files, conn):
                 mysql_results = mysql_cur.fetchall()
                 mysql_count = len(mysql_results)
                 mysql_multiset = Counter()
+                mysql_list = list()
                 for res in mysql_results:
-                    mysql_multiset[res] += 1
+                    print('MySQL: ', res)
+                    try:
+                        mysql_multiset[res] += 1
+                    except:
+                        mysql_multiset[str(res)] += 1
             except mysql.connector.Error as e: #mysql stop executing after finding an error
                 errors.append({
                     "where": f"\nMySQL error at {database_name}:",
@@ -203,8 +208,13 @@ def run_from_file(files, conn):
                 postgres_results = postgres_cur.fetchall()
                 postgres_count = len(postgres_results)
                 postgres_multiset = Counter()
+                postgres_list = list()
                 for res in postgres_results:
-                    postgres_multiset[res] += 1
+                    print('PostgreSQL: ', res)
+                    try:
+                        postgres_multiset[res] += 1
+                    except:
+                        postgres_multiset[str(res)] += 1
             except psycopg.Error as e: #postgres will not execute from the start if an error is detected
                 errors.append({
                     "where": f"\nPostgreSQL error at {database_name}:",
@@ -220,8 +230,13 @@ def run_from_file(files, conn):
                 sqlite_results = sqlite_cur.fetchall()
                 sqlite_count = len(sqlite_results)
                 sqlite_multiset = Counter()
+                sqlite_list = list()
                 for res in sqlite_results:
-                    sqlite_multiset[res] += 1
+                    print('SQLite: ', res)
+                    try:
+                        sqlite_multiset[res] += 1
+                    except:    
+                        sqlite_multiset[str(res)] += 1
             except sqlite3.Error as e: #sqlite stop executing after finding an error
                 errors.append({
                     "where": f"\nSQLite error at {database_name}: ",
@@ -318,7 +333,7 @@ if __name__ == '__main__':
         if remains > 0:
             remains = remains - 1
             files.append(log_files.pop(0))
-        postgres_con = psycopg.connect("dbname=postgres user=sqlancer password=sqlancer")
+        postgres_con = psycopg.connect("dbname=postgres user=sqlancer password=sqlancer host=127.0.0.1")
         postgres_con.autocommit = True
         t = threading.Thread(target=run_from_file, args=[files, postgres_con])
         threads.append(t)
