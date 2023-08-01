@@ -174,6 +174,7 @@ def run_from_file(files, conn):
                         "syntax": False,
                         "diff": True
                     })
+                    is_successful = False
                 
         for select in select_statements:
             # if one statement fails, no point in executing any further
@@ -188,7 +189,7 @@ def run_from_file(files, conn):
                 mysql_multiset = Counter()
                 mysql_list = list()
                 for res in mysql_results:
-                    print('MySQL: ', res)
+                    # print('MySQL: ', res)
                     try:
                         mysql_multiset[res] += 1
                     except:
@@ -210,7 +211,7 @@ def run_from_file(files, conn):
                 postgres_multiset = Counter()
                 postgres_list = list()
                 for res in postgres_results:
-                    print('PostgreSQL: ', res)
+                    # print('PostgreSQL: ', res)
                     try:
                         postgres_multiset[res] += 1
                     except:
@@ -232,7 +233,7 @@ def run_from_file(files, conn):
                 sqlite_multiset = Counter()
                 sqlite_list = list()
                 for res in sqlite_results:
-                    print('SQLite: ', res)
+                    # print('SQLite: ', res)
                     try:
                         sqlite_multiset[res] += 1
                     except:    
@@ -259,7 +260,7 @@ def run_from_file(files, conn):
                 errors.append({
                     "where": f"\nDifference error at {database_name}:",
                     "statement": select,
-                    "error": f'Errors: Different elements in returned rows\nSQLite: {sqlite_multiset} | MySQL: {mysql_multiset} | PostgreSQL: {postgres_multiset}',
+                    "error": f'Errors: Different elements in returned rows\nSQLite: {sqlite_multiset} \nMySQL: {mysql_multiset} \nPostgreSQL: {postgres_multiset}',
                     "syntax": False,
                     "diff": True
                 })
