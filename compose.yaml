@@ -39,3 +39,4 @@ services:
       POSTGRES_PASSWORD: sqlancer 
       POSTGRES_USER: sqlancer
       POSTGRES_DB: test
+      POSTGRES_INITDB_ARGS: --locale=C
