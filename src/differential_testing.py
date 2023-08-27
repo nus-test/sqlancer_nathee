@@ -13,7 +13,7 @@ from collections import Counter
 def run_from_file(files, conn):
     for file in files:
         errors = []
-        logs = open(file, 'r')
+        logs = open(file, 'r', encoding="utf8")
         names = re.split(r'[\\/]', logs.name)
         # extract information and statements from log file from python lib
         time = logs.readline()
@@ -108,6 +108,7 @@ def run_from_file(files, conn):
         mysql_cur.execute(f"CREATE DATABASE {database_name};")
         sql_mode = ["NO_BACKSLASH_ESCAPES", "PIPES_AS_CONCAT"]
         mysql_con = mysql.connector.connect(user="sqlancer", password="sqlancer", database=database_name, client_flags=[mysql.connector.constants.ClientFlag.FOUND_ROWS], sql_mode=sql_mode)
+        mysql_con.set_charset_collation(charset='binary')
         mysql_con.autocommit = True #not actually needed
         mysql_cur = mysql_con.cursor()
 
@@ -120,6 +121,7 @@ def run_from_file(files, conn):
         ## create database on sqlite with python lib
         sqlite_con = sqlite3.connect(f"./target/databases/{database_name}.db")
         sqlite_cur = sqlite_con.cursor()
+        sqlite_cur.execute("PRAGMA case_sensitive_like = true;")
 
         is_successful = True
         for statement in statements:
@@ -141,7 +143,7 @@ def run_from_file(files, conn):
                 is_successful = False
             ## execute statements on postgres with python lib
             try:
-                postgres_cur.execute(statement)
+                postgres_cur.execute(statement.encode())
                 postgres_count = postgres_cur.rowcount
             except psycopg.Error as e: #postgres will not execute from the start if an error is detected
                 errors.append({
@@ -196,6 +198,10 @@ def run_from_file(files, conn):
                                 temp = list(res)
                                 temp[i] = round(res[i], 12)
                                 res = tuple(temp)
+                            if type(res[i]) is bytes or type(res[i]) is bytearray:
+                                temp = list(res)
+                                temp[i] = res[i].decode()
+                                res = tuple(temp)
                         mysql_multiset[res] += 1
                     except:
                         mysql_multiset[str(res)] += 1
@@ -210,7 +216,7 @@ def run_from_file(files, conn):
                 is_select_successful = False
             ## execute select statements on postgres with python lib
             try:
-                postgres_cur.execute(select)
+                postgres_cur.execute(select.encode())
                 postgres_results = postgres_cur.fetchall()
                 postgres_count = len(postgres_results)
                 postgres_multiset = Counter()
@@ -222,6 +228,10 @@ def run_from_file(files, conn):
                             if type(res[i]) is float:
                                 temp = list(res)
                                 temp[i] = round(res[i], 12)
+                                res = tuple(temp)
+                            if type(res[i]) is bytes or type(res[i]) is bytearray:
+                                temp = list(res)
+                                temp[i] = res[i].decode()
                                 res = tuple(temp)
                         postgres_multiset[res] += 1
                     except:
@@ -249,6 +259,10 @@ def run_from_file(files, conn):
                             if type(res[i]) is float:
                                 temp = list(res)
                                 temp[i] = round(res[i], 12)
+                                res = tuple(temp)
+                            if type(res[i]) is bytes or type(res[i]) is bytearray:
+                                temp = list(res)
+                                temp[i] = res[i].decode()
                                 res = tuple(temp)
                         sqlite_multiset[res] += 1
                     except:    
