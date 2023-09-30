@@ -22,15 +22,17 @@ def run_from_file(files, conn):
         database_seed = logs.readline()
         statements = list()
         select_statements = list()
+        create_statements = list()
         while True:
             line = logs.readline().strip().split(';')[0]
             if not line:
                 break
             if line.upper().startswith("SELECT"):
                 select_statements.append(line + ';')
+            elif line.upper().startswith("CREATE"):
+                create_statements.append(line + ';')
             else:
                 statements.append(line + ';')
-
 
         # ## drop existing database from mysql with command line
         # drop_command = ""
@@ -123,11 +125,65 @@ def run_from_file(files, conn):
         sqlite_cur = sqlite_con.cursor()
         sqlite_cur.execute("PRAGMA case_sensitive_like = true;")
 
-        is_successful = True
-        for statement in statements:
+        is_create_successful = True
+        for statement in create_statements:
             # if one statement fails, no point in executing any further
-            if not is_successful:
+            if not is_create_successful:
                 break
+            ## execute statements on mysql with python lib
+            try:
+                mysql_cur.execute(statement)
+            except mysql.connector.Error as e: #mysql stop executing after finding an error
+                errors.append({
+                    "where": f"\nMySQL error at {database_name}:",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "sql syntax" in str(e).lower(),
+                    "diff": False
+                })
+                is_create_successful = False
+            ## execute statements on postgres with python lib
+            try:
+                postgres_cur.execute(statement.encode())
+                postgres_count = postgres_cur.rowcount
+            except psycopg.Error as e: #postgres will not execute from the start if an error is detected
+                errors.append({
+                    "where": f"\nPostgreSQL error at {database_name}:",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_create_successful = False
+            ## execute statements on sqlite with python lib
+            try:
+                sqlite_cur.execute(statement)
+                sqlite_count = sqlite_cur.rowcount
+            except sqlite3.Error as e: #sqlite stop executing after finding an error
+                errors.append({
+                    "where": f"\nSQLite error at {database_name}: ",
+                    "statement": statement,
+                    "error": e,
+                    "syntax": "syntax error" in str(e).lower(),
+                    "diff": False
+                })
+                is_create_successful = False
+
+        ## begin transaction for all dbms
+        mysql_cur.execute('BEGIN;')
+        postgres_cur.execute('BEGIN;')
+        sqlite_cur.execute('BEGIN;')
+
+        for statement in statements:
+            is_successful = True
+            # if one statement fails, no point in executing any further
+            if not is_create_successful:
+                break
+            ## start new savepoint
+            mysql_cur.execute('SAVEPOINT save;')
+            postgres_cur.execute('SAVEPOINT save;')
+            sqlite_cur.execute('SAVEPOINT save;')
+
             ## execute statements on mysql with python lib
             try:
                 mysql_cur.execute(statement)
@@ -167,20 +223,30 @@ def run_from_file(files, conn):
                     "diff": False
                 })
                 is_successful = False
-            if not statement.upper().startswith('CREATE'):
-                if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
-                    errors.append({
-                        "where": f"\nDifference error at {database_name}:",
-                        "statement": statement,
-                        "error": f'Errors: Different number of affected rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
-                        "syntax": False,
-                        "diff": True
-                    })
-                    is_successful = False
+            ## Check for unequal changes    
+            if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
+                errors.append({
+                    "where": f"\nDifference error at {database_name}:",
+                    "statement": statement,
+                    "error": f'Errors: Different number of affected rows\nSQLite: {sqlite_count} | MySQL: {mysql_count} | PostgreSQL: {postgres_count}',
+                    "syntax": False,
+                    "diff": True
+                })
+                is_successful = False
+
+            ## rollback every dbms to savepoint when there are errors
+            if not is_successful:
+                mysql_cur.execute('ROLLBACK TO SAVEPOINT save;')
+                postgres_cur.execute('ROLLBACK TO SAVEPOINT save;')
+                sqlite_cur.execute('ROLLBACK TO SAVEPOINT save;')
                 
+        mysql_cur.execute('COMMIT;')
+        postgres_cur.execute('COMMIT;')
+        sqlite_cur.execute('COMMIT;')
+
         for select in select_statements:
             # if one statement fails, no point in executing any further
-            if not is_successful:
+            if not is_create_successful:
                 break
             is_select_successful = True
             ## execute select statements on mysql with python lib
