@@ -20,6 +20,7 @@ services:
       test: mysql -u root -proot -e " GRANT ALL PRIVILEGES ON *.* TO 'sqlancer'@'%';FLUSH PRIVILEGES;" || exit 1
       interval: 5s
       retries: 3
+    command: --character-set-server=binary --collation-server=binary
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PASSWORD: sqlancer
