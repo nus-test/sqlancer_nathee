@@ -1,4 +1,5 @@
 ## run from root of sqlancer: python .\src\differential_testing.py <number of threads to use>
+import decimal
 import os
 import sys
 import subprocess
@@ -9,6 +10,11 @@ import psycopg #This needs to be downloaded: pip install "psycopg[binary]"
 import sqlite3
 import threading
 from collections import Counter
+import pathlib
+import shutil
+
+mode = 'console' #output errors in consoles or log files
+run_number = 0
 
 def run_from_file(files, conn):
     for file in files:
@@ -260,9 +266,9 @@ def run_from_file(files, conn):
                     # print('MySQL: ', res)
                     try:
                         for i in range(len(res)):
-                            if type(res[i]) is float:
+                            if type(res[i]) is float or type(res[i]) is decimal.Decimal:
                                 temp = list(res)
-                                temp[i] = round(res[i], 12)
+                                temp[i] = round(float(res[i]), 12)
                                 res = tuple(temp)
                             if type(res[i]) is bytes or type(res[i]) is bytearray:
                                 temp = list(res)
@@ -291,9 +297,9 @@ def run_from_file(files, conn):
                     # print('PostgreSQL: ', res)
                     try:
                         for i in range(len(res)):
-                            if type(res[i]) is float:
+                            if type(res[i]) is float or type(res[i]) is decimal.Decimal:
                                 temp = list(res)
-                                temp[i] = round(res[i], 12)
+                                temp[i] = round(float(res[i]), 12)
                                 res = tuple(temp)
                             if type(res[i]) is bytes or type(res[i]) is bytearray:
                                 temp = list(res)
@@ -360,13 +366,28 @@ def run_from_file(files, conn):
                     "diff": True
                 })
 
-        # print errors here all at once so errors from same threads are grouped together
-        for error in errors:
-            print(error["where"] + '\n' + error["statement"] + '\n', error["error"])
-            if error["syntax"]:
-                print("^-----------------------------------Syntax error-----------------------------------^")
-            if error["diff"]:
-                print("^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
+        if mode == 'console':
+            # print errors here all at once so errors from same threads are grouped together
+            for error in errors:
+                print(error["where"] + '\n' + error["statement"] + '\n', error["error"])
+                if error["syntax"]:
+                    print("^-----------------------------------Syntax error-----------------------------------^")
+                if error["diff"]:
+                    print("^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
+        elif mode == 'file':
+            pathlib.Path(f'./target/logs/errors/run{run_number}').mkdir(parents=True, exist_ok=True)
+            if len(errors) > 0:
+                shutil.copyfile(logs.name, f'./target/logs/errors/run{run_number}/{database_name}.txt')
+                f = open(f"./target/logs/errors/run{run_number}/{database_name}_error.txt", "w", encoding="utf8")
+                for error in errors:
+                    f.write(error["where"] + '\n' + error["statement"] + '\n')
+                    f.write(str(error["error"]))
+                    if error["syntax"]:
+                        f.write("\n^-----------------------------------Syntax error-----------------------------------^")
+                    if error["diff"]:
+                        f.write("\n^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Diff error>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>^")
+                    f.write("\n")
+                f.close()
 
 
 if __name__ == '__main__':
@@ -418,6 +439,14 @@ if __name__ == '__main__':
     except:
         print("Specify number of threads")
         sys.exit(1)
+    try:
+        mode = sys.argv[2]
+        run_number = sys.argv[3]
+        if mode != 'file':
+            print("Invalid mode")
+            sys.exit(1)
+    except:
+        pass
     log_files = glob.glob("./target/logs/*/database*")
     files_per_thread = int(len(log_files) / num_threads)
     remains = len(log_files) % num_threads
@@ -437,5 +466,3 @@ if __name__ == '__main__':
     
     for t in threads:
         t.join()
-
-    print("Finish running")
