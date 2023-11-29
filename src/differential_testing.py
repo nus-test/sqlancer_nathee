@@ -191,6 +191,11 @@ def run_from_file(files, conn):
                 for res in mysql_results:
                     # print('MySQL: ', res)
                     try:
+                        for i in range(len(res)):
+                            if type(res[i]) is float:
+                                temp = list(res)
+                                temp[i] = round(res[i], 12)
+                                res = tuple(temp)
                         mysql_multiset[res] += 1
                     except:
                         mysql_multiset[str(res)] += 1
@@ -213,6 +218,11 @@ def run_from_file(files, conn):
                 for res in postgres_results:
                     # print('PostgreSQL: ', res)
                     try:
+                        for i in range(len(res)):
+                            if type(res[i]) is float:
+                                temp = list(res)
+                                temp[i] = round(res[i], 12)
+                                res = tuple(temp)
                         postgres_multiset[res] += 1
                     except:
                         postgres_multiset[str(res)] += 1
@@ -235,6 +245,11 @@ def run_from_file(files, conn):
                 for res in sqlite_results:
                     # print('SQLite: ', res)
                     try:
+                        for i in range(len(res)):
+                            if type(res[i]) is float:
+                                temp = list(res)
+                                temp[i] = round(res[i], 12)
+                                res = tuple(temp)
                         sqlite_multiset[res] += 1
                     except:    
                         sqlite_multiset[str(res)] += 1
