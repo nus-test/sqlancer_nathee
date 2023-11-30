@@ -120,7 +120,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         //     nrPerformed = r.getInteger(0, 10);
         //     break;
         case UPDATE:
-            nrPerformed = 0; //r.getInteger(0, 10);
+            nrPerformed = r.getInteger(0, 10);
             break;
         case DELETE:
             nrPerformed = 0; //r.getInteger(0, 10);

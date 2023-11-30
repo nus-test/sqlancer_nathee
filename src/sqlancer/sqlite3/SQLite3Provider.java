@@ -149,7 +149,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             break;
         // case VIRTUAL_TABLE_ACTION:
         case UPDATE:
-            nrPerformed = 0; //r.getInteger(0, 30);
+            nrPerformed = r.getInteger(0, 30);
             break;
         // case PRAGMA:
         //     nrPerformed = r.getInteger(0, 20);
