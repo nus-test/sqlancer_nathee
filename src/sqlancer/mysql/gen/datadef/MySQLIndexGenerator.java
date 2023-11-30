@@ -61,7 +61,9 @@ public class MySQLIndexGenerator {
                     sb.append(", ");
                 }
                 sb.append("(");
-                MySQLExpression randExpr = gen.generateExpression(Randomly.fromOptions(MySQLDataType.values()));
+                List<MySQLDataType> validOptions = new ArrayList<>(Arrays.asList(MySQLDataType.values()));
+                validOptions.remove(MySQLDataType.VARCHAR);
+                MySQLExpression randExpr = gen.generateExpression(Randomly.fromList(validOptions));
                 sb.append(MySQLVisitor.asString(randExpr));
                 sb.append(")");
 
