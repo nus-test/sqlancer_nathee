@@ -44,13 +44,13 @@ public class MySQLInsertGenerator {
 
     private SQLQueryAdapter generateInsert() {
         sb.append("INSERT");
-        if (Randomly.getBoolean()) {
-            sb.append(" ");
-            sb.append(Randomly.fromOptions("LOW_PRIORITY", "DELAYED", "HIGH_PRIORITY"));
-        }
-        if (Randomly.getBoolean()) {
-            sb.append(" IGNORE");
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" ");
+        //     sb.append(Randomly.fromOptions("LOW_PRIORITY", "DELAYED", "HIGH_PRIORITY"));
+        // }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" IGNORE");
+        // }
         return generateInto();
     }
 
