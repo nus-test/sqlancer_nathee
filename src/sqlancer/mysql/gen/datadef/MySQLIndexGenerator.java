@@ -1,5 +1,7 @@
 package sqlancer.mysql.gen.datadef;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sqlancer.Randomly;
@@ -8,6 +10,7 @@ import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.mysql.MySQLErrors;
 import sqlancer.mysql.MySQLGlobalState;
 import sqlancer.mysql.MySQLSchema;
+import sqlancer.mysql.MySQLToStringVisitor;
 import sqlancer.mysql.MySQLSchema.MySQLColumn;
 import sqlancer.mysql.MySQLSchema.MySQLDataType;
 import sqlancer.mysql.MySQLSchema.MySQLTable;
@@ -48,7 +51,7 @@ public class MySQLIndexGenerator {
         }
         sb.append("INDEX ");
         sb.append(globalState.getSchema().getFreeIndexName());
-        indexType();
+        // indexType();
         sb.append(" ON ");
         MySQLTable table = schema.getRandomTable();
         MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(table.getColumns());
@@ -79,12 +82,12 @@ public class MySQLIndexGenerator {
                     columnIsPrimaryKey = true;
                 }
                 sb.append(c.getName());
-                if (Randomly.getBoolean() && c.getType() == MySQLDataType.VARCHAR) {
-                    sb.append("(");
-                    // TODO for string
-                    sb.append(r.getInteger(1, 5));
-                    sb.append(")");
-                }
+                // if (Randomly.getBoolean() && c.getType() == MySQLDataType.VARCHAR) {
+                //     sb.append("(");
+                //     // TODO for string
+                //     sb.append(r.getInteger(1, 5));
+                //     sb.append(")");
+                // }
                 if (Randomly.getBoolean()) {
                     sb.append(" ");
                     sb.append(Randomly.fromOptions("ASC", "DESC"));
@@ -93,8 +96,8 @@ public class MySQLIndexGenerator {
         }
         sb.append(")");
         MySQLToStringVisitor.fullyQualifiedNames = true;
-        indexOption();
-        algorithmOption();
+        // indexOption();
+        // algorithmOption();
         String string = sb.toString();
         sb = new StringBuilder();
         if (containsInPlace) {

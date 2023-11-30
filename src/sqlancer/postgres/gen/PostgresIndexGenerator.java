@@ -20,9 +20,9 @@ public final class PostgresIndexGenerator {
     private PostgresIndexGenerator() {
     }
 
-    public enum IndexType {
-        BTREE, HASH, GIST, GIN
-    }
+    // public enum IndexType {
+    //     BTREE, HASH, GIST, GIN
+    // }
 
     public static SQLQueryAdapter generate(PostgresGlobalState globalState) {
         ExpectedErrors errors = new ExpectedErrors();
@@ -44,23 +44,23 @@ public final class PostgresIndexGenerator {
         String indexName = getNewIndexName(randomTable);
         sb.append(indexName);
         sb.append(" ON ");
-        if (Randomly.getBoolean()) {
-            sb.append("ONLY ");
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append("ONLY ");
+        // }
         sb.append(randomTable.getName());
-        IndexType method;
-        if (Randomly.getBoolean()) {
-            sb.append(" USING ");
-            method = Randomly.fromOptions(IndexType.values());
-            sb.append(method);
-        } else {
-            method = IndexType.BTREE;
-        }
+        // IndexType method;
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" USING ");
+        //     method = Randomly.fromOptions(IndexType.values());
+        //     sb.append(method);
+        // } else {
+        //     method = IndexType.BTREE;
+        // }
 
         sb.append("(");
-        if (method == IndexType.HASH) {
-            sb.append(randomTable.getRandomColumn().getName());
-        } else {
+        // if (method == IndexType.HASH) {
+        //     sb.append(randomTable.getRandomColumn().getName());
+        // } else {
             for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
                 if (i != 0) {
                     sb.append(", ");
@@ -80,12 +80,12 @@ public final class PostgresIndexGenerator {
                 // sb.append("COLLATE ");
                 // sb.append(Randomly.fromOptions("C", "POSIX"));
                 // }
-                if (Randomly.getBooleanWithRatherLowProbability()) {
-                    sb.append(" ");
-                    sb.append(globalState.getRandomOpclass());
-                    errors.add("does not accept");
-                    errors.add("does not exist for access method");
-                }
+                // if (Randomly.getBooleanWithRatherLowProbability()) {
+                //     sb.append(" ");
+                //     sb.append(globalState.getRandomOpclass());
+                //     errors.add("does not accept");
+                //     errors.add("does not exist for access method");
+                // }
                 if (Randomly.getBoolean()) {
                     sb.append(" ");
                     sb.append(Randomly.fromOptions("ASC", "DESC"));
@@ -95,7 +95,7 @@ public final class PostgresIndexGenerator {
                 //     sb.append(Randomly.fromOptions("FIRST", "LAST"));
                 // }
             }
-        }
+        // }
 
         sb.append(")");
         // if (Randomly.getBoolean() && method != IndexType.HASH) {
