@@ -26,6 +26,7 @@ import sqlancer.mysql.ast.MySQLUnaryPostfixOperation;
 
 public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> implements MySQLVisitor {
 
+    public static boolean fullyQualifiedNames = true;
     int ref;
 
     @Override
@@ -127,7 +128,11 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
 
     @Override
     public void visit(MySQLColumnReference column) {
-        sb.append(column.getColumn().getFullQualifiedName());
+        if (fullyQualifiedNames) {
+            sb.append(column.getColumn().getFullQualifiedName());
+        } else {
+            sb.append(column.getColumn().getName());
+        }
     }
 
     @Override
