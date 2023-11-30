@@ -111,7 +111,7 @@ public class PostgresTableGenerator {
         }
         sb.append(")");
         generateInherits();
-        generatePartitionBy();
+        // generatePartitionBy();
         generateUsing();
         PostgresCommon.generateWith(sb, globalState, errors);
         // if (Randomly.getBoolean() && isTemporaryTable) {
