@@ -55,11 +55,11 @@ public class MySQLTableGenerator {
         }
         sb.append(" ");
         sb.append(tableName);
-        if (Randomly.getBoolean() && !schema.getDatabaseTables().isEmpty()) {
-            sb.append(" LIKE ");
-            sb.append(schema.getRandomTable().getName());
-            return new SQLQueryAdapter(sb.toString(), true);
-        } else {
+        // if (Randomly.getBoolean() && !schema.getDatabaseTables().isEmpty()) {
+        //     sb.append(" LIKE ");
+        //     sb.append(schema.getRandomTable().getName());
+        //     return new SQLQueryAdapter(sb.toString(), true);
+        // } else {
             sb.append("(");
             for (int i = 0; i < 1 + Randomly.smallNumber(); i++) {
                 if (i != 0) {
@@ -84,7 +84,7 @@ public class MySQLTableGenerator {
             }
             addCommonErrors(errors);
             return new SQLQueryAdapter(sb.toString(), errors, true);
-        }
+        // }
 
     }
 
