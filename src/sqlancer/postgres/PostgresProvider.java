@@ -150,7 +150,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         case DELETE:
         // case RESET_ROLE:
         // case SET:
-            nrPerformed = 0; //r.getInteger(0, 5);
+            nrPerformed = r.getInteger(0, 5);
             break;
         // case ANALYZE:
         //     nrPerformed = r.getInteger(0, 3);
