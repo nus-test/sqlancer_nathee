@@ -74,16 +74,16 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         int nrPerformed = 0;
         switch (a) {
         case DROP_INDEX:
-            nrPerformed = r.getInteger(0, 2);
+            nrPerformed = 0; //r.getInteger(0, 2);
             break;
         // case SHOW_TABLES:
         //     nrPerformed = r.getInteger(0, 1);
         //     break;
         case CREATE_TABLE:
-            nrPerformed = r.getInteger(0, 1);
+            nrPerformed = 0; //r.getInteger(0, 1);
             break;
         case INSERT:
-            nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
+            nrPerformed = 0; //r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
         // case REPAIR:
         //     nrPerformed = r.getInteger(0, 1);
@@ -92,7 +92,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
         case CREATE_INDEX:
-            nrPerformed = r.getInteger(0, 5);
+            nrPerformed = 0; //r.getInteger(0, 5);
             break;
         // case FLUSH:
         //     nrPerformed = Randomly.getBooleanWithSmallProbability() ? r.getInteger(0, 1) : 0;
@@ -111,7 +111,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
         case ALTER_TABLE:
-            nrPerformed = r.getInteger(0, 5);
+            nrPerformed = 0; //r.getInteger(0, 5);
             break;
         // case TRUNCATE_TABLE:
         //     nrPerformed = r.getInteger(0, 2);
@@ -120,10 +120,10 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         //     nrPerformed = r.getInteger(0, 10);
         //     break;
         case UPDATE:
-            nrPerformed = r.getInteger(0, 10);
+            nrPerformed = 0; //r.getInteger(0, 10);
             break;
         case DELETE:
-            nrPerformed = r.getInteger(0, 10);
+            nrPerformed = 0; //r.getInteger(0, 10);
             break;
         default:
             throw new AssertionError(a);
@@ -133,19 +133,19 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
 
     @Override
     public void generateDatabase(MySQLGlobalState globalState) throws Exception {
-        while (globalState.getSchema().getDatabaseTables().size() < Randomly.smallNumber() + 1) {
-            String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
-            SQLQueryAdapter createTable = MySQLTableGenerator.generate(globalState, tableName);
-            globalState.executeStatement(createTable);
-        }
+        // while (globalState.getSchema().getDatabaseTables().size() < Randomly.smallNumber() + 1) {
+        //     String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
+        //     SQLQueryAdapter createTable = MySQLTableGenerator.generate(globalState, tableName);
+        //     globalState.executeStatement(createTable);
+        // }
 
-        StatementExecutor<MySQLGlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
-                MySQLProvider::mapActions, (q) -> {
-                    if (globalState.getSchema().getDatabaseTables().isEmpty()) {
-                        throw new IgnoreMeException();
-                    }
-                });
-        se.executeStatements();
+        // StatementExecutor<MySQLGlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
+        //         MySQLProvider::mapActions, (q) -> {
+        //             if (globalState.getSchema().getDatabaseTables().isEmpty()) {
+        //                 throw new IgnoreMeException();
+        //             }
+        //         });
+        // se.executeStatements();
     }
 
     @Override
@@ -161,9 +161,9 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
             port = MySQLOptions.DEFAULT_PORT;
         }
         String databaseName = globalState.getDatabaseName();
-        globalState.getState().logStatement("DROP DATABASE IF EXISTS " + databaseName);
-        globalState.getState().logStatement("CREATE DATABASE " + databaseName);
-        globalState.getState().logStatement("USE " + databaseName);
+        // globalState.getState().logStatement("DROP DATABASE IF EXISTS " + databaseName);
+        // globalState.getState().logStatement("CREATE DATABASE " + databaseName);
+        // globalState.getState().logStatement("USE " + databaseName);
         String url = String.format("jdbc:mysql://%s:%d?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true",
                 host, port);
         Connection con = DriverManager.getConnection(url, username, password);

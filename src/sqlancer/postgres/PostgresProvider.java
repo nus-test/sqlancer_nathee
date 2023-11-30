@@ -122,10 +122,10 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
 
     protected static int mapActions(PostgresGlobalState globalState, Action a) {
         Randomly r = globalState.getRandomly();
-        int nrPerformed;
+        int nrPerformed = 0;
         switch (a) {
         case CREATE_INDEX:
-            nrPerformed = r.getInteger(0, 3);
+            nrPerformed = 0; //r.getInteger(0, 3);
             break;
         // case CLUSTER:
         //     nrPerformed = r.getInteger(0, 3);
@@ -135,13 +135,13 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         //     break;
         // case DISCARD:
         case DROP_INDEX:
-            nrPerformed = r.getInteger(0, 5);
+            nrPerformed = 0; //r.getInteger(0, 5);
             break;
         case COMMIT:
-            nrPerformed = r.getInteger(0, 0);
+            nrPerformed = 0; //r.getInteger(0, 0);
             break;
         case ALTER_TABLE:
-            nrPerformed = r.getInteger(0, 5);
+            nrPerformed = 0; //r.getInteger(0, 5);
             break;
         // case REINDEX:
         // case RESET:
@@ -150,7 +150,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         case DELETE:
         // case RESET_ROLE:
         // case SET:
-            nrPerformed = r.getInteger(0, 5);
+            nrPerformed = 0; //r.getInteger(0, 5);
             break;
         // case ANALYZE:
         //     nrPerformed = r.getInteger(0, 3);
@@ -167,13 +167,13 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
         case CREATE_VIEW:
-            nrPerformed = r.getInteger(0, 2);
+            nrPerformed = 0; //r.getInteger(0, 2);
             break;
         case UPDATE:
-            nrPerformed = r.getInteger(0, 10);
+            nrPerformed = 0; //r.getInteger(0, 10);
             break;
         case INSERT:
-            nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
+            nrPerformed = 0; //r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
         default:
             throw new AssertionError(a);
@@ -184,7 +184,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
 
     @Override
     public void generateDatabase(PostgresGlobalState globalState) throws Exception {
-        readFunctions(globalState);
+        // readFunctions(globalState);
         createTables(globalState, Randomly.fromOptions(4, 5, 6));
         prepareTables(globalState);
 
@@ -257,10 +257,10 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             throw new AssertionError(e);
         }
         Connection con = DriverManager.getConnection("jdbc:" + entryURL, username, password);
-        globalState.getState().logStatement(String.format("\\c %s;", entryDatabaseName));
-        globalState.getState().logStatement("DROP DATABASE IF EXISTS " + databaseName);
+        // globalState.getState().logStatement(String.format("\\c %s;", entryDatabaseName));
+        // globalState.getState().logStatement("DROP DATABASE IF EXISTS " + databaseName);
         createDatabaseCommand = getCreateDatabaseCommand(globalState);
-        globalState.getState().logStatement(createDatabaseCommand);
+        // globalState.getState().logStatement(createDatabaseCommand);
         try (Statement s = con.createStatement()) {
             s.execute("DROP DATABASE IF EXISTS " + databaseName);
         }
@@ -272,7 +272,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         String preDatabaseName = entryURL.substring(0, databaseIndex);
         String postDatabaseName = entryURL.substring(databaseIndex + entryDatabaseName.length());
         testURL = preDatabaseName + databaseName + postDatabaseName;
-        globalState.getState().logStatement(String.format("\\c %s;", databaseName));
+        // globalState.getState().logStatement(String.format("\\c %s;", databaseName));
 
         con = DriverManager.getConnection("jdbc:" + testURL, username, password);
         return new SQLConnection(con);
@@ -289,16 +289,16 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
     }
 
     protected void createTables(PostgresGlobalState globalState, int numTables) throws Exception {
-        while (globalState.getSchema().getDatabaseTables().size() < numTables) {
-            try {
-                String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
-                SQLQueryAdapter createTable = PostgresTableGenerator.generate(tableName, globalState.getSchema(),
-                        generateOnlyKnown, globalState);
-                globalState.executeStatement(createTable);
-            } catch (IgnoreMeException e) {
+        // while (globalState.getSchema().getDatabaseTables().size() < numTables) {
+        //     try {
+        //         String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
+        //         SQLQueryAdapter createTable = PostgresTableGenerator.generate(tableName, globalState.getSchema(),
+        //                 generateOnlyKnown, globalState);
+        //         globalState.executeStatement(createTable);
+        //     } catch (IgnoreMeException e) {
 
-            }
-        }
+        //     }
+        // }
     }
 
     protected void prepareTables(PostgresGlobalState globalState) throws Exception {
@@ -309,8 +309,8 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
                     }
                 });
         se.executeStatements();
-        globalState.executeStatement(new SQLQueryAdapter("COMMIT", true));
-        globalState.executeStatement(new SQLQueryAdapter("SET SESSION statement_timeout = 5000;\n"));
+        // globalState.executeStatement(new SQLQueryAdapter("COMMIT", true));
+        // globalState.executeStatement(new SQLQueryAdapter("SET SESSION statement_timeout = 5000;\n"));
     }
 
     private String getCreateDatabaseCommand(PostgresGlobalState state) {
