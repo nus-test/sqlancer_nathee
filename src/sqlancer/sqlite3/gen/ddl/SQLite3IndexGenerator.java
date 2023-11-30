@@ -1,6 +1,8 @@
 package sqlancer.sqlite3.gen.ddl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sqlancer.IgnoreMeException;
@@ -74,11 +76,11 @@ public class SQLite3IndexGenerator {
             sb.append(" UNIQUE");
         }
         sb.append(" INDEX");
-        if (Randomly.getBoolean()) {
-            sb.append(" IF NOT EXISTS");
-        } else {
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" IF NOT EXISTS");
+        // } else {
             errors.add("already exists");
-        }
+        // }
         sb.append(" ");
         sb.append(SQLite3Common.getFreeIndexName(globalState.getSchema()));
         sb.append(" ON ");
@@ -97,21 +99,21 @@ public class SQLite3IndexGenerator {
             visitor.fullyQualifiedNames = false;
             visitor.visit(expr);
             sb.append(visitor.get());
-            if (Randomly.getBoolean()) {
-                sb.append(SQLite3Common.getRandomCollate());
-            }
+            // if (Randomly.getBoolean()) {
+            //     sb.append(SQLite3Common.getRandomCollate());
+            // }
             appendPotentialOrdering(sb);
         }
         sb.append("))");
-        if (Randomly.getBoolean()) {
-            sb.append(" WHERE ");
-            SQLite3Expression expr = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly()
-                    .generateExpression(Randomly.fromOptions(SQLite3DataType.values()));
-            SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();
-            visitor.fullyQualifiedNames = false;
-            visitor.visit(expr);
-            sb.append(visitor.get());
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" WHERE ");
+        //     SQLite3Expression expr = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly()
+        //             .generateExpression(Randomly.fromOptions(SQLite3DataType.values()));
+        //     SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();
+        //     visitor.fullyQualifiedNames = false;
+        //     visitor.visit(expr);
+        //     sb.append(visitor.get());
+        // }
         return sb.toString();
     }
 
