@@ -145,7 +145,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
         case CREATE_INDEX:
-            nrPerformed = 0; //r.getInteger(0, 5);
+            nrPerformed = r.getInteger(0, 5);
             break;
         // case VIRTUAL_TABLE_ACTION:
         case UPDATE:

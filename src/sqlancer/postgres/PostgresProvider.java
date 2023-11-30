@@ -125,7 +125,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         int nrPerformed = 0;
         switch (a) {
         case CREATE_INDEX:
-            nrPerformed = 0; //r.getInteger(0, 3);
+            nrPerformed = r.getInteger(0, 3);
             break;
         // case CLUSTER:
         //     nrPerformed = r.getInteger(0, 3);
