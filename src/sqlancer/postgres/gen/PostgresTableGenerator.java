@@ -80,11 +80,11 @@ public class PostgresTableGenerator {
         }
         sb.append(" ");
         sb.append(tableName);
-        if (Randomly.getBoolean() && !newSchema.getDatabaseTables().isEmpty()) {
-            createLike();
-        } else {
+        // if (Randomly.getBoolean() && !newSchema.getDatabaseTables().isEmpty()) {
+        //     createLike();
+        // } else {
             createStandard();
-        }
+        // }
         return new SQLQueryAdapter(sb.toString(), errors, true);
     }
 
