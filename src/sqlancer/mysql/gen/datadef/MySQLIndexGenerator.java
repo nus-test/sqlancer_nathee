@@ -54,6 +54,7 @@ public class MySQLIndexGenerator {
         MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(table.getColumns());
         sb.append(table.getName());
         sb.append("(");
+        MySQLToStringVisitor.fullyQualifiedNames = false;
         if (table.getEngine() == MySQLEngine.INNO_DB && Randomly.getBoolean()) {
             for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
                 if (i != 0) {
@@ -89,6 +90,7 @@ public class MySQLIndexGenerator {
             }
         }
         sb.append(")");
+        MySQLToStringVisitor.fullyQualifiedNames = true;
         indexOption();
         algorithmOption();
         String string = sb.toString();
