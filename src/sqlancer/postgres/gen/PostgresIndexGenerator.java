@@ -98,18 +98,18 @@ public final class PostgresIndexGenerator {
         }
 
         sb.append(")");
-        if (Randomly.getBoolean() && method != IndexType.HASH) {
-            sb.append(" INCLUDE(");
-            List<PostgresColumn> columns = randomTable.getRandomNonEmptyColumnSubset();
-            sb.append(columns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
-            sb.append(")");
-        }
-        if (Randomly.getBoolean()) {
-            sb.append(" WHERE ");
-            PostgresExpression expr = new PostgresExpressionGenerator(globalState).setColumns(randomTable.getColumns())
-                    .setGlobalState(globalState).generateExpression(PostgresDataType.BOOLEAN);
-            sb.append(PostgresVisitor.asString(expr));
-        }
+        // if (Randomly.getBoolean() && method != IndexType.HASH) {
+        //     sb.append(" INCLUDE(");
+        //     List<PostgresColumn> columns = randomTable.getRandomNonEmptyColumnSubset();
+        //     sb.append(columns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
+        //     sb.append(")");
+        // }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" WHERE ");
+        //     PostgresExpression expr = new PostgresExpressionGenerator(globalState).setColumns(randomTable.getColumns())
+        //             .setGlobalState(globalState).generateExpression(PostgresDataType.BOOLEAN);
+        //     sb.append(PostgresVisitor.asString(expr));
+        // }
         errors.add("already contains data"); // CONCURRENT INDEX failed
         errors.add("You might need to add explicit type casts");
         errors.add(" collations are not supported"); // TODO check
