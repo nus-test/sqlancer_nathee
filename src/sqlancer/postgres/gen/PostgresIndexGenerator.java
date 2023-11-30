@@ -90,10 +90,10 @@ public final class PostgresIndexGenerator {
                     sb.append(" ");
                     sb.append(Randomly.fromOptions("ASC", "DESC"));
                 }
-                if (Randomly.getBooleanWithRatherLowProbability()) {
-                    sb.append(" NULLS ");
-                    sb.append(Randomly.fromOptions("FIRST", "LAST"));
-                }
+                // if (Randomly.getBooleanWithRatherLowProbability()) {
+                //     sb.append(" NULLS ");
+                //     sb.append(Randomly.fromOptions("FIRST", "LAST"));
+                // }
             }
         }
 
