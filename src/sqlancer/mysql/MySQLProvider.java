@@ -133,19 +133,19 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
 
     @Override
     public void generateDatabase(MySQLGlobalState globalState) throws Exception {
-        // while (globalState.getSchema().getDatabaseTables().size() < Randomly.smallNumber() + 1) {
-        //     String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
-        //     SQLQueryAdapter createTable = MySQLTableGenerator.generate(globalState, tableName);
-        //     globalState.executeStatement(createTable);
-        // }
+        while (globalState.getSchema().getDatabaseTables().size() < Randomly.smallNumber() + 1) {
+            String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
+            SQLQueryAdapter createTable = MySQLTableGenerator.generate(globalState, tableName);
+            globalState.executeStatement(createTable);
+        }
 
-        // StatementExecutor<MySQLGlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
-        //         MySQLProvider::mapActions, (q) -> {
-        //             if (globalState.getSchema().getDatabaseTables().isEmpty()) {
-        //                 throw new IgnoreMeException();
-        //             }
-        //         });
-        // se.executeStatements();
+        StatementExecutor<MySQLGlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
+                MySQLProvider::mapActions, (q) -> {
+                    if (globalState.getSchema().getDatabaseTables().isEmpty()) {
+                        throw new IgnoreMeException();
+                    }
+                });
+        se.executeStatements();
     }
 
     @Override

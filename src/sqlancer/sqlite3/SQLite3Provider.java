@@ -173,38 +173,38 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
 
     @Override
     public void generateDatabase(SQLite3GlobalState globalState) throws Exception {
-        // Randomly r = new Randomly(SQLite3SpecialStringGenerator::generate);
-        // globalState.setRandomly(r);
-        // if (globalState.getDbmsSpecificOptions().generateDatabase) {
+        Randomly r = new Randomly(SQLite3SpecialStringGenerator::generate);
+        globalState.setRandomly(r);
+        if (globalState.getDbmsSpecificOptions().generateDatabase) {
 
             // addSensiblePragmaDefaults(globalState);
-            // int nrTablesToCreate = 1;
-            // if (Randomly.getBoolean()) {
-            //     nrTablesToCreate++;
-            // }
-            // while (Randomly.getBooleanWithSmallProbability()) {
-            //     nrTablesToCreate++;
-            // }
-            // int i = 0;
+            int nrTablesToCreate = 1;
+            if (Randomly.getBoolean()) {
+                nrTablesToCreate++;
+            }
+            while (Randomly.getBooleanWithSmallProbability()) {
+                nrTablesToCreate++;
+            }
+            int i = 0;
 
-            // do {
-            //     SQLQueryAdapter tableQuery = getTableQuery(globalState, i++);
-            //     globalState.executeStatement(tableQuery);
-            // } while (globalState.getSchema().getDatabaseTables().size() < nrTablesToCreate);
-            // assert globalState.getSchema().getTables().getTables().size() == nrTablesToCreate;
-            // checkTablesForGeneratedColumnLoops(globalState);
+            do {
+                SQLQueryAdapter tableQuery = getTableQuery(globalState, i++);
+                globalState.executeStatement(tableQuery);
+            } while (globalState.getSchema().getDatabaseTables().size() < nrTablesToCreate);
+            assert globalState.getSchema().getTables().getTables().size() == nrTablesToCreate;
+            checkTablesForGeneratedColumnLoops(globalState);
             // if (globalState.getDbmsSpecificOptions().testDBStats && Randomly.getBooleanWithSmallProbability()) {
             //     SQLQueryAdapter tableQuery = new SQLQueryAdapter(
             //             "CREATE VIRTUAL TABLE IF NOT EXISTS stat USING dbstat(main)");
             //     globalState.executeStatement(tableQuery);
             // }
-            // StatementExecutor<SQLite3GlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
-            //         SQLite3Provider::mapActions, (q) -> {
-            //             if (q.couldAffectSchema() && globalState.getSchema().getDatabaseTables().isEmpty()) {
-            //                 throw new IgnoreMeException();
-            //             }
-            //         });
-            // se.executeStatements();
+            StatementExecutor<SQLite3GlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
+                    SQLite3Provider::mapActions, (q) -> {
+                        if (q.couldAffectSchema() && globalState.getSchema().getDatabaseTables().isEmpty()) {
+                            throw new IgnoreMeException();
+                        }
+                    });
+            se.executeStatements();
 
             // SQLQueryAdapter query = SQLite3TransactionGenerator.generateCommit(globalState);
             // globalState.executeStatement(query);
@@ -212,7 +212,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             // // also do an abort for DEFERRABLE INITIALLY DEFERRED
             // query = SQLite3TransactionGenerator.generateRollbackTransaction(globalState);
             // globalState.executeStatement(query);
-        // }
+        }
     }
 
     private void checkTablesForGeneratedColumnLoops(SQLite3GlobalState globalState) throws Exception {

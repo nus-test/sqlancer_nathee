@@ -289,16 +289,16 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
     }
 
     protected void createTables(PostgresGlobalState globalState, int numTables) throws Exception {
-        // while (globalState.getSchema().getDatabaseTables().size() < numTables) {
-        //     try {
-        //         String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
-        //         SQLQueryAdapter createTable = PostgresTableGenerator.generate(tableName, globalState.getSchema(),
-        //                 generateOnlyKnown, globalState);
-        //         globalState.executeStatement(createTable);
-        //     } catch (IgnoreMeException e) {
+        while (globalState.getSchema().getDatabaseTables().size() < numTables) {
+            try {
+                String tableName = DBMSCommon.createTableName(globalState.getSchema().getDatabaseTables().size());
+                SQLQueryAdapter createTable = PostgresTableGenerator.generate(tableName, globalState.getSchema(),
+                        generateOnlyKnown, globalState);
+                globalState.executeStatement(createTable);
+            } catch (IgnoreMeException e) {
 
-        //     }
-        // }
+            }
+        }
     }
 
     protected void prepareTables(PostgresGlobalState globalState) throws Exception {
