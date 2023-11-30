@@ -173,7 +173,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             nrPerformed = 0; //r.getInteger(0, 10);
             break;
         case INSERT:
-            nrPerformed = 0; //r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
+            nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
         default:
             throw new AssertionError(a);

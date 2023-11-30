@@ -83,7 +83,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
             nrPerformed = 0; //r.getInteger(0, 1);
             break;
         case INSERT:
-            nrPerformed = 0; //r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
+            nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
         // case REPAIR:
         //     nrPerformed = r.getInteger(0, 1);
