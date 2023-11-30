@@ -13,6 +13,7 @@ import sqlancer.OracleFactory;
 import sqlancer.common.oracle.CompositeTestOracle;
 import sqlancer.common.oracle.TestOracle;
 import sqlancer.postgres.PostgresOptions.PostgresOracleFactory;
+import sqlancer.postgres.oracle.PostgresFuzzer;
 import sqlancer.postgres.oracle.PostgresNoRECOracle;
 import sqlancer.postgres.oracle.PostgresPivotedQuerySynthesisOracle;
 import sqlancer.postgres.oracle.tlp.PostgresTLPAggregateOracle;
@@ -37,6 +38,9 @@ public class PostgresOptions implements DBMSSpecificOptions<PostgresOracleFactor
     @Parameter(names = "--connection-url", description = "Specifies the URL for connecting to the PostgreSQL server", arity = 1)
     public String connectionURL = String.format("postgresql://%s:%d/test", PostgresOptions.DEFAULT_HOST,
             PostgresOptions.DEFAULT_PORT);
+
+    @Parameter(names = "--execute-queries", description = "Specifies whether the query in the fuzzer should be executed", arity = 1)
+    public boolean executeQuery = true;
 
     @Parameter(names = "--extensions", description = "Specifies a comma-separated list of extension names to be created in each test database", arity = 1)
     public String extensions = "";
@@ -76,6 +80,13 @@ public class PostgresOptions implements DBMSSpecificOptions<PostgresOracleFactor
                 oracles.add(new PostgresTLPAggregateOracle(globalState));
                 return new CompositeTestOracle<PostgresGlobalState>(oracles, globalState);
             }
+        },
+        FUZZER {
+            @Override
+            public TestOracle<PostgresGlobalState> create(PostgresGlobalState globalState) throws Exception {
+                return new PostgresFuzzer(globalState);
+            }
+
         };
 
     }
