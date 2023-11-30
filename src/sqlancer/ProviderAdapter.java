@@ -53,26 +53,26 @@ public abstract class ProviderAdapter<G extends GlobalState<O, ? extends Abstrac
             checkViewsAreValid(globalState);
             globalState.getManager().incrementCreateDatabase();
 
-            // TestOracle<G> oracle = getTestOracle(globalState);
-            // for (int i = 0; i < globalState.getOptions().getNrQueries(); i++) {
-            //     try (OracleRunReproductionState localState = globalState.getState().createLocalState()) {
-            //         assert localState != null;
-            //         try {
-            //             oracle.check();
-            //             globalState.getManager().incrementSelectQueryCount();
-            //         } catch (IgnoreMeException e) {
+            TestOracle<G> oracle = getTestOracle(globalState);
+            for (int i = 0; i < globalState.getOptions().getNrQueries(); i++) {
+                try (OracleRunReproductionState localState = globalState.getState().createLocalState()) {
+                    assert localState != null;
+                    try {
+                        oracle.check();
+                        globalState.getManager().incrementSelectQueryCount();
+                    } catch (IgnoreMeException e) {
 
-            //         } catch (AssertionError e) {
-            //             Reproducer<G> reproducer = oracle.getLastReproducer();
-            //             if (reproducer != null) {
-            //                 return reproducer;
-            //             }
-            //             throw e;
-            //         }
-            //         assert localState != null;
-            //         localState.executedWithoutError();
-            //     }
-            // }
+                    } catch (AssertionError e) {
+                        Reproducer<G> reproducer = oracle.getLastReproducer();
+                        if (reproducer != null) {
+                            return reproducer;
+                        }
+                        throw e;
+                    }
+                    assert localState != null;
+                    localState.executedWithoutError();
+                }
+            }
         } finally {
             globalState.getConnection().close();
         }
