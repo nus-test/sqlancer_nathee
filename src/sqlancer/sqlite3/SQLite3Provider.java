@@ -122,6 +122,8 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             nrPerformed = 0; //r.getInteger(0, 2);
             break;
         case DELETE:
+            nrPerformed = r.getInteger(0, 5);
+            break;
         case DROP_VIEW:
         case DROP_INDEX:
             nrPerformed = 0; //r.getInteger(0, 0);
