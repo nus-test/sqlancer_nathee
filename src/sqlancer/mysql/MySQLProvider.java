@@ -92,7 +92,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
         case CREATE_INDEX:
-            nrPerformed = 0; //r.getInteger(0, 5);
+            nrPerformed = r.getInteger(0, 5);
             break;
         // case FLUSH:
         //     nrPerformed = Randomly.getBooleanWithSmallProbability() ? r.getInteger(0, 1) : 0;
