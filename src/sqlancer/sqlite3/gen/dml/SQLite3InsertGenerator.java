@@ -54,12 +54,12 @@ public class SQLite3InsertGenerator {
         SQLite3Errors.addExpectedExpressionErrors(errors);
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT ");
-        if (Randomly.getBoolean()) {
-            sb.append("OR IGNORE "); // TODO: try to generate REPLACE
-        } else {
-            String fromOptions = Randomly.fromOptions("OR REPLACE ", "OR ABORT ", "OR FAIL ", "OR ROLLBACK ");
-            sb.append(fromOptions);
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append("OR IGNORE "); // TODO: try to generate REPLACE
+        // } else {
+        //     String fromOptions = Randomly.fromOptions("OR REPLACE ", "OR ABORT ", "OR FAIL ", "OR ROLLBACK ");
+        //     sb.append(fromOptions);
+        // }
         boolean defaultValues = false;
         sb.append("INTO ");
         sb.append(table.getName());
