@@ -120,10 +120,10 @@ public class SQLite3ColumnBuilder {
             sb.append(" DEFAULT ");
             sb.append(SQLite3Visitor.asString(SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, target.getType())));
         }
-        if (Randomly.getBooleanWithSmallProbability()) {
-            String randomCollate = SQLite3Common.getRandomCollate();
-            sb.append(randomCollate);
-        }
+        // if (Randomly.getBooleanWithSmallProbability()) {
+        //     String randomCollate = SQLite3Common.getRandomCollate();
+        //     sb.append(randomCollate);
+        // }
         return sb.toString();
     }
 

@@ -167,12 +167,13 @@ public final class PostgresCommon {
             } else {
                 sb.append("name");
             }
-            if (Randomly.getBoolean() && !PostgresProvider.generateOnlyKnown) {
-                sb.append(" COLLATE ");
-                sb.append('"');
-                sb.append(Randomly.fromList(opClasses));
-                sb.append('"');
             }
+            // if (Randomly.getBoolean() && !PostgresProvider.generateOnlyKnown) {
+            //     sb.append(" COLLATE ");
+            //     sb.append('"');
+            //     sb.append(Randomly.fromList(opClasses));
+            //     sb.append('"');
+            // }
             break;
         case DECIMAL:
             sb.append("DECIMAL");
