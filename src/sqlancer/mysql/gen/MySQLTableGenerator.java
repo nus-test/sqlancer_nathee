@@ -354,7 +354,7 @@ public class MySQLTableGenerator {
             optionallyAddPrecisionAndScale(sb);
             break;
         case DOUBLE:
-            sb.append(Randomly.fromOptions("DOUBLE", "FLOAT"));
+            sb.append(Randomly.fromOptions("DOUBLE PRECISION", "FLOAT"));
             optionallyAddPrecisionAndScale(sb);
             break;
         default:

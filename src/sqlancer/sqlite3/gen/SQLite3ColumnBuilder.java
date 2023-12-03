@@ -45,7 +45,7 @@ public class SQLite3ColumnBuilder {
         }
         sb.append(columnName);
         sb.append(" ");
-        String dataType = Randomly.fromOptions("BIGINT"/*, "TEXT"*//*, "BLOB"*/, "REAL"/*, "INTEGER"*/);
+        String dataType = Randomly.fromOptions("BIGINT"/*, "TEXT"*//*, "BLOB"*/, "DOUBLE PRECISION", "REAL"/*, "INTEGER"*/);
         sb.append(dataType);
         SQLite3Column target = columns.stream().filter(p -> p.getName().contentEquals(columnName)).collect(Collectors.toList()).get(0);
         if (Randomly.getBooleanWithRatherLowProbability()) {

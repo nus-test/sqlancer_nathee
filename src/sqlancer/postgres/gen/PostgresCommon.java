@@ -183,6 +183,7 @@ public final class PostgresCommon {
             break;
         case REAL:
             sb.append("FLOAT");
+            sb.append("DOUBLE PRECISION");
             break;
         // case RANGE:
         //     sb.append(Randomly.fromOptions("int4range", "int4range")); // , "int8range", "numrange"

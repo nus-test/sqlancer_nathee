@@ -429,6 +429,7 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
         //     break;
         case "REAL":
         case "NUM":
+        case "DOUBLE PRECISION":
             columnType = SQLite3DataType.REAL;
             break;
         case "NULL":
