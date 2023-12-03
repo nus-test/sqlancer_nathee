@@ -55,8 +55,8 @@ public class MySQLUpdateGenerator extends AbstractUpdateGenerator<MySQLColumn> {
     protected void updateValue(MySQLColumn column) {
         if (Randomly.getBoolean()) {
             sb.append(gen.generateConstant(column.getType()));
-        } else if (Randomly.getBoolean()) {
-            sb.append("DEFAULT");
+        // } else if (Randomly.getBoolean()) {
+        //     sb.append("DEFAULT");
         } else {
             sb.append(MySQLVisitor.asString(gen.generateExpression(column.getType())));
         }
