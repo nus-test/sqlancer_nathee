@@ -196,32 +196,32 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
 
     @Override
     public void visit(PostgresCastOperation cast) {
-        if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) {
             sb.append("CAST(");
             visit(cast.getExpression());
             sb.append(" AS ");
             appendType(cast);
             sb.append(")");
-        } else {
-            sb.append("(");
-            visit(cast.getExpression());
-            sb.append(")::");
-            appendType(cast);
-        }
+        // } else {
+        //     sb.append("(");
+        //     visit(cast.getExpression());
+        //     sb.append(")::");
+        //     appendType(cast);
+        // }
     }
 
     private void appendType(PostgresCastOperation cast) {
         PostgresCompoundDataType compoundType = cast.getCompoundType();
         switch (compoundType.getDataType()) {
-        case BOOLEAN:
-            sb.append("BOOLEAN");
-            break;
-        case INT: // TODO support also other int types
-            sb.append("INT");
-            break;
+        // case BOOLEAN:
+        //     sb.append("BOOLEAN");
+        //     break;
+        // case INT: // TODO support also other int types
+        //     sb.append("INT");
+        //     break;
         case TEXT:
             // TODO: append TEXT, CHAR
-            sb.append(Randomly.fromOptions("VARCHAR"));
+            sb.append(Randomly.fromOptions("CHAR"));
             break;
         case REAL:
             sb.append("FLOAT");

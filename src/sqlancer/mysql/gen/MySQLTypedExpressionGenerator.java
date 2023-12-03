@@ -115,7 +115,7 @@ public class MySQLTypedExpressionGenerator extends TypedExpressionGenerator<MySQ
     }
 
     private enum IntExpression {
-        BINARY_OPERATION, COMPUTABLE_FUNCTION, UNARY_PREFIX_OPERATION, CAST;
+        BINARY_OPERATION, COMPUTABLE_FUNCTION, UNARY_PREFIX_OPERATION/*, CAST*/;
     }
     
     private MySQLExpression generateIntExpression(int depth) {
@@ -137,8 +137,8 @@ public class MySQLTypedExpressionGenerator extends TypedExpressionGenerator<MySQ
                     throw new IgnoreMeException();
                 }
                 return new MySQLUnaryPrefixOperation(subExpr, random);
-            case CAST:
-                return new MySQLCastOperation(generateExpression(MySQLDataType.getRandom(state), depth + 1), MySQLCastOperation.CastType.getRandom());
+            // case CAST:
+            //     return new MySQLCastOperation(generateExpression(MySQLDataType.getRandom(state), depth + 1), MySQLCastOperation.CastType.getRandom());
             default:
                 throw new AssertionError();
         }
