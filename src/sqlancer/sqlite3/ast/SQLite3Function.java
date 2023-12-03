@@ -298,27 +298,6 @@ public class SQLite3Function extends SQLite3Expression {
                 return SQLite3Constant.createTextConstant(string);
             }
         },
-        TYPEOF(1, "TYPEOF") {
-
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                switch (args[0].getDataType()) {
-                case BINARY:
-                    return SQLite3Constant.createTextConstant("blob");
-                case INT:
-                    return SQLite3Constant.createTextConstant("integer");
-                case NULL:
-                    return SQLite3Constant.createTextConstant("null");
-                case REAL:
-                    return SQLite3Constant.createTextConstant("real");
-                case TEXT:
-                    return SQLite3Constant.createTextConstant("text");
-                default:
-                    throw new AssertionError(args[0]);
-                }
-            }
-
-        },
         UNLIKELY(1, "UNLIKELY") {
             @Override
             public SQLite3Constant apply(SQLite3Constant... args) {
@@ -326,6 +305,27 @@ public class SQLite3Function extends SQLite3Expression {
             }
 
         };
+        // TYPEOF(1, "TYPEOF") {
+
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         switch (args[0].getDataType()) {
+        //         case BINARY:
+        //             return SQLite3Constant.createTextConstant("blob");
+        //         case INT:
+        //             return SQLite3Constant.createTextConstant("integer");
+        //         case NULL:
+        //             return SQLite3Constant.createTextConstant("null");
+        //         case REAL:
+        //             return SQLite3Constant.createTextConstant("real");
+        //         case TEXT:
+        //             return SQLite3Constant.createTextConstant("text");
+        //         default:
+        //             throw new AssertionError(args[0]);
+        //         }
+        //     }
+
+        // },
 
         private String functionName;
         final int nrArgs;
