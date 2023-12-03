@@ -49,43 +49,43 @@ public enum PostgresFunctionWithUnknownResult {
     },
 
     // String functions
-    ASCII("ascii", PostgresDataType.INT, PostgresDataType.TEXT),
-    BTRIM("btrim", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    CHR("chr", PostgresDataType.TEXT, PostgresDataType.INT),
-    CONVERT_FROM("convert_from", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
-        @Override
-        public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
-                int depth) {
-            PostgresExpression[] args = super.getArguments(returnType, gen, depth);
-            args[1] = PostgresConstant.createTextConstant(Randomly.fromOptions("UTF8", "LATIN1"));
-            return args;
-        }
-    },
+    // ASCII("ascii", PostgresDataType.INT, PostgresDataType.TEXT),
+    // BTRIM("btrim", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // CHR("chr", PostgresDataType.TEXT, PostgresDataType.INT),
+    // CONVERT_FROM("convert_from", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
+    //     @Override
+    //     public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
+    //             int depth) {
+    //         PostgresExpression[] args = super.getArguments(returnType, gen, depth);
+    //         args[1] = PostgresConstant.createTextConstant(Randomly.fromOptions("UTF8", "LATIN1"));
+    //         return args;
+    //     }
+    // },
     // concat
     // segfault
     // BIT_LENGTH("bit_length", PostgresDataType.INT, PostgresDataType.TEXT),
-    INITCAP("initcap", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    LEFT("left", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
+    // INITCAP("initcap", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // LEFT("left", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
     LOWER("lower", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    MD5("md5", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // MD5("md5", PostgresDataType.TEXT, PostgresDataType.TEXT),
     UPPER("upper", PostgresDataType.TEXT, PostgresDataType.TEXT),
     // PG_CLIENT_ENCODING("pg_client_encoding", PostgresDataType.TEXT),
-    QUOTE_LITERAL("quote_literal", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    QUOTE_IDENT("quote_ident", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    REGEX_REPLACE("regex_replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // QUOTE_LITERAL("quote_literal", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // QUOTE_IDENT("quote_ident", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // REGEX_REPLACE("regex_replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
     // REPEAT("repeat", PostgresDataType.TEXT, PostgresDataType.TEXT,
     // PostgresDataType.INT),
     REPLACE("replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    REVERSE("reverse", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    RIGHT("right", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
-    RPAD("rpad", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
+    // REVERSE("reverse", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // RIGHT("right", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
+    // RPAD("rpad", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
     RTRIM("rtrim", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    SPLIT_PART("split_part", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
-    STRPOS("strpos", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    SUBSTR("substr", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.INT),
-    TO_ASCII("to_ascii", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    TO_HEX("to_hex", PostgresDataType.INT, PostgresDataType.TEXT),
-    TRANSLATE("translate", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // SPLIT_PART("split_part", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
+    // STRPOS("strpos", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // SUBSTR("substr", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.INT),
+    // TO_ASCII("to_ascii", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // TO_HEX("to_hex", PostgresDataType.INT, PostgresDataType.TEXT),
+    // TRANSLATE("translate", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
     // mathematical functions
     // https://www.postgresql.org/docs/9.5/functions-math.html
     ABS("abs", PostgresDataType.REAL, PostgresDataType.REAL),

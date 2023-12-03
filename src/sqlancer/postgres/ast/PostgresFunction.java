@@ -78,26 +78,26 @@ public class PostgresFunction implements PostgresExpression {
             }
 
         },
-        LENGTH(1, "length") {
-            @Override
-            public PostgresConstant apply(PostgresConstant[] evaluatedArgs, PostgresExpression... args) {
-                if (evaluatedArgs[0].isNull()) {
-                    return PostgresConstant.createNullConstant();
-                }
-                String text = evaluatedArgs[0].asString();
-                return PostgresConstant.createIntConstant(text.length());
-            }
+        // LENGTH(1, "length") {
+        //     @Override
+        //     public PostgresConstant apply(PostgresConstant[] evaluatedArgs, PostgresExpression... args) {
+        //         if (evaluatedArgs[0].isNull()) {
+        //             return PostgresConstant.createNullConstant();
+        //         }
+        //         String text = evaluatedArgs[0].asString();
+        //         return PostgresConstant.createIntConstant(text.length());
+        //     }
 
-            @Override
-            public boolean supportsReturnType(PostgresDataType type) {
-                return type == PostgresDataType.INT;
-            }
+        //     @Override
+        //     public boolean supportsReturnType(PostgresDataType type) {
+        //         return type == PostgresDataType.INT;
+        //     }
 
-            @Override
-            public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
-                return new PostgresDataType[] { PostgresDataType.TEXT };
-            }
-        },
+        //     @Override
+        //     public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
+        //         return new PostgresDataType[] { PostgresDataType.TEXT };
+        //     }
+        // },
         UPPER(1, "upper") {
 
             @Override
@@ -120,7 +120,7 @@ public class PostgresFunction implements PostgresExpression {
                 return new PostgresDataType[] { PostgresDataType.TEXT };
             }
 
-        },
+        };
         // NULL_IF(2, "nullif") {
         //
         // @Override

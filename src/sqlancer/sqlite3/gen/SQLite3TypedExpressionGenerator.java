@@ -478,14 +478,14 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private enum AnyFunction {
         // ABS("ABS", 1), //
         // CHANGES("CHANGES", 0, Attribute.NONDETERMINISTIC), //
-        CHAR("CHAR", 1, Attribute.VARIADIC), //
+        // CHAR("CHAR", 1, Attribute.VARIADIC), //
         // COALESCE("COALESCE", 2, Attribute.VARIADIC), //
         GLOB("GLOB", 2), //
-        HEX("HEX", 1), //
         IFNULL("IFNULL", 2), //
-        INSTR("INSTR", 2), //
-        LENGTH("LENGTH", 1, SQLite3DataType.INT, SQLite3DataType.TEXT), //
+        // HEX("HEX", 1), //
+        // INSTR("INSTR", 2), //
         // LAST_INSERT_ROWID("LAST_INSERT_ROWID", 0, Attribute.NONDETERMINISTIC), //
+        // LENGTH("LENGTH", 1, SQLite3DataType.INT, SQLite3DataType.TEXT), //
         LIKE("LIKE", 2), //
         LIKE2("LIKE", 3) {
             @Override
@@ -500,25 +500,25 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         LOAD_EXTENSION("load_extension", 1), //
         LOAD_EXTENSION2("load_extension", 2, Attribute.NONDETERMINISTIC),// LOWER("LOWER", 1), //
         LTRIM1("LTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT), //
-        LTRIM2("LTRIM", 2), //
+        // LTRIM2("LTRIM", 2), //
         MAX("MAX", 2, Attribute.VARIADIC), //
         MIN("MIN", 2, Attribute.VARIADIC), //
         // NULLIF("NULLIF", 2), //
         PRINTF("PRINTF", 1, Attribute.VARIADIC), //
-        QUOTE("QUOTE", 1), //
+        // QUOTE("QUOTE", 1), //
         ROUND("ROUND", 2, SQLite3DataType.REAL, SQLite3DataType.REAL, SQLite3DataType.INT), //
-        RTRIM("RTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT), //
-        SOUNDEX("soundex", 1), //
+        RTRIM("RTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT); //
+        // SOUNDEX("soundex", 1), //
         // SQLITE_COMPILEOPTION_GET("SQLITE_COMPILEOPTION_GET", 1, Attribute.NONDETERMINISTIC), //
         // SQLITE_COMPILEOPTION_USED("SQLITE_COMPILEOPTION_USED", 1, Attribute.NONDETERMINISTIC), //
         // SQLITE_OFFSET(1), //
-        SUBSTR("SUBSTR", 2, SQLite3DataType.TEXT, SQLite3DataType.TEXT, SQLite3DataType.INT), //
         // SQLITE_SOURCE_ID("SQLITE_SOURCE_ID", 0, Attribute.NONDETERMINISTIC),
         // SQLITE_VERSION("SQLITE_VERSION", 0, Attribute.NONDETERMINISTIC), //
+        // SUBSTR("SUBSTR", 2, SQLite3DataType.TEXT, SQLite3DataType.TEXT, SQLite3DataType.INT); //
         // TOTAL_CHANGES("TOTAL_CHANGES", 0, Attribute.NONDETERMINISTIC), //
         // TRIM("TRIM", 1), //
         // TYPEOF("TYPEOF", 1), //
-        UNICODE("UNICODE", 1), UNLIKELY("UNLIKELY", 1), //
+        /*UNICODE("UNICODE", 1),*/ UNLIKELY("UNLIKELY", 1), //
         // UPPER("UPPER", 1); // "ZEROBLOB"
         // ZEROBLOB("ZEROBLOB", 1),
         DATE("DATE", 3, Attribute.VARIADIC), //
