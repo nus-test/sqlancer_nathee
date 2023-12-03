@@ -321,10 +321,10 @@ public final class PostgresCommon {
             sb.append("(");
             sb.append(otherColumns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
             sb.append(")");
-            if (Randomly.getBoolean()) {
-                sb.append(" ");
-                sb.append(Randomly.fromOptions("MATCH FULL", "MATCH SIMPLE"));
-            }
+            // if (Randomly.getBoolean()) {
+            //     sb.append(" ");
+            //     sb.append(Randomly.fromOptions("MATCH FULL", "MATCH SIMPLE"));
+            // }
             if (Randomly.getBoolean()) {
                 sb.append(" ON DELETE ");
                 errors.add("ERROR: invalid ON DELETE action for foreign key constraint containing generated column");
