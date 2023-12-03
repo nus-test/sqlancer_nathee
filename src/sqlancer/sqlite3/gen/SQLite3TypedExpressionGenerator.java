@@ -273,7 +273,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum IntExpression {
-        RANDOM_QUERY, UNARY_OPERATOR, BINARY_OPERATOR, CAST_EXPRESSION, AGGREGATE_FUNCTION, FUNCTION, CASE_OPERATOR
+        RANDOM_QUERY, UNARY_OPERATOR, BINARY_OPERATOR/*, CAST_EXPRESSION*/, AGGREGATE_FUNCTION, FUNCTION, CASE_OPERATOR
     }
 
     private SQLite3Expression generateIntExpression(int depth) {
@@ -307,8 +307,8 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 BinaryOperator operator = Randomly.fromList(validOptions);
                 SQLite3Expression rightExpression = getRandomExpression(SQLite3DataType.INT, depth + 1);
                 return new SQLite3Expression.Sqlite3BinaryOperation(leftExpression, rightExpression, operator);
-            case CAST_EXPRESSION:
-                return getCastOperator(TypeLiteral.Type.INTEGER, depth + 1);
+            // case CAST_EXPRESSION:
+            //     return getCastOperator(TypeLiteral.Type.INTEGER, depth + 1);
             case AGGREGATE_FUNCTION:
                 return getAggregateFunction(depth + 1);
             case CASE_OPERATOR:
