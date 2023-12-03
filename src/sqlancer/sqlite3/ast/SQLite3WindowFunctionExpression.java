@@ -109,7 +109,7 @@ public class SQLite3WindowFunctionExpression extends SQLite3Expression {
     }
 
     public enum SQLite3FrameSpecKind {
-        RANGE, ROWS, GROUPS;
+        RANGE, ROWS/*, GROUPS*/;
 
         public static SQLite3FrameSpecKind getRandom() {
             return Randomly.fromOptions(SQLite3FrameSpecKind.values());

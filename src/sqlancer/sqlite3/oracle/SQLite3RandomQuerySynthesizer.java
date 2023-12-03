@@ -85,9 +85,9 @@ public final class SQLite3RandomQuerySynthesizer {
                         windowFunctionTerm = new SQLite3WindowFunctionFrameSpecBetween(left, right);
                     }
                     windowFunction.setFrameSpec(windowFunctionTerm);
-                    if (Randomly.getBoolean()) {
-                        windowFunction.setExclude(SQLite3FrameSpecExclude.getRandom());
-                    }
+                    // if (Randomly.getBoolean()) {
+                    //     windowFunction.setExclude(SQLite3FrameSpecExclude.getRandom());
+                    // }
                 }
                 expressions.add(windowFunction);
             } else {

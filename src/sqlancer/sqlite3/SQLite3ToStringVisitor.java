@@ -415,11 +415,11 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
     @Override
     public void visit(SQLite3WindowFunctionExpression windowFunction) {
         visit(windowFunction.getBaseWindowFunction());
-        if (windowFunction.getFilterClause() != null) {
-            sb.append(" FILTER(WHERE ");
-            visit(windowFunction.getFilterClause());
-            sb.append(")");
-        }
+        // if (windowFunction.getFilterClause() != null) {
+        //     sb.append(" FILTER(WHERE ");
+        //     visit(windowFunction.getFilterClause());
+        //     sb.append(")");
+        // }
         sb.append(" OVER (");
         if (!windowFunction.getPartitionBy().isEmpty()) {
             sb.append(" PARTITION BY ");
@@ -434,10 +434,10 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
             sb.append(windowFunction.getFrameSpecKind());
             sb.append(" ");
             visit(windowFunction.getFrameSpec());
-            if (windowFunction.getExclude() != null) {
-                sb.append(" ");
-                sb.append(windowFunction.getExclude().getString());
-            }
+            // if (windowFunction.getExclude() != null) {
+            //     sb.append(" ");
+            //     sb.append(windowFunction.getExclude().getString());
+            // }
         }
         sb.append(")");
     }
