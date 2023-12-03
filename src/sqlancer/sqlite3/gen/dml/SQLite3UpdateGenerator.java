@@ -40,16 +40,16 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
     private SQLQueryAdapter generate(SQLite3Table table) {
         List<SQLite3Column> columnsToUpdate = Randomly.nonEmptySubset(table.getColumns()); //Randomly.nonEmptySubsetPotentialDuplicates(table.getColumns());
         sb.append("UPDATE ");
-        if (Randomly.getBoolean()) {
-            sb.append("OR IGNORE ");
-        } else {
-            if (Randomly.getBoolean()) {
-                String fromOptions = Randomly.fromOptions("OR ROLLBACK", "OR ABORT", "OR REPLACE", "OR FAIL");
-                sb.append(fromOptions);
-                sb.append(" ");
-            }
-            errors.add("[SQLITE_CONSTRAINT]");
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append("OR IGNORE ");
+        // } else {
+            // if (Randomly.getBoolean()) {
+            //     String fromOptions = Randomly.fromOptions("OR ROLLBACK", "OR ABORT", "OR REPLACE", "OR FAIL");
+            //     sb.append(fromOptions);
+            //     sb.append(" ");
+            // }
+            // errors.add("[SQLITE_CONSTRAINT]");
+        // }
         // TODO Beginning in SQLite version 3.15.0 (2016-10-14), an assignment in the
         // SET clause can be a parenthesized list of column names on the left and a row
         // value of the same size on the right.
