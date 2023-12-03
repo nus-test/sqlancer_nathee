@@ -36,9 +36,9 @@ public final class SQLite3Common {
                 .generateExpression(SQLite3DataType.INT);
         StringBuilder sb = new StringBuilder(SQLite3Visitor.asString(randExpr));
         sb.append(" ");
-        if (Randomly.getBoolean()) {
-            sb.append(SQLite3Common.getRandomCollate());
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(SQLite3Common.getRandomCollate());
+        // }
         if (Randomly.getBoolean()) {
             if (Randomly.getBoolean()) {
                 sb.append(" ASC");
