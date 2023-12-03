@@ -269,9 +269,9 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
             sb.append(" COLLATE \"C\"");
         }
         sb.append(") BETWEEN ");
-        if (op.isSymmetric()) {
-            sb.append("SYMMETRIC ");
-        }
+        // if (op.isSymmetric()) {
+        //     sb.append("SYMMETRIC ");
+        // }
         sb.append("(");
         visit(op.getLeft());
         sb.append(") AND (");

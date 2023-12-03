@@ -395,10 +395,10 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             validOptions.remove(BinaryComparisonOperator.LIKE);
             validOptions.remove(BinaryComparisonOperator.GLOB);
         }
-        if (type != SQLite3DataType.BOOLEAN) {
-            validOptions.remove(BinaryComparisonOperator.IS);
-            validOptions.remove(BinaryComparisonOperator.IS_NOT);
-        }
+        // if (type != SQLite3DataType.BOOLEAN) {
+        //     validOptions.remove(BinaryComparisonOperator.IS);
+        //     validOptions.remove(BinaryComparisonOperator.IS_NOT);
+        // }
         SQLite3Expression leftExpression = getRandomExpression(type, depth + 1);
         BinaryComparisonOperator operator = Randomly.fromList(validOptions);
         SQLite3Expression rightExpression = getRandomExpression(type, depth + 1);

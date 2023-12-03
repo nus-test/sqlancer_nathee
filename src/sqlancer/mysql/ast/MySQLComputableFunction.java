@@ -145,20 +145,20 @@ public class MySQLComputableFunction implements MySQLExpression {
             }
 
         },
-        LEAST(2, "LEAST", true) {
+        // LEAST(2, "LEAST", true) {
 
-            @Override
-            public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
-                return aggregate(evaluatedArgs, (min, cur) -> cur.isLessThan(min).asBooleanNotNull() ? cur : min);
-            }
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
+        //         return aggregate(evaluatedArgs, (min, cur) -> cur.isLessThan(min).asBooleanNotNull() ? cur : min);
+        //     }
 
-        },
-        GREATEST(2, "GREATEST", true) {
-            @Override
-            public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
-                return aggregate(evaluatedArgs, (max, cur) -> cur.isLessThan(max).asBooleanNotNull() ? max : cur);
-            }
-        };
+        // },
+        // GREATEST(2, "GREATEST", true) {
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
+        //         return aggregate(evaluatedArgs, (max, cur) -> cur.isLessThan(max).asBooleanNotNull() ? max : cur);
+        //     }
+        // };
 
         private String functionName;
         final int nrArgs;

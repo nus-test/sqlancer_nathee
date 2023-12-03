@@ -11,7 +11,7 @@ public class PostgresPostfixOperation implements PostgresExpression {
     private final String operatorTextRepresentation;
 
     public enum PostfixOperator implements Operator {
-        IS_NULL("IS NULL", "ISNULL") {
+        IS_NULL("IS NULL"/*, "ISNULL"*/) {
             @Override
             public PostgresConstant apply(PostgresConstant expectedValue) {
                 return PostgresConstant.createBooleanConstant(expectedValue.isNull());
@@ -23,19 +23,19 @@ public class PostgresPostfixOperation implements PostgresExpression {
             }
 
         },
-        IS_UNKNOWN("IS UNKNOWN") {
-            @Override
-            public PostgresConstant apply(PostgresConstant expectedValue) {
-                return PostgresConstant.createBooleanConstant(expectedValue.isNull());
-            }
+        // IS_UNKNOWN("IS UNKNOWN") {
+        //     @Override
+        //     public PostgresConstant apply(PostgresConstant expectedValue) {
+        //         return PostgresConstant.createBooleanConstant(expectedValue.isNull());
+        //     }
 
-            @Override
-            public PostgresDataType[] getInputDataTypes() {
-                return new PostgresDataType[] { PostgresDataType.BOOLEAN };
-            }
-        },
+        //     @Override
+        //     public PostgresDataType[] getInputDataTypes() {
+        //         return new PostgresDataType[] { PostgresDataType.BOOLEAN };
+        //     }
+        // },
 
-        IS_NOT_NULL("IS NOT NULL", "NOTNULL") {
+        IS_NOT_NULL("IS NOT NULL"/*, "NOTNULL"*/) {
 
             @Override
             public PostgresConstant apply(PostgresConstant expectedValue) {
@@ -48,17 +48,17 @@ public class PostgresPostfixOperation implements PostgresExpression {
             }
 
         },
-        IS_NOT_UNKNOWN("IS NOT UNKNOWN") {
-            @Override
-            public PostgresConstant apply(PostgresConstant expectedValue) {
-                return PostgresConstant.createBooleanConstant(!expectedValue.isNull());
-            }
+        // IS_NOT_UNKNOWN("IS NOT UNKNOWN") {
+        //     @Override
+        //     public PostgresConstant apply(PostgresConstant expectedValue) {
+        //         return PostgresConstant.createBooleanConstant(!expectedValue.isNull());
+        //     }
 
-            @Override
-            public PostgresDataType[] getInputDataTypes() {
-                return new PostgresDataType[] { PostgresDataType.BOOLEAN };
-            }
-        },
+        //     @Override
+        //     public PostgresDataType[] getInputDataTypes() {
+        //         return new PostgresDataType[] { PostgresDataType.BOOLEAN };
+        //     }
+        // },
         IS_TRUE("IS TRUE") {
 
             @Override

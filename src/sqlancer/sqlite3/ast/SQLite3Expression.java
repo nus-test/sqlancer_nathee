@@ -490,7 +490,7 @@ public abstract class SQLite3Expression {
             implements UnaryOperation<SQLite3Expression> {
 
         public enum PostfixUnaryOperator {
-            ISNULL("ISNULL") {
+            ISNULL("IS NULL") {
                 @Override
                 public SQLite3Constant apply(SQLite3Constant expectedValue) {
                     if (expectedValue.isNull()) {
@@ -500,30 +500,30 @@ public abstract class SQLite3Expression {
                     }
                 }
             },
-            NOT_NULL("NOT NULL") {
-                @Override
-                public SQLite3Constant apply(SQLite3Constant expectedValue) {
-                    if (expectedValue.isNull()) {
-                        return SQLite3Constant.createFalse();
-                    } else {
-                        return SQLite3Constant.createTrue();
-                    }
-                }
+            // NOT_NULL("NOT NULL") {
+            //     @Override
+            //     public SQLite3Constant apply(SQLite3Constant expectedValue) {
+            //         if (expectedValue.isNull()) {
+            //             return SQLite3Constant.createFalse();
+            //         } else {
+            //             return SQLite3Constant.createTrue();
+            //         }
+            //     }
 
-            },
+            // },
 
-            NOTNULL("NOTNULL") {
+            // NOTNULL("NOTNULL") {
 
-                @Override
-                public SQLite3Constant apply(SQLite3Constant expectedValue) {
-                    if (expectedValue.isNull()) {
-                        return SQLite3Constant.createFalse();
-                    } else {
-                        return SQLite3Constant.createTrue();
-                    }
-                }
+            //     @Override
+            //     public SQLite3Constant apply(SQLite3Constant expectedValue) {
+            //         if (expectedValue.isNull()) {
+            //             return SQLite3Constant.createFalse();
+            //         } else {
+            //             return SQLite3Constant.createTrue();
+            //         }
+            //     }
 
-            },
+            // },
             IS_TRUE("IS TRUE") {
 
                 @Override
@@ -826,7 +826,7 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            EQUALS("=", "==") {
+            EQUALS("="/*, "=="*/) {
                 @Override
                 SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
                     return left.applyEquals(right, collate);
@@ -852,41 +852,41 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            IS("IS") {
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
-                    if (left == null || right == null) {
-                        return null;
-                    } else if (left.isNull()) {
-                        return SQLite3Constant.createBoolean(right.isNull());
-                    } else if (right.isNull()) {
-                        return SQLite3Constant.createFalse();
-                    } else {
-                        return left.applyEquals(right, collate);
-                    }
-                }
+            // IS("IS") {
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
+            //         if (left == null || right == null) {
+            //             return null;
+            //         } else if (left.isNull()) {
+            //             return SQLite3Constant.createBoolean(right.isNull());
+            //         } else if (right.isNull()) {
+            //             return SQLite3Constant.createFalse();
+            //         } else {
+            //             return left.applyEquals(right, collate);
+            //         }
+            //     }
 
-            },
-            IS_NOT("IS NOT") {
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
-                    if (left == null || right == null) {
-                        return null;
-                    } else if (left.isNull()) {
-                        return SQLite3Constant.createBoolean(!right.isNull());
-                    } else if (right.isNull()) {
-                        return SQLite3Constant.createTrue();
-                    } else {
-                        SQLite3Constant applyEquals = left.applyEquals(right, collate);
-                        if (applyEquals == null) {
-                            return null;
-                        }
-                        boolean equals = applyEquals.asInt() == 1;
-                        return SQLite3Constant.createBoolean(!equals);
-                    }
-                }
+            // },
+            // IS_NOT("IS NOT") {
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
+            //         if (left == null || right == null) {
+            //             return null;
+            //         } else if (left.isNull()) {
+            //             return SQLite3Constant.createBoolean(!right.isNull());
+            //         } else if (right.isNull()) {
+            //             return SQLite3Constant.createTrue();
+            //         } else {
+            //             SQLite3Constant applyEquals = left.applyEquals(right, collate);
+            //             if (applyEquals == null) {
+            //                 return null;
+            //             }
+            //             boolean equals = applyEquals.asInt() == 1;
+            //             return SQLite3Constant.createBoolean(!equals);
+            //         }
+            //     }
 
-            },
+            // };
             LIKE("LIKE") {
                 @Override
                 public boolean shouldApplyAffinity() {

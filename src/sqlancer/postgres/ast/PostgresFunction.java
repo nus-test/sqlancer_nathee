@@ -155,62 +155,62 @@ public class PostgresFunction implements PostgresExpression {
         // }
         //
         // },
-        NUM_NONNULLS(1, "num_nonnulls") {
-            @Override
-            public PostgresConstant apply(PostgresConstant[] args, PostgresExpression... origArgs) {
-                int nr = 0;
-                for (PostgresConstant c : args) {
-                    if (!c.isNull()) {
-                        nr++;
-                    }
-                }
-                return PostgresConstant.createIntConstant(nr);
-            }
+        // NUM_NONNULLS(1, "num_nonnulls") {
+        //     @Override
+        //     public PostgresConstant apply(PostgresConstant[] args, PostgresExpression... origArgs) {
+        //         int nr = 0;
+        //         for (PostgresConstant c : args) {
+        //             if (!c.isNull()) {
+        //                 nr++;
+        //             }
+        //         }
+        //         return PostgresConstant.createIntConstant(nr);
+        //     }
 
-            @Override
-            public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
-                return getRandomTypes(nrArguments);
-            }
+        //     @Override
+        //     public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
+        //         return getRandomTypes(nrArguments);
+        //     }
 
-            @Override
-            public boolean supportsReturnType(PostgresDataType type) {
-                return type == PostgresDataType.INT;
-            }
+        //     @Override
+        //     public boolean supportsReturnType(PostgresDataType type) {
+        //         return type == PostgresDataType.INT;
+        //     }
 
-            @Override
-            public boolean isVariadic() {
-                return true;
-            }
+        //     @Override
+        //     public boolean isVariadic() {
+        //         return true;
+        //     }
 
-        },
-        NUM_NULLS(1, "num_nulls") {
-            @Override
-            public PostgresConstant apply(PostgresConstant[] args, PostgresExpression... origArgs) {
-                int nr = 0;
-                for (PostgresConstant c : args) {
-                    if (c.isNull()) {
-                        nr++;
-                    }
-                }
-                return PostgresConstant.createIntConstant(nr);
-            }
+        // },
+        // NUM_NULLS(1, "num_nulls") {
+        //     @Override
+        //     public PostgresConstant apply(PostgresConstant[] args, PostgresExpression... origArgs) {
+        //         int nr = 0;
+        //         for (PostgresConstant c : args) {
+        //             if (c.isNull()) {
+        //                 nr++;
+        //             }
+        //         }
+        //         return PostgresConstant.createIntConstant(nr);
+        //     }
 
-            @Override
-            public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
-                return getRandomTypes(nrArguments);
-            }
+        //     @Override
+        //     public PostgresDataType[] getInputTypesForReturnType(PostgresDataType returnType, int nrArguments) {
+        //         return getRandomTypes(nrArguments);
+        //     }
 
-            @Override
-            public boolean supportsReturnType(PostgresDataType type) {
-                return type == PostgresDataType.INT;
-            }
+        //     @Override
+        //     public boolean supportsReturnType(PostgresDataType type) {
+        //         return type == PostgresDataType.INT;
+        //     }
 
-            @Override
-            public boolean isVariadic() {
-                return true;
-            }
+        //     @Override
+        //     public boolean isVariadic() {
+        //         return true;
+        //     }
 
-        };
+        // };
 
         private String functionName;
         final int nrArgs;
