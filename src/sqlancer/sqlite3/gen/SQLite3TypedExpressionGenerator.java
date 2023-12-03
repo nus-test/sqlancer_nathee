@@ -544,14 +544,14 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         // JULIANDAY("JULIANDAY", 3, Attribute.VARIADIC), //
         // STRFTIME("STRFTIME", 3, Attribute.VARIADIC),
         // json functions
-        JSON("json", 1), //
-        JSON_ARRAY("json_array", 2, Attribute.VARIADIC), JSON_ARRAY_LENGTH("json_array_length", 1), //
-        JSON_ARRAY_LENGTH2("json_array_length", 2), //
-        JSON_EXTRACT("json_extract", 2, Attribute.VARIADIC), JSON_INSERT("json_insert", 3, Attribute.VARIADIC),
-        JSON_OBJECT("json_object", 2, Attribute.VARIADIC), JSON_PATCH("json_patch", 2),
-        JSON_REMOVE("json_remove", 2, Attribute.VARIADIC), JSON_TYPE("json_type", 1), //
-        JSON_VALID("json_valid", 1), //
-        JSON_QUOTE("json_quote", 1), //
+        // JSON("json", 1), //
+        // JSON_ARRAY("json_array", 2, Attribute.VARIADIC), JSON_ARRAY_LENGTH("json_array_length", 1), //
+        // JSON_ARRAY_LENGTH2("json_array_length", 2), //
+        // JSON_EXTRACT("json_extract", 2, Attribute.VARIADIC), JSON_INSERT("json_insert", 3, Attribute.VARIADIC),
+        // JSON_OBJECT("json_object", 2, Attribute.VARIADIC), JSON_PATCH("json_patch", 2),
+        // JSON_REMOVE("json_remove", 2, Attribute.VARIADIC), JSON_TYPE("json_type", 1), //
+        // JSON_VALID("json_valid", 1), //
+        // JSON_QUOTE("json_quote", 1), //
 
         RTREENODE("rtreenode", 2),
 
