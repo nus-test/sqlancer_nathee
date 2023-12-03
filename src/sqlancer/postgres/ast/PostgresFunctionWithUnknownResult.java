@@ -24,18 +24,18 @@ public enum PostgresFunctionWithUnknownResult {
     // PG_ROTATE_LOGFILE("pg_rotate_logfile", PostgresDataType.BOOLEAN), prints warning
 
     // https://www.postgresql.org/docs/devel/functions-info.html#FUNCTIONS-INFO-SESSION-TABLE
-    CURRENT_DATABASE("current_database", PostgresDataType.TEXT), // name
+    // CURRENT_DATABASE("current_database", PostgresDataType.TEXT), // name
     // CURRENT_QUERY("current_query", PostgresDataType.TEXT), // can generate false positives
-    CURRENT_SCHEMA("current_schema", PostgresDataType.TEXT), // name
+    // CURRENT_SCHEMA("current_schema", PostgresDataType.TEXT), // name
     // CURRENT_SCHEMAS("current_schemas", PostgresDataType.TEXT, PostgresDataType.BOOLEAN),
-    INET_CLIENT_PORT("inet_client_port", PostgresDataType.INT),
+    // INET_CLIENT_PORT("inet_client_port", PostgresDataType.INT),
     // INET_SERVER_PORT("inet_server_port", PostgresDataType.INT),
-    PG_BACKEND_PID("pg_backend_pid", PostgresDataType.INT),
-    PG_CURRENT_LOGFILE("pg_current_logfile", PostgresDataType.TEXT),
-    PG_IS_OTHER_TEMP_SCHEMA("pg_is_other_temp_schema", PostgresDataType.BOOLEAN),
-    PG_JIT_AVAILABLE("pg_jit_available", PostgresDataType.BOOLEAN),
-    PG_NOTIFICATION_QUEUE_USAGE("pg_notification_queue_usage", PostgresDataType.REAL),
-    PG_TRIGGER_DEPTH("pg_trigger_depth", PostgresDataType.INT), VERSION("version", PostgresDataType.TEXT),
+    // PG_BACKEND_PID("pg_backend_pid", PostgresDataType.INT),
+    // PG_CURRENT_LOGFILE("pg_current_logfile", PostgresDataType.TEXT),
+    // PG_IS_OTHER_TEMP_SCHEMA("pg_is_other_temp_schema", PostgresDataType.BOOLEAN),
+    // PG_JIT_AVAILABLE("pg_jit_available", PostgresDataType.BOOLEAN),
+    // PG_NOTIFICATION_QUEUE_USAGE("pg_notification_queue_usage", PostgresDataType.REAL),
+    // PG_TRIGGER_DEPTH("pg_trigger_depth", PostgresDataType.INT), VERSION("version", PostgresDataType.TEXT),
 
     //
     TO_CHAR("to_char", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
