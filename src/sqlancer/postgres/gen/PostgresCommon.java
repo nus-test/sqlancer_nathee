@@ -335,18 +335,18 @@ public final class PostgresCommon {
                 errors.add("invalid ON UPDATE action for foreign key constraint containing generated column");
                 deleteOrUpdateAction(sb);
             }
-            if (Randomly.getBoolean()) {
-                sb.append(" ");
-                if (Randomly.getBoolean()) {
-                    sb.append("DEFERRABLE");
-                    if (Randomly.getBoolean()) {
-                        sb.append(" ");
-                        sb.append(Randomly.fromOptions("INITIALLY DEFERRED", "INITIALLY IMMEDIATE"));
-                    }
-                } else {
-                    sb.append("NOT DEFERRABLE");
-                }
-            }
+            // if (Randomly.getBoolean()) {
+            //     sb.append(" ");
+            //     if (Randomly.getBoolean()) {
+            //         sb.append("DEFERRABLE");
+            //         if (Randomly.getBoolean()) {
+            //             sb.append(" ");
+            //             sb.append(Randomly.fromOptions("INITIALLY DEFERRED", "INITIALLY IMMEDIATE"));
+            //         }
+            //     } else {
+            //         sb.append("NOT DEFERRABLE");
+            //     }
+            // }
             break;
         case EXCLUDE:
             sb.append("EXCLUDE ");
