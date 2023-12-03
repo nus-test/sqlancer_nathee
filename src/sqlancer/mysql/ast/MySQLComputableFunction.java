@@ -105,46 +105,46 @@ public class MySQLComputableFunction implements MySQLExpression {
                 return args;
             }
 
-        },
+        };
         /**
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/control-flow-functions.html#function_if">Flow Control
          *      Functions</a>
          */
-        IF(3, "IF") {
+        // IF(3, "IF") {
 
-            @Override
-            public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
-                MySQLConstant cond = args[0];
-                MySQLConstant left = args[1];
-                MySQLConstant right = args[2];
-                MySQLConstant result;
-                if (cond.isNull() || !cond.asBooleanNotNull()) {
-                    result = right;
-                } else {
-                    result = left;
-                }
-                return castToMostGeneralType(result, new MySQLExpression[] { origArgs[1], origArgs[2] });
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
+        //         MySQLConstant cond = args[0];
+        //         MySQLConstant left = args[1];
+        //         MySQLConstant right = args[2];
+        //         MySQLConstant result;
+        //         if (cond.isNull() || !cond.asBooleanNotNull()) {
+        //             result = right;
+        //         } else {
+        //             result = left;
+        //         }
+        //         return castToMostGeneralType(result, new MySQLExpression[] { origArgs[1], origArgs[2] });
 
-            }
+        //     }
 
-        },
+        // },
         /**
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/control-flow-functions.html#function_ifnull">IFNULL</a>
          */
-        IFNULL(2, "IFNULL") {
+        // IFNULL(2, "IFNULL") {
 
-            @Override
-            public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
-                MySQLConstant result;
-                if (args[0].isNull()) {
-                    result = args[1];
-                } else {
-                    result = args[0];
-                }
-                return castToMostGeneralType(result, origArgs);
-            }
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
+        //         MySQLConstant result;
+        //         if (args[0].isNull()) {
+        //             result = args[1];
+        //         } else {
+        //             result = args[0];
+        //         }
+        //         return castToMostGeneralType(result, origArgs);
+        //     }
 
-        },
+        // },
         // LEAST(2, "LEAST", true) {
 
         //     @Override

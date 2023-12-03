@@ -38,15 +38,15 @@ public enum PostgresFunctionWithUnknownResult {
     // PG_TRIGGER_DEPTH("pg_trigger_depth", PostgresDataType.INT), VERSION("version", PostgresDataType.TEXT),
 
     //
-    TO_CHAR("to_char", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
-        @Override
-        public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
-                int depth) {
-            PostgresExpression[] args = super.getArguments(returnType, gen, depth);
-            args[0] = gen.generateExpression(PostgresDataType.getRandomType());
-            return args;
-        }
-    },
+    // TO_CHAR("to_char", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
+    //     @Override
+    //     public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
+    //             int depth) {
+    //         PostgresExpression[] args = super.getArguments(returnType, gen, depth);
+    //         args[0] = gen.generateExpression(PostgresDataType.getRandomType());
+    //         return args;
+    //     }
+    // },
 
     // String functions
     // ASCII("ascii", PostgresDataType.INT, PostgresDataType.TEXT),
@@ -126,8 +126,8 @@ public enum PostgresFunctionWithUnknownResult {
     // ATANH("atanh", PostgresDataType.REAL), //
 
     // https://www.postgresql.org/docs/devel/functions-binarystring.html
-    GET_BIT("get_bit", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
-    GET_BYTE("get_byte", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
+    // GET_BIT("get_bit", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
+    // GET_BYTE("get_byte", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
 
     // range functions
     // https://www.postgresql.org/docs/devel/functions-range.html#RANGE-FUNCTIONS-TABLE
@@ -141,7 +141,7 @@ public enum PostgresFunctionWithUnknownResult {
 //    RANGE_MERGE("range_merge", PostgresDataType.RANGE, PostgresDataType.RANGE, PostgresDataType.RANGE), //
 
     // https://www.postgresql.org/docs/devel/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE
-    GET_COLUMN_SIZE("get_column_size", PostgresDataType.INT, PostgresDataType.TEXT);
+    // GET_COLUMN_SIZE("get_column_size", PostgresDataType.INT, PostgresDataType.TEXT);
     // PG_DATABASE_SIZE("pg_database_size", PostgresDataType.INT, PostgresDataType.INT);
     // PG_SIZE_BYTES("pg_size_bytes", PostgresDataType.INT, PostgresDataType.TEXT);
 

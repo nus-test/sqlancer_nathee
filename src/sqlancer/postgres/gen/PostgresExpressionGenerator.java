@@ -232,10 +232,10 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
     private PostgresExpression getComparison(PostgresExpression leftExpr, PostgresExpression rightExpr) {
         PostgresBinaryComparisonOperation op = new PostgresBinaryComparisonOperation(leftExpr, rightExpr,
                 PostgresBinaryComparisonOperation.PostgresBinaryComparisonOperator.getRandom());
-        if (PostgresProvider.generateOnlyKnown && op.getLeft().getExpressionType() == PostgresDataType.TEXT
-                && op.getRight().getExpressionType() == PostgresDataType.TEXT) {
-            return new PostgresCollate(op, "C");
-        }
+        // if (PostgresProvider.generateOnlyKnown && op.getLeft().getExpressionType() == PostgresDataType.TEXT
+        //         && op.getRight().getExpressionType() == PostgresDataType.TEXT) {
+        //     return new PostgresCollate(op, "C");
+        // }
         return op;
     }
 
@@ -261,19 +261,19 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
         if (dataType == PostgresDataType.FLOAT && Randomly.getBoolean()) {
             dataType = PostgresDataType.INT;
         }
-        if (!filterColumns(dataType).isEmpty() && Randomly.getBoolean()) {
-            return potentiallyWrapInCollate(dataType, createColumnOfType(dataType));
-        }
+        // if (!filterColumns(dataType).isEmpty() && Randomly.getBoolean()) {
+        //     return potentiallyWrapInCollate(dataType, createColumnOfType(dataType));
+        // }
         PostgresExpression exprInternal = generateExpressionInternal(depth, dataType);
         return potentiallyWrapInCollate(dataType, exprInternal);
     }
 
     private PostgresExpression potentiallyWrapInCollate(PostgresDataType dataType, PostgresExpression exprInternal) {
-        if (dataType == PostgresDataType.TEXT && PostgresProvider.generateOnlyKnown) {
-            return new PostgresCollate(exprInternal, "C");
-        } else {
+//        if (dataType == PostgresDataType.TEXT && PostgresProvider.generateOnlyKnown) {
+//            return new PostgresCollate(exprInternal, "C");
+//        } else {
             return exprInternal;
-        }
+//        }
     }
 
     private PostgresExpression generateExpressionInternal(int depth, PostgresDataType dataType) throws AssertionError {
@@ -370,18 +370,18 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
     }
 
     private enum TextExpression {
-        CAST, FUNCTION, CONCAT, COLLATE
+        CAST, FUNCTION, CONCAT//, COLLATE
     }
 
     private PostgresExpression generateTextExpression(int depth) {
         TextExpression option;
         List<TextExpression> validOptions = new ArrayList<>(Arrays.asList(TextExpression.values()));
-        if (expectedResult) {
-            validOptions.remove(TextExpression.COLLATE);
-        }
-        if (!globalState.getDbmsSpecificOptions().testCollations) {
-            validOptions.remove(TextExpression.COLLATE);
-        }
+        // if (expectedResult) {
+        //     validOptions.remove(TextExpression.COLLATE);
+        // }
+        // if (!globalState.getDbmsSpecificOptions().testCollations) {
+        //     validOptions.remove(TextExpression.COLLATE);
+        // }
         option = Randomly.fromList(validOptions);
 
         switch (option) {
@@ -391,10 +391,10 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
             return generateFunction(depth + 1, PostgresDataType.TEXT);
         case CONCAT:
             return generateConcat(depth);
-        case COLLATE:
-            assert !expectedResult;
-            return new PostgresCollate(generateExpression(depth + 1, PostgresDataType.TEXT), globalState == null
-                    ? Randomly.fromOptions("C", "POSIX", "de_CH.utf8", "es_CR.utf8") : globalState.getRandomCollate());
+        // case COLLATE:
+        //     assert !expectedResult;
+        //     return new PostgresCollate(generateExpression(depth + 1, PostgresDataType.TEXT), globalState == null
+        //             ? Randomly.fromOptions("C", "POSIX", "de_CH.utf8", "es_CR.utf8") : globalState.getRandomCollate());
         default:
             throw new AssertionError();
         }

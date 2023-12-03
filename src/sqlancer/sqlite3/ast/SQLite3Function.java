@@ -128,31 +128,31 @@ public class SQLite3Function extends SQLite3Expression {
                 return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
         },
-        LIKELY(1, "LIKELY") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                return args[0];
-            }
+        // LIKELY(1, "LIKELY") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         return args[0];
+        //     }
 
-        },
-        LIKELIHOOD(2, "LIKELIHOOD") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                return args[0];
-            }
+        // },
+        // LIKELIHOOD(2, "LIKELIHOOD") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         return args[0];
+        //     }
 
-        },
-        IFNULL(2, "IFNULL") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                for (SQLite3Expression arg : args) {
-                    if (!arg.getExpectedValue().isNull()) {
-                        return arg.getExpectedValue();
-                    }
-                }
-                return SQLite3Constant.createNullConstant();
-            }
-        },
+        // },
+        // IFNULL(2, "IFNULL") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         for (SQLite3Expression arg : args) {
+        //             if (!arg.getExpectedValue().isNull()) {
+        //                 return arg.getExpectedValue();
+        //             }
+        //         }
+        //         return SQLite3Constant.createNullConstant();
+        //     }
+        // },
 
         UPPER(1, "UPPER") {
 
@@ -245,13 +245,6 @@ public class SQLite3Function extends SQLite3Expression {
             public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
                 return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
-        },
-        UNLIKELY(1, "UNLIKELY") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                return args[0];
-            }
-
         };
         // TRIM_TWO_ARGS(2, "TRIM") {
 
@@ -326,6 +319,13 @@ public class SQLite3Function extends SQLite3Expression {
         //     }
 
         // },
+        // UNLIKELY(1, "UNLIKELY") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         return args[0];
+        //     }
+
+        // };
 
         private String functionName;
         final int nrArgs;
