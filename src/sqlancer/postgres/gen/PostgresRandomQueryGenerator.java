@@ -54,9 +54,9 @@ public final class PostgresRandomQueryGenerator {
                         PostgresConstant.createIntConstant(Randomly.getPositiveOrZeroNonCachedInteger()));
             }
         }
-        if (Randomly.getBooleanWithRatherLowProbability()) {
-            select.setForClause(ForClause.getRandom());
-        }
+        // if (Randomly.getBooleanWithRatherLowProbability()) {
+        //     select.setForClause(ForClause.getRandom());
+        // }
         return select;
     }
 
