@@ -104,9 +104,11 @@ public abstract class GlobalState<O extends DBMSSpecificOptions<?>, S extends Ab
     protected abstract void executeEpilogue(Query<?> q, boolean success, ExecutionTimer timer) throws Exception;
 
     public boolean executeStatement(Query<C> q, String... fills) throws Exception {
-        ExecutionTimer timer = executePrologue(q);
         boolean success = manager.execute(q, fills);
-        executeEpilogue(q, success, timer);
+        if (success) {
+            ExecutionTimer timer = executePrologue(q);
+            executeEpilogue(q, success, timer);
+        }
         return success;
     }
 
