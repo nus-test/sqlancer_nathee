@@ -128,9 +128,9 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
             case RIGHT:
                 sb.append("RIGHT OUTER JOIN");
                 break;
-            case FULL:
-                sb.append("FULL OUTER JOIN");
-                break;
+//            case FULL:
+//                sb.append("FULL OUTER JOIN");
+//                break;
             case CROSS:
                 sb.append("CROSS JOIN");
                 break;

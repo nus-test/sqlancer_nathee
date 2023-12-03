@@ -6,7 +6,7 @@ import sqlancer.postgres.PostgresSchema.PostgresDataType;
 public class PostgresJoin implements PostgresExpression {
 
     public enum PostgresJoinType {
-        INNER, LEFT, RIGHT, FULL, CROSS;
+        INNER, LEFT, RIGHT/*, FULL*/, CROSS;
 
         public static PostgresJoinType getRandom() {
             return Randomly.fromOptions(values());

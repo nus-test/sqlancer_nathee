@@ -27,6 +27,7 @@ import sqlancer.sqlite3.ast.SQLite3Expression.SQLite3TableReference;
 import sqlancer.sqlite3.ast.SQLite3Expression.SQLite3Text;
 import sqlancer.sqlite3.ast.SQLite3Expression.Subquery;
 import sqlancer.sqlite3.ast.SQLite3Expression.TypeLiteral;
+import sqlancer.sqlite3.ast.SQLite3Expression.Join.JoinType;
 import sqlancer.sqlite3.ast.SQLite3Function;
 import sqlancer.sqlite3.ast.SQLite3RowValueExpression;
 import sqlancer.sqlite3.ast.SQLite3Select;
@@ -243,15 +244,15 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
         case RIGHT:
             sb.append("RIGHT OUTER");
             break;
-        case FULL:
-            sb.append("FULL OUTER");
-            break;
+        // case FULL:
+        //     sb.append("FULL OUTER");
+        //     break;
         default:
             throw new AssertionError(join.getType());
         }
         sb.append(" JOIN ");
         sb.append(join.getTable().getName());
-        if (join.getOnClause() != null) {
+        if (join.getOnClause() != null && join.getType() != JoinType.CROSS && join.getType() != JoinType.NATURAL) {
             sb.append(" ON ");
             visit(join.getOnClause());
         }
