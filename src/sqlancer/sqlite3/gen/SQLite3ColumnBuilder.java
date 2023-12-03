@@ -23,7 +23,7 @@ public class SQLite3ColumnBuilder {
     private boolean allowNotNull = true;
 
     private enum Constraints {
-        NOT_NULL, PRIMARY_KEY, UNIQUE, CHECK, GENERATED_AS
+        GENERATED_AS, NOT_NULL, UNIQUE, PRIMARY_KEY//, CHECK
     }
 
     public boolean isContainsAutoIncrement() {
@@ -50,6 +50,7 @@ public class SQLite3ColumnBuilder {
         SQLite3Column target = columns.stream().filter(p -> p.getName().contentEquals(columnName)).collect(Collectors.toList()).get(0);
         if (Randomly.getBooleanWithRatherLowProbability()) {
             List<Constraints> constraints = Randomly.subset(Constraints.values());
+            constraints = constraints.stream().sorted(Constraints::compareTo).collect(Collectors.toList()); //Sort options in correct order
             if (!Randomly.getBooleanWithSmallProbability()
                     || globalState.getDbmsSpecificOptions().testGeneratedColumns) {
                 constraints.remove(Constraints.GENERATED_AS);
@@ -106,11 +107,11 @@ public class SQLite3ColumnBuilder {
                         }
                     }
                     break;
-                case CHECK:
-                    if (allowCheck) {
-                        sb.append(SQLite3Common.getCheckConstraint(globalState, columns));
-                    }
-                    break;
+                // case CHECK:
+                //     if (allowCheck) {
+                //         sb.append(SQLite3Common.getCheckConstraint(globalState, columns));
+                //     }
+                //     break;
                 default:
                     throw new AssertionError();
                 }
@@ -120,10 +121,10 @@ public class SQLite3ColumnBuilder {
             sb.append(" DEFAULT ");
             sb.append(SQLite3Visitor.asString(SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, target.getType())));
         }
-        if (Randomly.getBooleanWithSmallProbability()) {
-            String randomCollate = SQLite3Common.getRandomCollate();
-            sb.append(randomCollate);
-        }
+        // if (Randomly.getBooleanWithSmallProbability()) {
+        //     String randomCollate = SQLite3Common.getRandomCollate();
+        //     sb.append(randomCollate);
+        // }
         return sb.toString();
     }
 
