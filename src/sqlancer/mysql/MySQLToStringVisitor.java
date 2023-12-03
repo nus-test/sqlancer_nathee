@@ -144,11 +144,11 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
             sb.append("FALSE");
             break;
         case IS_NULL:
-            if (Randomly.getBoolean()) {
-                sb.append("UNKNOWN");
-            } else {
+            // if (Randomly.getBoolean()) {
+            //     sb.append("UNKNOWN");
+            // } else {
                 sb.append("NULL");
-            }
+            // }
             break;
         case IS_TRUE:
             sb.append("TRUE");
