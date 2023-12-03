@@ -13,7 +13,7 @@ public class PostgresBinaryBitOperation extends BinaryOperatorNode<PostgresExpre
         CONCATENATION("||"), //
         BITWISE_AND("&"), //
         BITWISE_OR("|"), //
-        BITWISE_XOR("#"), //
+        // BITWISE_XOR("#"), //
         BITWISE_SHIFT_LEFT("<<"), //
         BITWISE_SHIFT_RIGHT(">>");
 

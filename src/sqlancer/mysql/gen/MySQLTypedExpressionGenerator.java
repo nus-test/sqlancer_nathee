@@ -122,11 +122,11 @@ public class MySQLTypedExpressionGenerator extends TypedExpressionGenerator<MySQ
         IntExpression option = Randomly.fromOptions(IntExpression.values());
         switch (option) {
             case BINARY_OPERATION:
-                if (MySQLBugs.bug99135) {
-                    throw new IgnoreMeException();
-                }
-                return new MySQLBinaryOperation(generateExpression(MySQLDataType.INT, depth + 1), generateExpression(MySQLDataType.INT, depth + 1),
-                        MySQLBinaryOperator.getRandom());
+                // if (MySQLBugs.bug99135) {
+                //     throw new IgnoreMeException();
+                // }
+                // return new MySQLBinaryOperation(generateExpression(MySQLDataType.INT, depth + 1), generateExpression(MySQLDataType.INT, depth + 1),
+                //         MySQLBinaryOperator.getRandom());
             case COMPUTABLE_FUNCTION:
                 return getComputableFunction(MySQLDataType.INT, depth + 1);
             case UNARY_PREFIX_OPERATION:
