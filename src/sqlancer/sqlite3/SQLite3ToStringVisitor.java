@@ -178,44 +178,44 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
                 // sb.append(c.asInt() == 1 ? "TRUE" : "FALSE");
                 // } else {
                 // - 0X8000000000000000 results in an error message otherwise
-                if (!c.isHex() || c.asInt() == Long.MIN_VALUE) {
+                // if (!c.isHex() || c.asInt() == Long.MIN_VALUE) {
                     sb.append(c.asInt());
-                } else {
-                    long intVal = c.asInt();
-                    asHexString(intVal);
-                }
+                // } else {
+                //     long intVal = c.asInt();
+                //     asHexString(intVal);
+                // }
                 // }
                 break;
             case REAL:
                 double asDouble = c.asDouble();
-                if (Double.POSITIVE_INFINITY == asDouble) {
-                    sb.append("1e500");
-                } else if (Double.NEGATIVE_INFINITY == asDouble) {
-                    sb.append("-1e500");
-                } else if (Double.isNaN(asDouble)) {
-                    // throw new IgnoreMeException();
-                    sb.append("1e500 / 1e500");
-                } else {
+                // if (Double.POSITIVE_INFINITY == asDouble) {
+                //     sb.append("1e500");
+                // } else if (Double.NEGATIVE_INFINITY == asDouble) {
+                //     sb.append("-1e500");
+                // } else if (Double.isNaN(asDouble)) {
+                //     // throw new IgnoreMeException();
+                //     sb.append("1e500 / 1e500");
+                // } else {
                     sb.append(asDouble);
-                }
+                // }
                 break;
             case TEXT:
                 sb.append("'");
                 sb.append(c.asString().replace("'", "''"));
                 sb.append("'");
                 break;
-            case BINARY:
-                sb.append('x');
-                sb.append("'");
-                byte[] arr;
-                if (c.getValue() instanceof byte[]) {
-                    arr = c.asBinary();
-                } else {
-                    arr = c.asString().getBytes(SQLite3Cast.DEFAULT_ENCODING);
-                }
-                sb.append(SQLite3Visitor.byteArrayToHex(arr));
-                sb.append("'");
-                break;
+            // case BINARY:
+            //     sb.append('x');
+            //     sb.append("'");
+            //     byte[] arr;
+            //     if (c.getValue() instanceof byte[]) {
+            //         arr = c.asBinary();
+            //     } else {
+            //         arr = c.asString().getBytes(SQLite3Cast.DEFAULT_ENCODING);
+            //     }
+            //     sb.append(SQLite3Visitor.byteArrayToHex(arr));
+            //     sb.append("'");
+            //     break;
             case BOOLEAN:
                 sb.append(c.asBoolean() ? "TRUE" : "FALSE");
                 break;

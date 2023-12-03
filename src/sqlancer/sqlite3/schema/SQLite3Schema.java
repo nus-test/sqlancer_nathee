@@ -133,14 +133,14 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
             value = randomRowValues.getString(columnIndex);
             constant = SQLite3Constant.createTextConstant((String) value);
             break;
-        case BINARY:
-            value = randomRowValues.getBytes(columnIndex);
-            constant = SQLite3Constant.createBinaryConstant((byte[]) value);
-            if (((byte[]) value).length == 0) {
-                // TODO: the JDBC driver seems to sometimes return a zero-length array for NULL values
-                throw new IgnoreMeException();
-            }
-            break;
+        // case BINARY:
+        //     value = randomRowValues.getBytes(columnIndex);
+        //     constant = SQLite3Constant.createBinaryConstant((byte[]) value);
+        //     if (((byte[]) value).length == 0) {
+        //         // TODO: the JDBC driver seems to sometimes return a zero-length array for NULL values
+        //         throw new IgnoreMeException();
+        //     }
+        //     break;
         case NULL:
             return SQLite3Constant.createNullConstant();
         default:

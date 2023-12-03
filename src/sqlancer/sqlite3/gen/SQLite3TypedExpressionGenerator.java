@@ -56,6 +56,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private boolean allowAggregateFunctions;
     private boolean allowSubqueries;
     private boolean allowAggreates;
+    private boolean allowNullValue;
 
     public SQLite3TypedExpressionGenerator(SQLite3TypedExpressionGenerator other) {
         this.rw = other.rw;
@@ -68,6 +69,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         this.allowAggregateFunctions = other.allowAggregateFunctions;
         this.allowSubqueries = other.allowSubqueries;
         this.allowAggreates = other.allowAggreates;
+        this.allowNullValue = true;
     }
 
     public SQLite3TypedExpressionGenerator(SQLite3GlobalState globalState) {
@@ -234,7 +236,10 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             case IN_OPERATOR:
                 return getInOperator(depth + 1);
             case CASE_OPERATOR:
-                return getCaseOperator(SQLite3DataType.BOOLEAN, depth + 1);
+                allowNullValue = false;
+                SQLite3Expression expression = getCaseOperator(SQLite3DataType.BOOLEAN, depth + 1);
+                allowNullValue = true;
+                return expression;
             default:
                 throw new AssertionError();
         }
@@ -266,7 +271,10 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             case CAST_EXPRESSION:
                 return getCastOperator(TypeLiteral.Type.TEXT, depth + 1);
             case CASE_OPERATOR:
-                return getCaseOperator(SQLite3DataType.TEXT, depth + 1);
+                allowNullValue = false;
+                SQLite3Expression expression = getCaseOperator(SQLite3DataType.TEXT, depth + 1);
+                allowNullValue = true;
+                return expression;
             default:
                 throw new AssertionError();
         }
@@ -310,9 +318,15 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             // case CAST_EXPRESSION:
             //     return getCastOperator(TypeLiteral.Type.INTEGER, depth + 1);
             case AGGREGATE_FUNCTION:
-                return getAggregateFunction(depth + 1);
+                allowNullValue = false;
+                SQLite3Expression expr = getAggregateFunction(depth + 1);
+                allowNullValue = true;
+                return expr;
             case CASE_OPERATOR:
-                return getCaseOperator(SQLite3DataType.INT, depth + 1);
+                allowNullValue = false;
+                SQLite3Expression expression = getCaseOperator(SQLite3DataType.INT, depth + 1);
+                allowNullValue = true;
+                return expression;
             default:
                 throw new AssertionError();
         }
@@ -325,7 +339,10 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     @Override
     public SQLite3Expression generateExpression(SQLite3DataType type, int depth) {
         if (allowAggreates && Randomly.getBoolean()) {
-            return getAggregateFunction(depth + 1);
+            allowNullValue = false;
+            SQLite3Expression expr = getAggregateFunction(depth + 1);
+            allowNullValue = true;
+            return expr;
         }
         if (depth >= globalState.getOptions().getMaxExpressionDepth()) {
             if (Randomly.getBooleanWithRatherLowProbability() || columns.isEmpty()) {
@@ -341,7 +358,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return generateIntExpression(depth);
             case NONE:
             case TEXT:
-            case BINARY:
+            // case BINARY:
                 return generateTextExpression(depth);
             case REAL:
                 return generateLeafNode(type);
@@ -391,7 +408,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private SQLite3Expression getBinaryComparisonOperator(int depth) {
         SQLite3DataType type = getRandomType();
         List<BinaryComparisonOperator> validOptions = new ArrayList<>(Arrays.asList(BinaryComparisonOperator.values()));
-        if (type != SQLite3DataType.TEXT || type != SQLite3DataType.NONE || type != SQLite3DataType.BINARY) {
+        if (type != SQLite3DataType.TEXT && type != SQLite3DataType.NONE/* || type != SQLite3DataType.BINARY*/) {
             validOptions.remove(BinaryComparisonOperator.LIKE);
             validOptions.remove(BinaryComparisonOperator.GLOB);
         }
@@ -686,6 +703,9 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         return new SQLite3TextConstant(String.valueOf(s.charAt(0)));
     }
 
+    public void allowNullValue(boolean value) {
+        allowNullValue = value;
+    }
     @Override
     protected SQLite3Expression generateColumn(SQLite3DataType type) {
         SQLite3Column column = Randomly.fromList(columns.stream().filter(c -> c.getType() == type).collect(Collectors.toList()));
@@ -694,25 +714,25 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
 
     @Override
     public SQLite3Expression generateConstant(SQLite3DataType type) {
-        if (Randomly.getBooleanWithRatherLowProbability()) {
+        if (Randomly.getBooleanWithRatherLowProbability() && allowNullValue) {
             return SQLite3Constant.createNullConstant();
         }
         switch (type) {
         case BOOLEAN:
             return SQLite3Constant.createBooleanConstant(Randomly.getBoolean());
         case INT:
-            if (Randomly.getBoolean()) {
-                return SQLite3Constant.createIntConstant(r.getInteger(), Randomly.getBoolean());
-            } else {
-                return SQLite3Constant.createTextConstant(String.valueOf(r.getInteger()));
-            }
+            // if (Randomly.getBoolean()) {
+                return SQLite3Constant.createIntConstant(r.getInteger(), false);
+            // } else {
+            //     return SQLite3Constant.createTextConstant(String.valueOf(r.getInteger()));
+            // }
         case REAL:
             return SQLite3Constant.createRealConstant(r.getDouble());
         case NONE:
         case TEXT:
             return SQLite3Constant.createTextConstant(r.getString());
-        case BINARY:
-            return SQLite3Constant.getRandomBinaryConstant(r);
+        // case BINARY:
+        //     return SQLite3Constant.getRandomBinaryConstant(r);
         case NULL:
             return SQLite3Constant.createNullConstant();
         default:

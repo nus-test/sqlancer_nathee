@@ -482,15 +482,15 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
         // }
         switch (type) {
         case INT:
-            if (Randomly.getBooleanWithSmallProbability()) {
-                return PostgresConstant.createTextConstant(String.valueOf(r.getInteger()));
-            } else {
+            // if (Randomly.getBooleanWithSmallProbability()) {
+            //     return PostgresConstant.createTextConstant(String.valueOf(r.getInteger()));
+            // } else {
                 return PostgresConstant.createIntConstant(r.getInteger());
-            }
+            // }
         case BOOLEAN:
             if (Randomly.getBooleanWithSmallProbability() && !PostgresProvider.generateOnlyKnown) {
                 return PostgresConstant
-                        .createTextConstant(Randomly.fromOptions("TR", "TRUE", "FA", "FALSE", "0", "1", "ON", "off"));
+                        .createTextConstant(Randomly.fromOptions(/* "TR", */"TRUE"/*, "FA"*/, "FALSE", "0", "1"/*, "ON", "off"*/));
             } else {
                 return PostgresConstant.createBooleanConstant(Randomly.getBoolean());
             }

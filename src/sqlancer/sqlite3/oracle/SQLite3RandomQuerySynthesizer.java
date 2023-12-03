@@ -55,7 +55,9 @@ public final class SQLite3RandomQuerySynthesizer {
                 if (!normalAggregateFunction) {
                     baseWindowFunction = SQLite3WindowFunction.getRandom(targetTables.getColumns(), globalState);
                 } else {
+                    gen.allowNullValue(false);
                     baseWindowFunction = gen.getAggregateFunction(true);
+                    gen.allowNullValue(true);
                     assert baseWindowFunction != null;
                 }
                 SQLite3WindowFunctionExpression windowFunction = new SQLite3WindowFunctionExpression(
@@ -114,7 +116,9 @@ public final class SQLite3RandomQuerySynthesizer {
         boolean groupBy = Randomly.getBooleanWithRatherLowProbability();
         if (groupBy) {
             // GROUP BY
+            gen.allowNullValue(false);
             select.setGroupByClause(gen.getRandomExpressions(Randomly.fromOptions(SQLite3DataType.values()), Randomly.smallNumber() + 1));
+            gen.allowNullValue(true);
             if (Randomly.getBoolean()) {
                 // HAVING
                 select.setHavingClause(aggregateGen.generateExpression(SQLite3DataType.BOOLEAN));
@@ -127,10 +131,10 @@ public final class SQLite3RandomQuerySynthesizer {
         }
         if (Randomly.getBooleanWithRatherLowProbability()) {
             // LIMIT
-            select.setLimitClause(SQLite3Constant.createIntConstant(r.getInteger()));
+            select.setLimitClause(SQLite3Constant.createIntConstant(Randomly.getPositiveOrZeroNonCachedInteger()));
             if (Randomly.getBoolean()) {
                 // OFFSET
-                select.setOffsetClause(SQLite3Constant.createIntConstant(r.getInteger()));
+                select.setOffsetClause(SQLite3Constant.createIntConstant(Randomly.getPositiveOrZeroNonCachedInteger()));
             }
         }
         if (!orderBy && !groupBy && Randomly.getBooleanWithSmallProbability()) {
