@@ -143,6 +143,7 @@ public class MySQLSchema extends AbstractSchema<MySQLGlobalState, MySQLTable> {
         case "bigint":
             return MySQLDataType.INT;
         case "varchar":
+        case "varbinary":
         case "tinytext":
         case "mediumtext":
         case "text":
