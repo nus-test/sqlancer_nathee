@@ -1139,14 +1139,14 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            DIVIDE("/") {
+            // DIVIDE("/") {
 
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
-                    return null;
-                }
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
+            //         return null;
+            //     }
 
-            }, // division by zero results in zero
+            // }, // division by zero results in zero
             REMAINDER("%") {
                 @Override
                 SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {

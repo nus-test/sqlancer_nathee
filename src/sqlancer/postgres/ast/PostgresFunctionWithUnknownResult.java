@@ -89,7 +89,7 @@ public enum PostgresFunctionWithUnknownResult {
     // mathematical functions
     // https://www.postgresql.org/docs/9.5/functions-math.html
     ABS("abs", PostgresDataType.REAL, PostgresDataType.REAL),
-    CBRT("cbrt", PostgresDataType.REAL, PostgresDataType.REAL), CEILING("ceiling", PostgresDataType.REAL), //
+    // CBRT("cbrt", PostgresDataType.REAL, PostgresDataType.REAL), CEILING("ceiling", PostgresDataType.REAL), //
     DEGREES("degrees", PostgresDataType.REAL), EXP("exp", PostgresDataType.REAL), LN("ln", PostgresDataType.REAL),
     LOG("log", PostgresDataType.REAL), LOG2("log", PostgresDataType.REAL, PostgresDataType.REAL),
     PI("pi", PostgresDataType.REAL), POWER("power", PostgresDataType.REAL, PostgresDataType.REAL),
@@ -100,30 +100,30 @@ public enum PostgresFunctionWithUnknownResult {
     // trigonometric functions - complete
     // https://www.postgresql.org/docs/12/functions-math.html#FUNCTIONS-MATH-TRIG-TABLE
     ACOS("acos", PostgresDataType.REAL), //
-    ACOSD("acosd", PostgresDataType.REAL), //
+    // ACOSD("acosd", PostgresDataType.REAL), //
     ASIN("asin", PostgresDataType.REAL), //
-    ASIND("asind", PostgresDataType.REAL), //
+    // ASIND("asind", PostgresDataType.REAL), //
     ATAN("atan", PostgresDataType.REAL), //
-    ATAND("atand", PostgresDataType.REAL), //
+    // ATAND("atand", PostgresDataType.REAL), //
     ATAN2("atan2", PostgresDataType.REAL, PostgresDataType.REAL), //
-    ATAN2D("atan2d", PostgresDataType.REAL, PostgresDataType.REAL), //
+    // ATAN2D("atan2d", PostgresDataType.REAL, PostgresDataType.REAL), //
     COS("cos", PostgresDataType.REAL), //
-    COSD("cosd", PostgresDataType.REAL), //
+    // COSD("cosd", PostgresDataType.REAL), //
     COT("cot", PostgresDataType.REAL), //
-    COTD("cotd", PostgresDataType.REAL), //
+    // COTD("cotd", PostgresDataType.REAL), //
     SIN("sin", PostgresDataType.REAL), //
-    SIND("sind", PostgresDataType.REAL), //
-    TAN("tan", PostgresDataType.REAL), //
-    TAND("tand", PostgresDataType.REAL), //
+    // SIND("sind", PostgresDataType.REAL), //
+    TAN("tan", PostgresDataType.REAL); //
+    // TAND("tand", PostgresDataType.REAL), //
 
     // hyperbolic functions - complete
     // https://www.postgresql.org/docs/12/functions-math.html#FUNCTIONS-MATH-HYP-TABLE
-    SINH("sinh", PostgresDataType.REAL), //
-    COSH("cosh", PostgresDataType.REAL), //
-    TANH("tanh", PostgresDataType.REAL), //
-    ASINH("asinh", PostgresDataType.REAL), //
-    ACOSH("acosh", PostgresDataType.REAL), //
-    ATANH("atanh", PostgresDataType.REAL), //
+    // SINH("sinh", PostgresDataType.REAL), //
+    // COSH("cosh", PostgresDataType.REAL), //
+    // TANH("tanh", PostgresDataType.REAL), //
+    // ASINH("asinh", PostgresDataType.REAL), //
+    // ACOSH("acosh", PostgresDataType.REAL), //
+    // ATANH("atanh", PostgresDataType.REAL), //
 
     // https://www.postgresql.org/docs/devel/functions-binarystring.html
     GET_BIT("get_bit", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
