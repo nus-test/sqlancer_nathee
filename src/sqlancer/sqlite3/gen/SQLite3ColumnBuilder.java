@@ -68,6 +68,7 @@ public class SQLite3ColumnBuilder {
                                     .filter(p -> !p.getName().contentEquals(columnName)).collect(Collectors.toList()))
                             .generateExpression(target.getType())));
                     sb.append(")");
+                    sb.append(" STORED"); // STORED is added since default is VIRTUAL which is not commonly supported
                     break;
                 case PRIMARY_KEY:
                     // only one primary key is allow if not specified as table constraint
