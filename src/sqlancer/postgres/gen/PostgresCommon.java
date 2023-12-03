@@ -416,10 +416,10 @@ public final class PostgresCommon {
             sb.append(" ");
             sb.append(Randomly.fromOptions("ASC", "DESC"));
         }
-        if (Randomly.getBoolean()) {
-            sb.append(" NULLS ");
-            sb.append(Randomly.fromOptions("FIRST", "LAST"));
-        }
+        // if (Randomly.getBoolean()) {
+        //     sb.append(" NULLS ");
+        //     sb.append(Randomly.fromOptions("FIRST", "LAST"));
+        // }
     }
 
     private static void deleteOrUpdateAction(StringBuilder sb) {

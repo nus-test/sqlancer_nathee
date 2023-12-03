@@ -155,20 +155,24 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     public SQLite3Expression generateOrderingTerm() {
-        SQLite3Expression expr = generateExpression(getRandomType());
+        if (columns.isEmpty()) {
+            throw new IgnoreMeException();
+        }
+        SQLite3Column column = Randomly.fromList(columns);
+        SQLite3Expression expr = new SQLite3ColumnName(column, rw == null ? null : rw.getValues().get(column));
         // COLLATE is potentially already generated
         if (Randomly.getBoolean()) {
             expr = new SQLite3OrderingTerm(expr, Ordering.getRandomValue());
         }
-        if (globalState.getDbmsSpecificOptions().testNullsFirstLast && Randomly.getBoolean()) {
-            expr = new SQLite3PostfixText(expr, Randomly.fromOptions(" NULLS FIRST", " NULLS LAST"),
-                    null /* expr.getExpectedValue() */) {
-                @Override
-                public boolean omitBracketsWhenPrinting() {
-                    return true;
-                }
-            };
-        }
+        // if (globalState.getDbmsSpecificOptions().testNullsFirstLast && Randomly.getBoolean()) {
+        //     expr = new SQLite3PostfixText(expr, Randomly.fromOptions(" NULLS FIRST", " NULLS LAST"),
+        //             null /* expr.getExpectedValue() */) {
+        //         @Override
+        //         public boolean omitBracketsWhenPrinting() {
+        //             return true;
+        //         }
+        //     };
+        // }
         return expr;
     }
 
