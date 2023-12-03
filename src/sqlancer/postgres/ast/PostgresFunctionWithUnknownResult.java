@@ -9,15 +9,15 @@ import sqlancer.postgres.gen.PostgresExpressionGenerator;
 
 public enum PostgresFunctionWithUnknownResult {
 
-    ABBREV("abbrev", PostgresDataType.TEXT, PostgresDataType.INET),
-    BROADCAST("broadcast", PostgresDataType.INET, PostgresDataType.INET),
-    FAMILY("family", PostgresDataType.INT, PostgresDataType.INET),
-    HOSTMASK("hostmask", PostgresDataType.INET, PostgresDataType.INET),
-    MASKLEN("masklen", PostgresDataType.INT, PostgresDataType.INET),
-    NETMASK("netmask", PostgresDataType.INET, PostgresDataType.INET),
-    SET_MASKLEN("set_masklen", PostgresDataType.INET, PostgresDataType.INET, PostgresDataType.INT),
-    TEXT("text", PostgresDataType.TEXT, PostgresDataType.INET),
-    INET_SAME_FAMILY("inet_same_family", PostgresDataType.BOOLEAN, PostgresDataType.INET, PostgresDataType.INET),
+//    ABBREV("abbrev", PostgresDataType.TEXT, PostgresDataType.INET),
+//    BROADCAST("broadcast", PostgresDataType.INET, PostgresDataType.INET),
+//    FAMILY("family", PostgresDataType.INT, PostgresDataType.INET),
+//    HOSTMASK("hostmask", PostgresDataType.INET, PostgresDataType.INET),
+//    MASKLEN("masklen", PostgresDataType.INT, PostgresDataType.INET),
+//    NETMASK("netmask", PostgresDataType.INET, PostgresDataType.INET),
+//    SET_MASKLEN("set_masklen", PostgresDataType.INET, PostgresDataType.INET, PostgresDataType.INT),
+//    TEXT("text", PostgresDataType.TEXT, PostgresDataType.INET),
+//    INET_SAME_FAMILY("inet_same_family", PostgresDataType.BOOLEAN, PostgresDataType.INET, PostgresDataType.INET),
 
     // https://www.postgresql.org/docs/devel/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL-TABLE
     // PG_RELOAD_CONF("pg_reload_conf", PostgresDataType.BOOLEAN), // too much output
