@@ -38,7 +38,7 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
     }
 
     private SQLQueryAdapter generate(SQLite3Table table) {
-        List<SQLite3Column> columnsToUpdate = Randomly.nonEmptySubsetPotentialDuplicates(table.getColumns());
+        List<SQLite3Column> columnsToUpdate = Randomly.nonEmptySubset(table.getColumns()); //Randomly.nonEmptySubsetPotentialDuplicates(table.getColumns());
         sb.append("UPDATE ");
         if (Randomly.getBoolean()) {
             sb.append("OR IGNORE ");
@@ -56,23 +56,23 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
 
         sb.append(table.getName());
         sb.append(" SET ");
-        if (Randomly.getBoolean()) {
-            sb.append("(");
-            sb.append(columnsToUpdate.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
-            sb.append(")");
-            sb.append("=");
-            sb.append("(");
-            for (int i = 0; i < columnsToUpdate.size(); i++) {
-                if (i != 0) {
-                    sb.append(", ");
-                }
-                updateValue(columnsToUpdate.get(i));
-            }
-            sb.append(")");
-            // row values
-        } else {
+        // if (Randomly.getBoolean()) {
+        //     sb.append("(");
+        //     sb.append(columnsToUpdate.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
+        //     sb.append(")");
+        //     sb.append("=");
+        //     sb.append("(");
+        //     for (int i = 0; i < columnsToUpdate.size(); i++) {
+        //         if (i != 0) {
+        //             sb.append(", ");
+        //         }
+        //         updateValue(columnsToUpdate.get(i));
+        //     }
+        //     sb.append(")");
+        //     // row values
+        // } else {
             updateColumns(columnsToUpdate);
-        }
+        // }
 
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
