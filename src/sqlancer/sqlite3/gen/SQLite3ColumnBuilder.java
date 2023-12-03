@@ -82,9 +82,9 @@ public class SQLite3ColumnBuilder {
                         //         sb.append(" DESC");
                         //     }
                         // }
-                        if (Randomly.getBoolean()) {
-                            insertOnConflictClause();
-                        }
+                        // if (Randomly.getBoolean()) {
+                        //     insertOnConflictClause();
+                        // }
                         // if (!hasOrdering && dataType.equals("INTEGER") && Randomly.getBoolean()) {
                         //     containsAutoIncrement = true;
                         //     sb.append(" AUTOINCREMENT");
@@ -94,17 +94,17 @@ public class SQLite3ColumnBuilder {
                 case UNIQUE:
                     if (allowUnique) {
                         sb.append(" UNIQUE");
-                        if (Randomly.getBoolean()) {
-                            insertOnConflictClause();
-                        }
+                        // if (Randomly.getBoolean()) {
+                        //     insertOnConflictClause();
+                        // }
                     }
                     break;
                 case NOT_NULL:
                     if (allowNotNull) {
                         sb.append(" NOT NULL");
-                        if (Randomly.getBoolean()) {
-                            insertOnConflictClause();
-                        }
+                        // if (Randomly.getBoolean()) {
+                        //     insertOnConflictClause();
+                        // }
                     }
                     break;
                 // case CHECK:
