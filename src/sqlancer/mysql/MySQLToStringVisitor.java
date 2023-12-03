@@ -43,9 +43,9 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
         case ALL:
             sb.append(Randomly.fromOptions("ALL ", ""));
             break;
-        case DISTINCTROW:
-            sb.append("DISTINCTROW ");
-            break;
+        // case DISTINCTROW:
+        //     sb.append("DISTINCTROW ");
+        //     break;
         default:
             throw new AssertionError();
         }

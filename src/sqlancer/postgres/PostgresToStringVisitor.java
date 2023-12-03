@@ -70,13 +70,13 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
 
     @Override
     public void visit(PostgresFromTable from) {
-        if (from.isOnly()) {
-            sb.append("ONLY ");
-        }
+        // if (from.isOnly()) {
+        //     sb.append("ONLY ");
+        // }
         sb.append(from.getTable().getName());
-        if (!from.isOnly() && Randomly.getBoolean()) {
-            sb.append("*");
-        }
+        // if (!from.isOnly() && Randomly.getBoolean()) {
+        //     sb.append("*");
+        // }
     }
 
     @Override
@@ -93,11 +93,11 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         switch (s.getSelectOption()) {
         case DISTINCT:
             sb.append("DISTINCT ");
-            if (s.getDistinctOnClause() != null) {
-                sb.append("ON (");
-                visit(s.getDistinctOnClause());
-                sb.append(") ");
-            }
+            // if (s.getDistinctOnClause() != null) {
+            //     sb.append("ON (");
+            //     visit(s.getDistinctOnClause());
+            //     sb.append(") ");
+            // }
             break;
         case ALL:
             sb.append(Randomly.fromOptions("ALL ", ""));
