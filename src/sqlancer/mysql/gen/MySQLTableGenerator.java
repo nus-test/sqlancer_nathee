@@ -257,7 +257,7 @@ public class MySQLTableGenerator {
     }
 
     private enum ColumnOptions {
-        NULL_OR_NOT_NULL, UNIQUE, COMMENT, COLUMN_FORMAT, STORAGE, PRIMARY_KEY
+        NULL_OR_NOT_NULL, UNIQUE, /*COMMENT, COLUMN_FORMAT, STORAGE,*/ PRIMARY_KEY
     }
 
     private void appendColumnDefinition() {
@@ -270,6 +270,7 @@ public class MySQLTableGenerator {
         boolean columnHasPrimaryKey = false;
 
         List<ColumnOptions> columnOptions = Randomly.subset(ColumnOptions.values());
+        columnOptions = columnOptions.stream().sorted(ColumnOptions::compareTo).collect(Collectors.toList()); //Sort options in correct order
         if (!columnOptions.contains(ColumnOptions.NULL_OR_NOT_NULL)) {
             tableHasNullableColumn = true;
         }
@@ -296,22 +297,22 @@ public class MySQLTableGenerator {
             case UNIQUE:
                 sb.append("UNIQUE");
                 keysSpecified++;
-                if (Randomly.getBoolean()) {
-                    sb.append(" KEY");
-                }
+                // if (Randomly.getBoolean()) {
+                //     sb.append(" KEY");
+                // }
                 break;
-            case COMMENT:
-                // TODO: generate randomly
-                sb.append(String.format("COMMENT '%s' ", "asdf"));
-                break;
-            case COLUMN_FORMAT:
-                sb.append("COLUMN_FORMAT ");
-                sb.append(Randomly.fromOptions("FIXED", "DYNAMIC", "DEFAULT"));
-                break;
-            case STORAGE:
-                sb.append("STORAGE ");
-                sb.append(Randomly.fromOptions("DISK", "MEMORY"));
-                break;
+            // case COMMENT:
+            //     // TODO: generate randomly
+            //     sb.append(String.format("COMMENT '%s' ", "asdf"));
+            //     break;
+            // case COLUMN_FORMAT:
+            //     sb.append("COLUMN_FORMAT ");
+            //     sb.append(Randomly.fromOptions("FIXED", "DYNAMIC", "DEFAULT"));
+            //     break;
+            // case STORAGE:
+            //     sb.append("STORAGE ");
+            //     sb.append(Randomly.fromOptions("DISK", "MEMORY"));
+            //     break;
             case PRIMARY_KEY:
                 // PRIMARY KEYs cannot be NULL
                 if (allowPrimaryKey && !setPrimaryKey && !isNull) {

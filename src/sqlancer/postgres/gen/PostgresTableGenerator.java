@@ -222,15 +222,16 @@ public class PostgresTableGenerator {
     }
 
     private enum ColumnConstraint {
-        NULL_OR_NOT_NULL, UNIQUE, PRIMARY_KEY, DEFAULT, CHECK, GENERATED
+        GENERATED, NULL_OR_NOT_NULL, DEFAULT, UNIQUE, PRIMARY_KEY//, CHECK
     };
 
     private void createColumnConstraint(PostgresDataType type, boolean serial) {
         List<ColumnConstraint> constraintSubset = Randomly.nonEmptySubset(ColumnConstraint.values());
-        if (Randomly.getBoolean()) {
-            // make checks constraints less likely
-            constraintSubset.remove(ColumnConstraint.CHECK);
-        }
+        constraintSubset = constraintSubset.stream().sorted(ColumnConstraint::compareTo).collect(Collectors.toList()); //Sort options in correct order
+        // if (Randomly.getBoolean()) {
+        //     // make checks constraints less likely
+        //     constraintSubset.remove(ColumnConstraint.CHECK);
+        // }
         if (!columnCanHavePrimaryKey || columnHasPrimaryKey) {
             constraintSubset.remove(ColumnConstraint.PRIMARY_KEY);
         }
@@ -242,6 +243,10 @@ public class PostgresTableGenerator {
         if (constraintSubset.contains(ColumnConstraint.GENERATED) && type != PostgresDataType.INT) {
             // otherwise: ERROR: identity column type must be smallint, integer, or bigint
             constraintSubset.remove(ColumnConstraint.GENERATED);
+        }
+        if (constraintSubset.contains(ColumnConstraint.UNIQUE)
+                || constraintSubset.contains(ColumnConstraint.PRIMARY_KEY)) {
+            constraintSubset.remove(ColumnConstraint.NULL_OR_NOT_NULL);
         }
         if (serial) {
             constraintSubset.remove(ColumnConstraint.GENERATED);
@@ -272,19 +277,19 @@ public class PostgresTableGenerator {
                 errors.add("out of range");
                 errors.add("is a generated column");
                 break;
-            case CHECK:
-                sb.append("CHECK (");
-                sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
-                        columnsToBeAdded, PostgresDataType.BOOLEAN)));
-                sb.append(")");
+            // case CHECK:
+            //     sb.append("CHECK (");
+            //     sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
+            //             columnsToBeAdded, PostgresDataType.BOOLEAN)));
+            //     sb.append(")");
                 if (Randomly.getBoolean()) {
                     sb.append(" NO INHERIT");
                 }
-                errors.add("out of range");
-                break;
+            //     errors.add("out of range");
+            //     break;
             case GENERATED:
                 sb.append("GENERATED ");
-                if (Randomly.getBoolean()) {
+                // if (Randomly.getBoolean()) {
                     sb.append(" ALWAYS AS (");
                     sb.append(PostgresVisitor.asString(
                             PostgresExpressionGenerator.generateExpression(globalState, columnsToBeAdded, type)));
@@ -293,10 +298,10 @@ public class PostgresTableGenerator {
                     errors.add("cannot use generated column in partition key");
                     errors.add("generation expression is not immutable");
                     errors.add("cannot use column reference in DEFAULT expression");
-                } else {
-                    sb.append(Randomly.fromOptions("ALWAYS", "BY DEFAULT"));
-                    sb.append(" AS IDENTITY");
-                }
+                // } else {
+                //     sb.append(Randomly.fromOptions("ALWAYS", "BY DEFAULT"));
+                //     sb.append(" AS IDENTITY");
+                // }
                 break;
             default:
                 throw new AssertionError(sb);

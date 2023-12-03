@@ -131,6 +131,7 @@ public class SQLite3TableGenerator {
                                                                                * constraint as belonging to the column
                                                                                */
                 && Randomly.getBooleanWithRatherLowProbability()) {
+            sb.append(", ");
             sb.append(SQLite3Common.getCheckConstraint(globalState, columns));
         }
 
