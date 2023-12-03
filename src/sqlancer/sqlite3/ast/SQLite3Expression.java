@@ -1171,64 +1171,64 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            SHIFT_LEFT("<<") {
+            // SHIFT_LEFT("<<") {
 
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
-                    return applyIntOperation(left, right, (leftResult, rightResult) -> {
-                        if (rightResult >= 0) {
-                            if (rightResult >= Long.SIZE) {
-                                return 0L;
-                            }
-                            return leftResult << rightResult;
-                        } else {
-                            if (rightResult == Long.MIN_VALUE) {
-                                return leftResult >= 0 ? 0L : -1L;
-                            }
-                            return SHIFT_RIGHT.apply(left, SQLite3Constant.createIntConstant(-rightResult)).asInt();
-                        }
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
+            //         return applyIntOperation(left, right, (leftResult, rightResult) -> {
+            //             if (rightResult >= 0) {
+            //                 if (rightResult >= Long.SIZE) {
+            //                     return 0L;
+            //                 }
+            //                 return leftResult << rightResult;
+            //             } else {
+            //                 if (rightResult == Long.MIN_VALUE) {
+            //                     return leftResult >= 0 ? 0L : -1L;
+            //                 }
+            //                 return SHIFT_RIGHT.apply(left, SQLite3Constant.createIntConstant(-rightResult)).asInt();
+            //             }
 
-                    });
-                }
+            //         });
+            //     }
 
-            },
-            SHIFT_RIGHT(">>") {
+            // },
+            // SHIFT_RIGHT(">>") {
 
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
-                    return applyIntOperation(left, right, (leftResult, rightResult) -> {
-                        if (rightResult >= 0) {
-                            if (rightResult >= Long.SIZE) {
-                                return leftResult >= 0 ? 0L : -1L;
-                            }
-                            return leftResult >> rightResult;
-                        } else {
-                            if (rightResult == Long.MIN_VALUE) {
-                                return 0L;
-                            }
-                            return SHIFT_LEFT.apply(left, SQLite3Constant.createIntConstant(-rightResult)).asInt();
-                        }
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
+            //         return applyIntOperation(left, right, (leftResult, rightResult) -> {
+            //             if (rightResult >= 0) {
+            //                 if (rightResult >= Long.SIZE) {
+            //                     return leftResult >= 0 ? 0L : -1L;
+            //                 }
+            //                 return leftResult >> rightResult;
+            //             } else {
+            //                 if (rightResult == Long.MIN_VALUE) {
+            //                     return 0L;
+            //                 }
+            //                 return SHIFT_LEFT.apply(left, SQLite3Constant.createIntConstant(-rightResult)).asInt();
+            //             }
 
-                    });
-                }
+            //         });
+            //     }
 
-            },
-            ARITHMETIC_AND("&") {
+            // },
+            // ARITHMETIC_AND("&") {
 
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
-                    return applyIntOperation(left, right, (a, b) -> a & b);
-                }
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
+            //         return applyIntOperation(left, right, (a, b) -> a & b);
+            //     }
 
-            },
-            ARITHMETIC_OR("|") {
+            // },
+            // ARITHMETIC_OR("|") {
 
-                @Override
-                SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
-                    return applyIntOperation(left, right, (a, b) -> a | b);
-                }
+            //     @Override
+            //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
+            //         return applyIntOperation(left, right, (a, b) -> a | b);
+            //     }
 
-            },
+            // },
             AND("AND") {
 
                 @Override

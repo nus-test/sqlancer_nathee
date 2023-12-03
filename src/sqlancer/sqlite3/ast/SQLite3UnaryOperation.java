@@ -74,16 +74,16 @@ public class SQLite3UnaryOperation extends SQLite3Expression implements UnaryOpe
             }
 
         },
-        NEGATE("~") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant constant) {
-                SQLite3Constant intValue = SQLite3Cast.castToInt(constant);
-                if (intValue.isNull()) {
-                    return intValue;
-                }
-                return SQLite3Constant.createIntConstant(~intValue.asInt());
-            }
-        },
+        // NEGATE("~") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant constant) {
+        //         SQLite3Constant intValue = SQLite3Cast.castToInt(constant);
+        //         if (intValue.isNull()) {
+        //             return intValue;
+        //         }
+        //         return SQLite3Constant.createIntConstant(~intValue.asInt());
+        //     }
+        // },
         NOT("NOT") {
             @Override
             public SQLite3Constant apply(SQLite3Constant constant) {

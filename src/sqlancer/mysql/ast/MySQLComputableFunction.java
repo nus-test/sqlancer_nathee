@@ -41,20 +41,20 @@ public class MySQLComputableFunction implements MySQLExpression {
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#function_bit-count">Bit Functions
          *      and Operators</a>
          */
-        BIT_COUNT(1, "BIT_COUNT") {
+        // BIT_COUNT(1, "BIT_COUNT") {
 
-            @Override
-            public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
-                MySQLConstant arg = evaluatedArgs[0];
-                if (arg.isNull()) {
-                    return MySQLConstant.createNullConstant();
-                } else {
-                    long val = arg.castAs(CastType.SIGNED).getInt();
-                    return MySQLConstant.createIntConstant(Long.bitCount(val));
-                }
-            }
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
+        //         MySQLConstant arg = evaluatedArgs[0];
+        //         if (arg.isNull()) {
+        //             return MySQLConstant.createNullConstant();
+        //         } else {
+        //             long val = arg.castAs(CastType.SIGNED).getInt();
+        //             return MySQLConstant.createIntConstant(Long.bitCount(val));
+        //         }
+        //     }
 
-        },
+        // },
         // BENCHMARK(2, "BENCHMARK") {
         //
         // @Override

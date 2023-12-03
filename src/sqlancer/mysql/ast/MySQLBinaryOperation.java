@@ -26,13 +26,13 @@ public class MySQLBinaryOperation implements MySQLExpression {
             public MySQLConstant apply(MySQLConstant left, MySQLConstant right) {
                 return applyBitOperation(left, right, (l, r) -> l | r);
             }
-        },
-        XOR("^") {
-            @Override
-            public MySQLConstant apply(MySQLConstant left, MySQLConstant right) {
-                return applyBitOperation(left, right, (l, r) -> l ^ r);
-            }
         };
+        // XOR("^") {
+        //     @Override
+        //     public MySQLConstant apply(MySQLConstant left, MySQLConstant right) {
+        //         return applyBitOperation(left, right, (l, r) -> l ^ r);
+        //     }
+        // };
 
         private String textRepresentation;
 
