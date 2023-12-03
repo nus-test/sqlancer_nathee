@@ -501,8 +501,8 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         LOAD_EXTENSION2("load_extension", 2, Attribute.NONDETERMINISTIC),// LOWER("LOWER", 1), //
         LTRIM1("LTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT), //
         // LTRIM2("LTRIM", 2), //
-        MAX("MAX", 2, Attribute.VARIADIC), //
-        MIN("MIN", 2, Attribute.VARIADIC), //
+        // MAX("MAX", 2, Attribute.VARIADIC), //
+        // MIN("MIN", 2, Attribute.VARIADIC), //
         // NULLIF("NULLIF", 2), //
         PRINTF("PRINTF", 1, Attribute.VARIADIC), //
         // QUOTE("QUOTE", 1), //
