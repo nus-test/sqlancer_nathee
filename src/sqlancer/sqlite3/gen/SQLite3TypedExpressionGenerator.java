@@ -538,11 +538,11 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         /*UNICODE("UNICODE", 1),*/ UNLIKELY("UNLIKELY", 1), //
         // UPPER("UPPER", 1); // "ZEROBLOB"
         // ZEROBLOB("ZEROBLOB", 1),
-        DATE("DATE", 3, Attribute.VARIADIC), //
-        TIME("TIME", 3, Attribute.VARIADIC), //
-        DATETIME("DATETIME", 3, Attribute.VARIADIC), //
-        JULIANDAY("JULIANDAY", 3, Attribute.VARIADIC), //
-        STRFTIME("STRFTIME", 3, Attribute.VARIADIC),
+        // DATE("DATE", 3, Attribute.VARIADIC), //
+        // TIME("TIME", 3, Attribute.VARIADIC), //
+        // DATETIME("DATETIME", 3, Attribute.VARIADIC), //
+        // JULIANDAY("JULIANDAY", 3, Attribute.VARIADIC), //
+        // STRFTIME("STRFTIME", 3, Attribute.VARIADIC),
         // json functions
         JSON("json", 1), //
         JSON_ARRAY("json_array", 2, Attribute.VARIADIC), JSON_ARRAY_LENGTH("json_array_length", 1), //
