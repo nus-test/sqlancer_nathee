@@ -223,14 +223,14 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         //     // TODO: append TEXT, CHAR
         //     sb.append(Randomly.fromOptions("CHAR"));
         //     break;
-        case REAL:
-            sb.append("FLOAT");
-            break;
-        case DECIMAL:
-            sb.append("DECIMAL");
-            break;
+        // case REAL:
+        //     sb.append("FLOAT");
+        //     break;
+        // case DECIMAL:
+        //     sb.append("DECIMAL");
+        //     break;
         case FLOAT:
-            sb.append("REAL");
+            sb.append("DOUBLE PRECISION");
             break;
 //        case RANGE:
 //            sb.append("int4range");

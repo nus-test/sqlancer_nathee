@@ -31,12 +31,12 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
     private final String databaseName;
 
     public enum PostgresDataType {
-        INT, BOOLEAN, TEXT, DECIMAL, FLOAT, REAL/*, RANGE, MONEY, BIT, INET*/;
+        INT, BOOLEAN, TEXT/*, DECIMAL*/, FLOAT, REAL/*, RANGE, MONEY, BIT, INET*/;
 
         public static PostgresDataType getRandomType() {
             List<PostgresDataType> dataTypes = new ArrayList<>(Arrays.asList(values()));
             if (PostgresProvider.generateOnlyKnown) {
-                dataTypes.remove(PostgresDataType.DECIMAL);
+                // dataTypes.remove(PostgresDataType.DECIMAL);
                 dataTypes.remove(PostgresDataType.FLOAT);
                 dataTypes.remove(PostgresDataType.REAL);
 //                dataTypes.remove(PostgresDataType.INET);
@@ -126,8 +126,8 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
         case "name":
         case "regclass":
             return PostgresDataType.TEXT;
-        case "numeric":
-            return PostgresDataType.DECIMAL;
+        // case "numeric":
+        //     return PostgresDataType.DECIMAL;
         case "double precision":
             return PostgresDataType.FLOAT;
         case "real":

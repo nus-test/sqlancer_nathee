@@ -308,7 +308,7 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
                 return generateIntExpression(depth);
             case TEXT:
                 return generateTextExpression(depth);
-            case DECIMAL:
+            // case DECIMAL:
             case REAL:
             case FLOAT:
 //            case MONEY:
@@ -327,7 +327,7 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
     private static PostgresCompoundDataType getCompoundDataType(PostgresDataType type) {
         switch (type) {
         case BOOLEAN:
-        case DECIMAL: // TODO
+        // case DECIMAL: // TODO
         case FLOAT:
         case INT:
 //        case MONEY:
@@ -496,8 +496,8 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
             }
         case TEXT:
             return PostgresConstant.createTextConstant(r.getString());
-        case DECIMAL:
-            return PostgresConstant.createDecimalConstant(r.getRandomBigDecimal());
+        // case DECIMAL:
+        //     return PostgresConstant.createDecimalConstant(r.getRandomBigDecimal());
         case FLOAT:
             return PostgresConstant.createFloatConstant((float) r.getDouble());
         case REAL:

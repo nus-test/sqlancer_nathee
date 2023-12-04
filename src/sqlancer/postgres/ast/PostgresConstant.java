@@ -422,12 +422,11 @@ public abstract class PostgresConstant implements PostgresExpression {
             return String.valueOf(val);
         }
 
-        @Override
-        public PostgresDataType getExpressionType() {
-            return PostgresDataType.DECIMAL;
-        }
-
-    }
+    
+        // @Override
+        // public PostgresDataType getExpressionType() {
+        //     return PostgresDataType.DECIMAL;
+        // }
 
     }
 
@@ -496,6 +495,7 @@ public abstract class PostgresConstant implements PostgresExpression {
             return PostgresDataType.FLOAT;
         }
 
+    }
 //    public static class BitConstant extends PostgresConstantBase {
 //
 //        private final long val;

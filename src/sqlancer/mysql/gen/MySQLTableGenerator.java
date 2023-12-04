@@ -350,11 +350,11 @@ public class MySQLTableGenerator {
             sb.append(Randomly.fromOptions("VARCHAR(255)"/*, "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"*/));
             break;
         case FLOAT:
-            sb.append("FLOAT");
-            optionallyAddPrecisionAndScale(sb);
-            break;
+            // sb.append("FLOAT");
+            // optionallyAddPrecisionAndScale(sb);
+            // break;
         case DOUBLE:
-            sb.append(Randomly.fromOptions("DOUBLE PRECISION", "FLOAT"));
+            sb.append(Randomly.fromOptions("DOUBLE PRECISION"/*, "FLOAT"*/));
             optionallyAddPrecisionAndScale(sb);
             break;
         default:
