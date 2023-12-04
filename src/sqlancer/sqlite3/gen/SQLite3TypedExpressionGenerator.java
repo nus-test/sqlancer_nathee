@@ -246,7 +246,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum TextExpression {
-        RANDOM_QUERY, BINARY_OPERATOR/*, COLLATE*/, CAST_EXPRESSION, FUNCTION, CASE_OPERATOR
+        RANDOM_QUERY, BINARY_OPERATOR/*, COLLATE, CAST_EXPRESSION*/, FUNCTION, CASE_OPERATOR
     }
 
     private SQLite3Expression generateTextExpression(int depth) {
@@ -268,8 +268,8 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return new SQLite3Expression.Sqlite3BinaryOperation(leftExpression, rightExpression, BinaryOperator.CONCATENATE);
             // case COLLATE:
             //     return new CollateOperation(getRandomExpression(SQLite3DataType.TEXT, depth + 1), SQLite3CollateSequence.random());
-            case CAST_EXPRESSION:
-                return getCastOperator(TypeLiteral.Type.TEXT, depth + 1);
+            // case CAST_EXPRESSION:
+            //     return getCastOperator(TypeLiteral.Type.TEXT, depth + 1);
             case CASE_OPERATOR:
                 allowNullValue = false;
                 SQLite3Expression expression = getCaseOperator(SQLite3DataType.TEXT, depth + 1);
