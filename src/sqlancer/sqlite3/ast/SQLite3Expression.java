@@ -1398,8 +1398,8 @@ public abstract class SQLite3Expression {
             //     return TypeAffinity.BLOB;
             case INT:
                 return TypeAffinity.INTEGER;
-            case NONE:
-                return TypeAffinity.NONE;
+            // case NONE:
+            //     return TypeAffinity.NONE;
             case REAL:
                 return TypeAffinity.REAL;
             case TEXT:

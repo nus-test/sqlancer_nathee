@@ -38,9 +38,9 @@ public class PostgresBinaryBitOperation extends BinaryOperatorNode<PostgresExpre
         super(left, right, op);
     }
 
-    @Override
-    public PostgresDataType getExpressionType() {
-        return PostgresDataType.BIT;
-    }
+//    @Override
+//    public PostgresDataType getExpressionType() {
+//        return PostgresDataType.BIT;
+//    }
 
 }

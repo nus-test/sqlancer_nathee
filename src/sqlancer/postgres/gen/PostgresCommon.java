@@ -165,10 +165,9 @@ public final class PostgresCommon {
                 sb.append("(");
                 sb.append(ThreadLocalRandom.current().nextInt(1, 500));
                 sb.append(")");
+            // } else {
+            //     sb.append("name");
             // }
-            } else {
-                sb.append("name");
-            }
             // if (Randomly.getBoolean() && !PostgresProvider.generateOnlyKnown) {
             //     sb.append(" COLLATE ");
             //     sb.append('"');
@@ -185,24 +184,24 @@ public final class PostgresCommon {
         case REAL:
             sb.append("FLOAT");
             break;
-        case RANGE:
-            sb.append(Randomly.fromOptions("int4range", "int4range")); // , "int8range", "numrange"
-            break;
-        case MONEY:
-            sb.append("money");
-            break;
-        case BIT:
-            sb.append("BIT");
-            // if (Randomly.getBoolean()) {
-            sb.append(" VARYING");
-            // }
-            sb.append("(");
-            sb.append(Randomly.getNotCachedInteger(1, 500));
-            sb.append(")");
-            break;
-        case INET:
-            sb.append("inet");
-            break;
+        // case RANGE:
+        //     sb.append(Randomly.fromOptions("int4range", "int4range")); // , "int8range", "numrange"
+        //     break;
+        // case MONEY:
+        //     sb.append("money");
+        //     break;
+//        case BIT:
+//            sb.append("BIT");
+//            // if (Randomly.getBoolean()) {
+//            // sb.append(" VARYING");
+//            // }
+//            // sb.append("(");
+//            // sb.append(Randomly.getNotCachedInteger(1, 500));
+//            // sb.append(")");
+//            break;
+        // case INET:
+        //     sb.append("inet");
+        //     break;
         default:
             throw new AssertionError(type);
         }
