@@ -24,7 +24,6 @@ import sqlancer.mysql.gen.MySQLDropIndex;
 import sqlancer.mysql.gen.MySQLInsertGenerator;
 import sqlancer.mysql.gen.MySQLSetGenerator;
 import sqlancer.mysql.gen.MySQLTableGenerator;
-import sqlancer.mysql.gen.MySQLTruncateTableGenerator;
 import sqlancer.mysql.gen.MySQLUpdateGenerator;
 import sqlancer.mysql.gen.admin.MySQLFlush;
 import sqlancer.mysql.gen.admin.MySQLReset;
@@ -53,7 +52,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         ANALYZE_TABLE(MySQLAnalyzeTable::analyze), //
         FLUSH(MySQLFlush::create), RESET(MySQLReset::create), CREATE_INDEX(MySQLIndexGenerator::create), //
         ALTER_TABLE(MySQLAlterTable::create), //
-        TRUNCATE_TABLE(MySQLTruncateTableGenerator::generate), //
+        // TRUNCATE_TABLE(MySQLTruncateTableGenerator::generate), //
         SELECT_INFO((g) -> new SQLQueryAdapter(
                 "select TABLE_NAME, ENGINE from information_schema.TABLES where table_schema = '" + g.getDatabaseName()
                         + "'")), //
@@ -122,9 +121,9 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         case ALTER_TABLE:
             nrPerformed = r.getInteger(0, 5);
             break;
-        case TRUNCATE_TABLE:
-            nrPerformed = r.getInteger(0, 2);
-            break;
+        // case TRUNCATE_TABLE:
+        //     nrPerformed = r.getInteger(0, 2);
+        //     break;
         case SELECT_INFO:
             nrPerformed = r.getInteger(0, 10);
             break;

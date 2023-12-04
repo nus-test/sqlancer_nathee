@@ -25,16 +25,13 @@ import sqlancer.common.query.SQLQueryProvider;
 import sqlancer.common.query.SQLancerResultSet;
 import sqlancer.sqlite3.SQLite3Options.SQLite3OracleFactory;
 import sqlancer.sqlite3.gen.SQLite3AnalyzeGenerator;
-import sqlancer.sqlite3.gen.SQLite3CreateVirtualRtreeTabelGenerator;
 import sqlancer.sqlite3.gen.SQLite3ExplainGenerator;
 import sqlancer.sqlite3.gen.SQLite3PragmaGenerator;
-import sqlancer.sqlite3.gen.SQLite3ReindexGenerator;
 import sqlancer.sqlite3.gen.SQLite3TransactionGenerator;
 import sqlancer.sqlite3.gen.SQLite3VacuumGenerator;
 import sqlancer.sqlite3.gen.SQLite3VirtualFTSTableCommandGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3AlterTable;
 import sqlancer.sqlite3.gen.ddl.SQLite3CreateTriggerGenerator;
-import sqlancer.sqlite3.gen.ddl.SQLite3CreateVirtualFTSTableGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3DropIndexGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3DropTableGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3IndexGenerator;
@@ -66,8 +63,8 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         CREATE_VIEW(SQLite3ViewGenerator::generate), // 2
         CREATE_TRIGGER(SQLite3CreateTriggerGenerator::create), // 3
         CREATE_TABLE(SQLite3TableGenerator::createRandomTableStatement), // 4
-        CREATE_VIRTUALTABLE(SQLite3CreateVirtualFTSTableGenerator::createRandomTableStatement), // 5
-        CREATE_RTREETABLE(SQLite3CreateVirtualRtreeTabelGenerator::createRandomTableStatement), // 6
+        // CREATE_VIRTUALTABLE(SQLite3CreateVirtualFTSTableGenerator::createRandomTableStatement), // 5
+        // CREATE_RTREETABLE(SQLite3CreateVirtualRtreeTabelGenerator::createRandomTableStatement), // 6
         INSERT(SQLite3InsertGenerator::insertRow), // 7
         DELETE(SQLite3DeleteGenerator::deleteContent), // 8
         ALTER(SQLite3AlterTable::alterTable), // 9
@@ -76,8 +73,8 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         DROP_TABLE(SQLite3DropTableGenerator::dropTable), // 12
         DROP_VIEW(SQLite3ViewGenerator::dropView), // 13
         VACUUM(SQLite3VacuumGenerator::executeVacuum), // 14
-        REINDEX(SQLite3ReindexGenerator::executeReindex), // 15
         ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16
+        // REINDEX(SQLite3ReindexGenerator::executeReindex), // 15
         EXPLAIN(SQLite3ExplainGenerator::explain), // 17
         CHECK_RTREE_TABLE((g) -> {
             SQLite3Table table = g.getSchema().getRandomTableOrBailout(t -> t.getName().startsWith("r"));
@@ -163,12 +160,12 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             nrPerformed = r.getInteger(0, 20);
             break;
         case CREATE_TABLE:
-        case CREATE_VIRTUALTABLE:
-        case CREATE_RTREETABLE:
-            nrPerformed = 0;
-            break;
+        // case CREATE_VIRTUALTABLE:
+        // case CREATE_RTREETABLE:
+        //     nrPerformed = 0;
+        //     break;
         case TRANSACTION_START:
-        case REINDEX:
+        // case REINDEX:
         case ANALYZE:
         case ROLLBACK_TRANSACTION:
         case COMMIT:
@@ -201,11 +198,11 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             } while (globalState.getSchema().getDatabaseTables().size() < nrTablesToCreate);
             assert globalState.getSchema().getTables().getTables().size() == nrTablesToCreate;
             checkTablesForGeneratedColumnLoops(globalState);
-            if (globalState.getDbmsSpecificOptions().testDBStats && Randomly.getBooleanWithSmallProbability()) {
-                SQLQueryAdapter tableQuery = new SQLQueryAdapter(
-                        "CREATE VIRTUAL TABLE IF NOT EXISTS stat USING dbstat(main)");
-                globalState.executeStatement(tableQuery);
-            }
+            // if (globalState.getDbmsSpecificOptions().testDBStats && Randomly.getBooleanWithSmallProbability()) {
+            //     SQLQueryAdapter tableQuery = new SQLQueryAdapter(
+            //             "CREATE VIRTUAL TABLE IF NOT EXISTS stat USING dbstat(main)");
+            //     globalState.executeStatement(tableQuery);
+            // }
             StatementExecutor<SQLite3GlobalState, Action> se = new StatementExecutor<>(globalState, Action.values(),
                     SQLite3Provider::mapActions, (q) -> {
                         if (q.couldAffectSchema() && globalState.getSchema().getDatabaseTables().isEmpty()) {
@@ -250,15 +247,15 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             String tableName = DBMSCommon.createTableName(i);
             tableQuery = SQLite3TableGenerator.createTableStatement(tableName, globalState);
             break;
-        case FTS:
-            String ftsTableName = "v" + DBMSCommon.createTableName(i);
-            tableQuery = SQLite3CreateVirtualFTSTableGenerator.createTableStatement(ftsTableName,
-                    globalState.getRandomly());
-            break;
-        case RTREE:
-            String rTreeTableName = "rt" + i;
-            tableQuery = SQLite3CreateVirtualRtreeTabelGenerator.createTableStatement(rTreeTableName, globalState);
-            break;
+        // case FTS:
+        //     String ftsTableName = "v" + DBMSCommon.createTableName(i);
+        //     tableQuery = SQLite3CreateVirtualFTSTableGenerator.createTableStatement(ftsTableName,
+        //             globalState.getRandomly());
+        //     break;
+        // case RTREE:
+        //     String rTreeTableName = "rt" + i;
+        //     tableQuery = SQLite3CreateVirtualRtreeTabelGenerator.createTableStatement(rTreeTableName, globalState);
+        //     break;
         default:
             throw new AssertionError();
         }

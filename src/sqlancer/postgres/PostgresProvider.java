@@ -25,21 +25,15 @@ import sqlancer.common.query.SQLancerResultSet;
 import sqlancer.postgres.PostgresOptions.PostgresOracleFactory;
 import sqlancer.postgres.gen.PostgresAlterTableGenerator;
 import sqlancer.postgres.gen.PostgresAnalyzeGenerator;
-import sqlancer.postgres.gen.PostgresClusterGenerator;
-import sqlancer.postgres.gen.PostgresCommentGenerator;
 import sqlancer.postgres.gen.PostgresDeleteGenerator;
 import sqlancer.postgres.gen.PostgresDiscardGenerator;
 import sqlancer.postgres.gen.PostgresDropIndexGenerator;
 import sqlancer.postgres.gen.PostgresIndexGenerator;
 import sqlancer.postgres.gen.PostgresInsertGenerator;
 import sqlancer.postgres.gen.PostgresNotifyGenerator;
-import sqlancer.postgres.gen.PostgresReindexGenerator;
-import sqlancer.postgres.gen.PostgresSequenceGenerator;
 import sqlancer.postgres.gen.PostgresSetGenerator;
-import sqlancer.postgres.gen.PostgresStatisticsGenerator;
 import sqlancer.postgres.gen.PostgresTableGenerator;
 import sqlancer.postgres.gen.PostgresTransactionGenerator;
-import sqlancer.postgres.gen.PostgresTruncateGenerator;
 import sqlancer.postgres.gen.PostgresUpdateGenerator;
 import sqlancer.postgres.gen.PostgresVacuumGenerator;
 import sqlancer.postgres.gen.PostgresViewGenerator;
@@ -77,7 +71,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         ANALYZE(PostgresAnalyzeGenerator::create), //
         ALTER_TABLE(g -> PostgresAlterTableGenerator.create(g.getSchema().getRandomTable(t -> !t.isView()), g,
                 generateOnlyKnown)), //
-        CLUSTER(PostgresClusterGenerator::create), //
+        // CLUSTER(PostgresClusterGenerator::create), //
         COMMIT(g -> {
             SQLQueryAdapter query;
             if (Randomly.getBoolean()) {
@@ -89,26 +83,25 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             }
             return query;
         }), //
-        CREATE_STATISTICS(PostgresStatisticsGenerator::insert), //
-        DROP_STATISTICS(PostgresStatisticsGenerator::remove), //
+        // CREATE_STATISTICS(PostgresStatisticsGenerator::insert), //
+        // DROP_STATISTICS(PostgresStatisticsGenerator::remove), //
         DELETE(PostgresDeleteGenerator::create), //
         DISCARD(PostgresDiscardGenerator::create), //
         DROP_INDEX(PostgresDropIndexGenerator::create), //
         INSERT(PostgresInsertGenerator::insert), //
         UPDATE(PostgresUpdateGenerator::create), //
-        TRUNCATE(PostgresTruncateGenerator::create), //
+        // TRUNCATE(PostgresTruncateGenerator::create), //
         VACUUM(PostgresVacuumGenerator::create), //
-        REINDEX(PostgresReindexGenerator::create), //
         SET(PostgresSetGenerator::create), //
+        // REINDEX(PostgresReindexGenerator::create), //
         CREATE_INDEX(PostgresIndexGenerator::generate), //
-        SET_CONSTRAINTS((g) -> {
-            StringBuilder sb = new StringBuilder();
-            sb.append("SET CONSTRAINTS ALL ");
-            sb.append(Randomly.fromOptions("DEFERRED", "IMMEDIATE"));
-            return new SQLQueryAdapter(sb.toString());
-        }), //
+        // SET_CONSTRAINTS((g) -> {
+        //     StringBuilder sb = new StringBuilder();
+        //     sb.append("SET CONSTRAINTS ALL ");
+        //     sb.append(Randomly.fromOptions("DEFERRED", "IMMEDIATE"));
+        //     return new SQLQueryAdapter(sb.toString());
+        // }), //
         RESET_ROLE((g) -> new SQLQueryAdapter("RESET ROLE")), //
-        COMMENT_ON(PostgresCommentGenerator::generate), //
         RESET((g) -> new SQLQueryAdapter("RESET ALL") /*
                                                        * https://www.postgresql.org/docs/devel/sql-reset.html TODO: also
                                                        * configuration parameter
@@ -116,7 +109,8 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         NOTIFY(PostgresNotifyGenerator::createNotify), //
         LISTEN((g) -> PostgresNotifyGenerator.createListen()), //
         UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), //
-        CREATE_SEQUENCE(PostgresSequenceGenerator::createSequence), //
+        // COMMENT_ON(PostgresCommentGenerator::generate), //
+        // CREATE_SEQUENCE(PostgresSequenceGenerator::createSequence), //
         CREATE_VIEW(PostgresViewGenerator::create);
 
         private final SQLQueryProvider<PostgresGlobalState> sqlQueryProvider;
@@ -136,13 +130,14 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         int nrPerformed;
         switch (a) {
         case CREATE_INDEX:
-        case CLUSTER:
             nrPerformed = r.getInteger(0, 3);
             break;
-        case CREATE_STATISTICS:
-            nrPerformed = r.getInteger(0, 5);
-            break;
-        case DISCARD:
+        // case CLUSTER:
+        //     nrPerformed = r.getInteger(0, 3);
+        //     break;
+        // case CREATE_STATISTICS:
+        //     nrPerformed = r.getInteger(0, 5);
+        //     break;
         case DROP_INDEX:
             nrPerformed = r.getInteger(0, 5);
             break;
@@ -152,7 +147,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         case ALTER_TABLE:
             nrPerformed = r.getInteger(0, 5);
             break;
-        case REINDEX:
+        // case REINDEX:
         case RESET:
             nrPerformed = r.getInteger(0, 3);
             break;
@@ -165,16 +160,16 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             nrPerformed = r.getInteger(0, 3);
             break;
         case VACUUM:
-        case SET_CONSTRAINTS:
-        case COMMENT_ON:
         case NOTIFY:
         case LISTEN:
         case UNLISTEN:
-        case CREATE_SEQUENCE:
-        case DROP_STATISTICS:
-        case TRUNCATE:
-            nrPerformed = r.getInteger(0, 2);
-            break;
+        // case SET_CONSTRAINTS:
+        // case COMMENT_ON:
+        // case CREATE_SEQUENCE:
+        // case DROP_STATISTICS:
+        // case TRUNCATE:
+        //     nrPerformed = r.getInteger(0, 2);
+        //     break;
         case CREATE_VIEW:
             nrPerformed = r.getInteger(0, 2);
             break;
