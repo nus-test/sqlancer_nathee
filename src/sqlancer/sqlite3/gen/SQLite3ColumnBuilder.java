@@ -75,20 +75,20 @@ public class SQLite3ColumnBuilder {
                         sb.append(" PRIMARY KEY");
                         containsPrimaryKey = true;
                         boolean hasOrdering = Randomly.getBoolean();
-                        if (hasOrdering) {
-                            if (Randomly.getBoolean()) {
-                                sb.append(" ASC");
-                            } else {
-                                sb.append(" DESC");
-                            }
-                        }
+                        // if (hasOrdering) {
+                        //     if (Randomly.getBoolean()) {
+                        //         sb.append(" ASC");
+                        //     } else {
+                        //         sb.append(" DESC");
+                        //     }
+                        // }
                         if (Randomly.getBoolean()) {
                             insertOnConflictClause();
                         }
-                        if (!hasOrdering && dataType.equals("INTEGER") && Randomly.getBoolean()) {
-                            containsAutoIncrement = true;
-                            sb.append(" AUTOINCREMENT");
-                        }
+                        // if (!hasOrdering && dataType.equals("INTEGER") && Randomly.getBoolean()) {
+                        //     containsAutoIncrement = true;
+                        //     sb.append(" AUTOINCREMENT");
+                        // }
                     }
                     break;
                 case UNIQUE:

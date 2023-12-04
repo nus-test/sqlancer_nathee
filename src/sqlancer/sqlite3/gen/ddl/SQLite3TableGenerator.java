@@ -150,9 +150,9 @@ public class SQLite3TableGenerator {
                 sb.append(", ");
             }
             sb.append(Randomly.fromList(columnNames));
-            if (Randomly.getBoolean()) {
-                sb.append(Randomly.fromOptions(" ASC", " DESC"));
-            }
+            // if (Randomly.getBoolean()) {
+            //     sb.append(Randomly.fromOptions(" ASC", " DESC"));
+            // }
         }
         sb.append(")");
     }
