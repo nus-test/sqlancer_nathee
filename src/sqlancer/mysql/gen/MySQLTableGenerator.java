@@ -347,7 +347,7 @@ public class MySQLTableGenerator {
             // }
             break;
         case VARCHAR:
-            sb.append(Randomly.fromOptions("VARCHAR(500)"/*, "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"*/));
+            sb.append(Randomly.fromOptions("VARCHAR(255)"/*, "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"*/));
             break;
         case FLOAT:
             sb.append("FLOAT");
