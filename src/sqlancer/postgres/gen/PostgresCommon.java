@@ -175,14 +175,14 @@ public final class PostgresCommon {
             //     sb.append('"');
             // }
             break;
-        case DECIMAL:
-            sb.append("DECIMAL");
-            break;
+        // case DECIMAL:
+        //     sb.append("DECIMAL");
+        //     break;
         case FLOAT:
-            sb.append("REAL");
-            break;
+            // sb.append("REAL");
+            // break;
         case REAL:
-            sb.append("FLOAT");
+            // sb.append("FLOAT");
             sb.append("DOUBLE PRECISION");
             break;
         // case RANGE:

@@ -422,12 +422,11 @@ public abstract class PostgresConstant implements PostgresExpression {
             return String.valueOf(val);
         }
 
-        @Override
-        public PostgresDataType getExpressionType() {
-            return PostgresDataType.DECIMAL;
-        }
-
     }
+        // @Override
+        // public PostgresDataType getExpressionType() {
+        //     return PostgresDataType.DECIMAL;
+        // }
 
     }
 
