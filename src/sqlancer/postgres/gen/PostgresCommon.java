@@ -209,7 +209,7 @@ public final class PostgresCommon {
     }
 
     public enum TableConstraints {
-        CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY, EXCLUDE
+        CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY//, EXCLUDE
     }
 
     private enum StorageParameters {
@@ -300,13 +300,13 @@ public final class PostgresCommon {
             sb.append("UNIQUE(");
             sb.append(randomNonEmptyColumnSubset.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
             sb.append(")");
-            appendIndexParameters(sb, globalState, errors);
+            // appendIndexParameters(sb, globalState, errors);
             break;
         case PRIMARY_KEY:
             sb.append("PRIMARY KEY(");
             sb.append(randomNonEmptyColumnSubset.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
             sb.append(")");
-            appendIndexParameters(sb, globalState, errors);
+            // appendIndexParameters(sb, globalState, errors);
             break;
         case FOREIGN_KEY:
             sb.append("FOREIGN KEY (");
@@ -348,36 +348,37 @@ public final class PostgresCommon {
             //     }
             // }
             break;
-        case EXCLUDE:
-            sb.append("EXCLUDE ");
-            sb.append("(");
-            // TODO [USING index_method ]
-            for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
-                if (i != 0) {
-                    sb.append(", ");
-                }
-                appendExcludeElement(sb, globalState, table.getColumns());
-                sb.append(" WITH ");
-                appendOperator(sb, globalState.getOperators());
-            }
-            sb.append(")");
-            appendIndexParameters(sb, globalState, errors);
-            errors.add("is not valid");
-            errors.add("no operator matches");
-            errors.add("operator does not exist");
-            errors.add("unknown has no default operator class");
-            errors.add("exclusion constraints are not supported on partitioned tables");
-            errors.add("The exclusion operator must be related to the index operator class for the constraint");
-            errors.add("could not create exclusion constraint");
-            // TODO: index parameters
-            if (Randomly.getBoolean()) {
-                sb.append(" WHERE ");
-                sb.append("(");
-                sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
-                        table.getColumns(), PostgresDataType.BOOLEAN)));
-                sb.append(")");
-            }
             break;
+        // case EXCLUDE:
+        //     sb.append("EXCLUDE ");
+        //     sb.append("(");
+        //     // TODO [USING index_method ]
+        //     for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
+        //         if (i != 0) {
+        //             sb.append(", ");
+        //         }
+        //         appendExcludeElement(sb, globalState, table.getColumns());
+        //         sb.append(" WITH ");
+        //         appendOperator(sb, globalState.getOperators());
+        //     }
+        //     sb.append(")");
+        //     appendIndexParameters(sb, globalState, errors);
+        //     errors.add("is not valid");
+        //     errors.add("no operator matches");
+        //     errors.add("operator does not exist");
+        //     errors.add("unknown has no default operator class");
+        //     errors.add("exclusion constraints are not supported on partitioned tables");
+        //     errors.add("The exclusion operator must be related to the index operator class for the constraint");
+        //     errors.add("could not create exclusion constraint");
+        //     // TODO: index parameters
+        //     if (Randomly.getBoolean()) {
+        //         sb.append(" WHERE ");
+        //         sb.append("(");
+        //         sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
+        //                 table.getColumns(), PostgresDataType.BOOLEAN)));
+        //         sb.append(")");
+        //     }
+        //     break;
         default:
             throw new AssertionError(t);
         }

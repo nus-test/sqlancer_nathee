@@ -71,9 +71,9 @@ public class PostgresTableGenerator {
             sb.append(" ");
             isTemporaryTable = true;
             sb.append(Randomly.fromOptions("TEMPORARY"/*, "TEMP"*/));
-        } else if (Randomly.getBoolean()) {
-            sb.append(" UNLOGGED");
-        }
+        } //else if (Randomly.getBoolean()) {
+        //     sb.append(" UNLOGGED");
+        // }
         sb.append(" TABLE");
         if (Randomly.getBoolean()) {
             sb.append(" IF NOT EXISTS");
@@ -110,10 +110,10 @@ public class PostgresTableGenerator {
             PostgresCommon.addTableConstraints(columnHasPrimaryKey, sb, table, globalState, errors);
         }
         sb.append(")");
-        generateInherits();
+        // generateInherits();
         // generatePartitionBy();
-        generateUsing();
-        PostgresCommon.generateWith(sb, globalState, errors);
+        // generateUsing();
+        // PostgresCommon.generateWith(sb, globalState, errors);
         // if (Randomly.getBoolean() && isTemporaryTable) {
         //     sb.append(" ON COMMIT ");
         //     sb.append(Randomly.fromOptions("PRESERVE ROWS", "DELETE ROWS", "DROP"));
@@ -282,9 +282,9 @@ public class PostgresTableGenerator {
             //     sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
             //             columnsToBeAdded, PostgresDataType.BOOLEAN)));
             //     sb.append(")");
-                if (Randomly.getBoolean()) {
-                    sb.append(" NO INHERIT");
-                }
+            //     if (Randomly.getBoolean()) {
+            //         sb.append(" NO INHERIT");
+            //     }
             //     errors.add("out of range");
             //     break;
             case GENERATED:

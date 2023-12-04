@@ -136,11 +136,11 @@ public class SQLite3TableGenerator {
         }
 
         sb.append(")");
-        if (globalState.getDbmsSpecificOptions().testWithoutRowids && containsPrimaryKey && !containsAutoIncrement
-                && Randomly.getBoolean()) {
-            // see https://sqlite.org/withoutrowid.html
-            sb.append(" WITHOUT ROWID");
-        }
+        // if (globalState.getDbmsSpecificOptions().testWithoutRowids && containsPrimaryKey && !containsAutoIncrement
+        //         && Randomly.getBoolean()) {
+        //     // see https://sqlite.org/withoutrowid.html
+        //     sb.append(" WITHOUT ROWID");
+        // }
     }
 
     private void addColumnConstraints(String s) {

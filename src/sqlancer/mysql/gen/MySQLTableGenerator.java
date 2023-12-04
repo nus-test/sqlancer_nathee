@@ -69,7 +69,7 @@ public class MySQLTableGenerator {
             }
             sb.append(")");
             sb.append(" ");
-            appendTableOptions();
+            // appendTableOptions();
             // appendPartitionOptions();
             if ((tableHasNullableColumn || setPrimaryKey) && engine == MySQLEngine.CSV) {
                 if (true) { // TODO
