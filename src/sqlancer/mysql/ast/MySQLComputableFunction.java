@@ -91,6 +91,20 @@ public class MySQLComputableFunction implements MySQLExpression {
                 return true;
             }
 
+            @Override
+            public boolean supportsReturnType(MySQLDataType type) {
+                return true;
+            }
+
+            @Override
+            public MySQLDataType[] getInputTypesForReturnType(MySQLDataType returnType, int nrArguments) {
+                MySQLDataType[] args = new MySQLDataType[nrArguments];
+                for (int i = 0; i < nrArguments; i++) {
+                    args[i] = returnType;
+                }
+                return args;
+            }
+
         },
         /**
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/control-flow-functions.html#function_if">Flow Control
@@ -200,6 +214,10 @@ public class MySQLComputableFunction implements MySQLExpression {
         public boolean isVariadic() {
             return variadic;
         }
+
+        public abstract boolean supportsReturnType(MySQLDataType type);
+
+        public abstract MySQLDataType[] getInputTypesForReturnType(MySQLDataType returnType, int nrArguments);
 
         public String getName() {
             return functionName;

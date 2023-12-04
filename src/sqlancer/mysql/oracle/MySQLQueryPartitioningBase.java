@@ -18,13 +18,14 @@ import sqlancer.mysql.ast.MySQLExpression;
 import sqlancer.mysql.ast.MySQLSelect;
 import sqlancer.mysql.ast.MySQLTableReference;
 import sqlancer.mysql.gen.MySQLExpressionGenerator;
+import sqlancer.mysql.gen.MySQLTypedExpressionGenerator;
 
 public abstract class MySQLQueryPartitioningBase extends
         TernaryLogicPartitioningOracleBase<MySQLExpression, MySQLGlobalState> implements TestOracle<MySQLGlobalState> {
 
     MySQLSchema s;
     MySQLTables targetTables;
-    MySQLExpressionGenerator gen;
+    MySQLTypedExpressionGenerator gen;
     MySQLSelect select;
 
     public MySQLQueryPartitioningBase(MySQLGlobalState state) {
@@ -36,7 +37,7 @@ public abstract class MySQLQueryPartitioningBase extends
     public void check() throws SQLException {
         s = state.getSchema();
         targetTables = s.getRandomTableNonEmptyTables();
-        gen = new MySQLExpressionGenerator(state).setColumns(targetTables.getColumns());
+        gen = new MySQLTypedExpressionGenerator(state).setColumns(targetTables.getColumns());
         initializeTernaryPredicateVariants();
         select = new MySQLSelect();
         select.setFetchColumns(generateFetchColumns());

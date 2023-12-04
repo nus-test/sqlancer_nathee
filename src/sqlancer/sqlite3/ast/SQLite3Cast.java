@@ -43,6 +43,8 @@ public final class SQLite3Cast {
         case REAL:
             double doubleVal = numericValue.asDouble();
             return Optional.of(doubleVal != 0 && !Double.isNaN(doubleVal));
+        case BOOLEAN:
+            return Optional.of(numericValue.asBoolean());
         default:
             throw new AssertionError(numericValue);
         }

@@ -42,6 +42,16 @@ public class SQLite3Function extends SQLite3Expression {
                     return SQLite3Constant.createRealConstant(absVal);
                 }
             }
+
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return type == SQLite3DataType.INT;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                return new SQLite3DataType[] { returnType };
+            }
         },
 
         COALESCE(2, "COALESCE") {
@@ -59,6 +69,20 @@ public class SQLite3Function extends SQLite3Expression {
             @Override
             public boolean isVariadic() {
                 return true;
+            }
+
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return true;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                SQLite3DataType[] args = new SQLite3DataType[nrArguments];
+                for (int i = 0; i < nrArguments; i++) {
+                    args[i] = returnType;
+                }
+                return args;
             }
 
         },
@@ -92,6 +116,16 @@ public class SQLite3Function extends SQLite3Expression {
                 } else {
                     return SQLite3Constant.createNullConstant();
                 }
+            }
+
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return type == SQLite3DataType.TEXT;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
         },
         LIKELY(1, "LIKELY") {
@@ -136,6 +170,16 @@ public class SQLite3Function extends SQLite3Expression {
                 }
             }
 
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return type == SQLite3DataType.TEXT;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                return new SQLite3DataType[] { SQLite3DataType.TEXT };
+            }
+
         },
         NULLIF(2, "NULLIF") {
             @Override
@@ -168,6 +212,16 @@ public class SQLite3Function extends SQLite3Expression {
                 }
                 return apply(args, collateSequence);
             }
+
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return true;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                return new SQLite3DataType[] { returnType, returnType };
+            }
         },
         TRIM(1, "TRIM") {
 
@@ -182,6 +236,15 @@ public class SQLite3Function extends SQLite3Expression {
                 }
             }
 
+            @Override
+            public boolean supportsReturnType(SQLite3DataType type) {
+                return type == SQLite3DataType.TEXT;
+            }
+
+            @Override
+            public SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments) {
+                return new SQLite3DataType[] { SQLite3DataType.TEXT };
+            }
         },
         TRIM_TWO_ARGS(2, "TRIM") {
 
@@ -300,6 +363,10 @@ public class SQLite3Function extends SQLite3Expression {
         public boolean isVariadic() {
             return false;
         }
+
+        public abstract boolean supportsReturnType(SQLite3DataType type);
+
+        public abstract SQLite3DataType[] getInputTypesForReturnType(SQLite3DataType returnType, int nrArguments);
 
         public TypeAffinity getAffinity(SQLite3Expression... args) {
             return TypeAffinity.NONE;

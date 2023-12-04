@@ -7,6 +7,8 @@ import sqlancer.Randomly;
 import sqlancer.sqlite3.SQLite3GlobalState;
 import sqlancer.sqlite3.SQLite3Provider;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column.SQLite3CollateSequence;
 
@@ -19,7 +21,7 @@ public class SQLite3WindowFunction extends SQLite3Expression {
         WindowFunction func = Randomly.fromOptions(WindowFunction.values());
         SQLite3Expression[] args = new SQLite3Expression[func.nrArgs];
         for (int i = 0; i < args.length; i++) {
-            args[i] = new SQLite3ExpressionGenerator(globalState).setColumns(columns).generateExpression();
+            args[i] = new SQLite3TypedExpressionGenerator(globalState).setColumns(columns).generateExpression(SQLite3DataType.INT);
         }
         return new SQLite3WindowFunction(func, args);
     }

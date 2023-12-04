@@ -25,6 +25,8 @@ import sqlancer.sqlite3.ast.SQLite3UnaryOperation;
 import sqlancer.sqlite3.ast.SQLite3UnaryOperation.UnaryOperator;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Tables;
 
@@ -32,7 +34,7 @@ public class SQLite3TLPAggregateOracle implements TestOracle<SQLite3GlobalState>
 
     private final SQLite3GlobalState state;
     private final ExpectedErrors errors = new ExpectedErrors();
-    private SQLite3ExpressionGenerator gen;
+    private SQLite3TypedExpressionGenerator gen;
     private String generatedQueryString;
 
     public SQLite3TLPAggregateOracle(SQLite3GlobalState state) {
@@ -44,12 +46,12 @@ public class SQLite3TLPAggregateOracle implements TestOracle<SQLite3GlobalState>
     public void check() throws SQLException {
         SQLite3Schema s = state.getSchema();
         SQLite3Tables targetTables = s.getRandomTableNonEmptyTables();
-        gen = new SQLite3ExpressionGenerator(state).setColumns(targetTables.getColumns());
+        gen = new SQLite3TypedExpressionGenerator(state).setColumns(targetTables.getColumns());
         SQLite3Select select = new SQLite3Select();
         SQLite3AggregateFunction windowFunction = Randomly.fromOptions(SQLite3Aggregate.SQLite3AggregateFunction.MIN,
                 SQLite3Aggregate.SQLite3AggregateFunction.MAX, SQLite3AggregateFunction.SUM,
                 SQLite3AggregateFunction.TOTAL);
-        SQLite3Aggregate aggregate = new SQLite3Aggregate(gen.getRandomExpressions(1), windowFunction);
+        SQLite3Aggregate aggregate = new SQLite3Aggregate(gen.getRandomExpressions(SQLite3DataType.INT, 1), windowFunction);
         select.setFetchColumns(Arrays.asList(aggregate));
         List<SQLite3Expression> from = SQLite3Common.getTableRefs(targetTables.getTables(), s);
         select.setFromList(from);
@@ -58,7 +60,7 @@ public class SQLite3TLPAggregateOracle implements TestOracle<SQLite3GlobalState>
         }
         String originalQuery = SQLite3Visitor.asString(select);
         generatedQueryString = originalQuery;
-        SQLite3Expression whereClause = gen.generateExpression();
+        SQLite3Expression whereClause = gen.generateExpression(SQLite3DataType.BOOLEAN);
         SQLite3UnaryOperation negatedClause = new SQLite3UnaryOperation(UnaryOperator.NOT, whereClause);
         SQLite3PostfixUnaryOperation notNullClause = new SQLite3PostfixUnaryOperation(PostfixUnaryOperator.ISNULL,
                 whereClause);
@@ -117,7 +119,7 @@ public class SQLite3TLPAggregateOracle implements TestOracle<SQLite3GlobalState>
         leftSelect.setFromList(from);
         leftSelect.setWhereClause(whereClause);
         if (Randomly.getBooleanWithRatherLowProbability()) {
-            leftSelect.setGroupByClause(gen.getRandomExpressions(Randomly.smallNumber() + 1));
+            leftSelect.setGroupByClause(gen.getRandomExpressions(Randomly.fromOptions(SQLite3DataType.values()), Randomly.smallNumber() + 1));
         }
         if (Randomly.getBoolean()) {
             leftSelect.setOrderByExpressions(gen.generateOrderBys());

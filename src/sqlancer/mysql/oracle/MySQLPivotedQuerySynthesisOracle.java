@@ -13,6 +13,7 @@ import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.mysql.MySQLErrors;
 import sqlancer.mysql.MySQLGlobalState;
 import sqlancer.mysql.MySQLSchema.MySQLColumn;
+import sqlancer.mysql.MySQLSchema.MySQLDataType;
 import sqlancer.mysql.MySQLSchema.MySQLRowValue;
 import sqlancer.mysql.MySQLSchema.MySQLTable;
 import sqlancer.mysql.MySQLSchema.MySQLTables;
@@ -27,6 +28,7 @@ import sqlancer.mysql.ast.MySQLUnaryPostfixOperation.UnaryPostfixOperator;
 import sqlancer.mysql.ast.MySQLUnaryPrefixOperation;
 import sqlancer.mysql.ast.MySQLUnaryPrefixOperation.MySQLUnaryPrefixOperator;
 import sqlancer.mysql.gen.MySQLExpressionGenerator;
+import sqlancer.mysql.gen.MySQLTypedExpressionGenerator;
 
 public class MySQLPivotedQuerySynthesisOracle
         extends PivotedQuerySynthesisBase<MySQLGlobalState, MySQLRowValue, MySQLExpression, SQLConnection> {
@@ -66,7 +68,7 @@ public class MySQLPivotedQuerySynthesisOracle
         }
         List<String> modifiers = Randomly.subset("STRAIGHT_JOIN", "SQL_SMALL_RESULT", "SQL_BIG_RESULT", "SQL_NO_CACHE");
         selectStatement.setModifiers(modifiers);
-        List<MySQLExpression> orderBy = new MySQLExpressionGenerator(globalState).setColumns(columns)
+        List<MySQLExpression> orderBy = new MySQLTypedExpressionGenerator(globalState).setColumns(columns)
                 .generateOrderBys();
         selectStatement.setOrderByExpressions(orderBy);
 
@@ -99,8 +101,8 @@ public class MySQLPivotedQuerySynthesisOracle
     }
 
     private MySQLExpression generateRectifiedExpression(List<MySQLColumn> columns, MySQLRowValue rw) {
-        MySQLExpression expression = new MySQLExpressionGenerator(globalState).setRowVal(rw).setColumns(columns)
-                .generateExpression();
+        MySQLExpression expression = new MySQLTypedExpressionGenerator(globalState).setRowVal(rw).setColumns(columns)
+                .generateExpression(MySQLDataType.BOOLEAN);
         MySQLConstant expectedValue = expression.getExpectedValue();
         MySQLExpression result;
         if (expectedValue.isNull()) {

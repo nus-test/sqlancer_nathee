@@ -9,13 +9,14 @@ import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.mysql.MySQLErrors;
 import sqlancer.mysql.MySQLGlobalState;
 import sqlancer.mysql.MySQLSchema.MySQLColumn;
+import sqlancer.mysql.MySQLSchema.MySQLDataType;
 import sqlancer.mysql.MySQLSchema.MySQLTable;
 import sqlancer.mysql.MySQLVisitor;
 
 public class MySQLUpdateGenerator extends AbstractUpdateGenerator<MySQLColumn> {
 
     private final MySQLGlobalState globalState;
-    private MySQLExpressionGenerator gen;
+    private MySQLTypedExpressionGenerator gen;
 
     public MySQLUpdateGenerator(MySQLGlobalState globalState) {
         this.globalState = globalState;
@@ -28,7 +29,7 @@ public class MySQLUpdateGenerator extends AbstractUpdateGenerator<MySQLColumn> {
     private SQLQueryAdapter generate() throws SQLException {
         MySQLTable table = globalState.getSchema().getRandomTable(t -> !t.isView());
         List<MySQLColumn> columns = table.getRandomNonEmptyColumnSubset();
-        gen = new MySQLExpressionGenerator(globalState).setColumns(table.getColumns());
+        gen = new MySQLTypedExpressionGenerator(globalState).setColumns(table.getColumns());
         sb.append("UPDATE ");
         sb.append(table.getName());
         sb.append(" SET ");
@@ -36,7 +37,7 @@ public class MySQLUpdateGenerator extends AbstractUpdateGenerator<MySQLColumn> {
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
             MySQLErrors.addExpressionErrors(errors);
-            sb.append(MySQLVisitor.asString(gen.generateExpression()));
+            sb.append(MySQLVisitor.asString(gen.generateExpression(MySQLDataType.BOOLEAN)));
         }
         errors.add("doesn't have a default value");
         errors.add("Data truncation");
@@ -53,11 +54,11 @@ public class MySQLUpdateGenerator extends AbstractUpdateGenerator<MySQLColumn> {
     @Override
     protected void updateValue(MySQLColumn column) {
         if (Randomly.getBoolean()) {
-            sb.append(gen.generateConstant());
+            sb.append(gen.generateConstant(column.getType()));
         } else if (Randomly.getBoolean()) {
             sb.append("DEFAULT");
         } else {
-            sb.append(MySQLVisitor.asString(gen.generateExpression()));
+            sb.append(MySQLVisitor.asString(gen.generateExpression(column.getType())));
         }
     }
 

@@ -15,6 +15,7 @@ import sqlancer.mysql.MySQLSchema.MySQLTable.MySQLEngine;
 import sqlancer.mysql.MySQLVisitor;
 import sqlancer.mysql.ast.MySQLExpression;
 import sqlancer.mysql.gen.MySQLExpressionGenerator;
+import sqlancer.mysql.gen.MySQLTypedExpressionGenerator;
 
 public class MySQLIndexGenerator {
 
@@ -50,7 +51,7 @@ public class MySQLIndexGenerator {
         indexType();
         sb.append(" ON ");
         MySQLTable table = schema.getRandomTable();
-        MySQLExpressionGenerator gen = new MySQLExpressionGenerator(globalState).setColumns(table.getColumns());
+        MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(table.getColumns());
         sb.append(table.getName());
         sb.append("(");
         if (table.getEngine() == MySQLEngine.INNO_DB && Randomly.getBoolean()) {
@@ -59,7 +60,7 @@ public class MySQLIndexGenerator {
                     sb.append(", ");
                 }
                 sb.append("(");
-                MySQLExpression randExpr = gen.generateExpression();
+                MySQLExpression randExpr = gen.generateExpression(Randomly.fromOptions(MySQLDataType.values()));
                 sb.append(MySQLVisitor.asString(randExpr));
                 sb.append(")");
 

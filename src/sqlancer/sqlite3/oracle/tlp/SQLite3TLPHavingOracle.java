@@ -24,6 +24,7 @@ import sqlancer.sqlite3.ast.SQLite3UnaryOperation;
 import sqlancer.sqlite3.ast.SQLite3UnaryOperation.UnaryOperator;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
 import sqlancer.sqlite3.schema.SQLite3Schema;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
@@ -49,7 +50,7 @@ public class SQLite3TLPHavingOracle implements TestOracle<SQLite3GlobalState> {
         List<SQLite3Expression> groupByColumns = Randomly.nonEmptySubset(targetTables.getColumns()).stream()
                 .map(c -> new SQLite3ColumnName(c, null)).collect(Collectors.toList());
         List<SQLite3Column> columns = targetTables.getColumns();
-        SQLite3ExpressionGenerator gen = new SQLite3ExpressionGenerator(state).setColumns(columns);
+        SQLite3TypedExpressionGenerator gen = new SQLite3TypedExpressionGenerator(state).setColumns(columns);
         SQLite3Select select = new SQLite3Select();
         select.setFetchColumns(groupByColumns);
         List<SQLite3Table> tables = targetTables.getTables();

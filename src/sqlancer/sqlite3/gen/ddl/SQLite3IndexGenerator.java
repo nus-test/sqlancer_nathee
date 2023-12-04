@@ -14,6 +14,8 @@ import sqlancer.sqlite3.SQLite3ToStringVisitor;
 import sqlancer.sqlite3.ast.SQLite3Expression;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
 
@@ -86,8 +88,8 @@ public class SQLite3IndexGenerator {
             if (i != 0) {
                 sb.append(",");
             }
-            SQLite3Expression expr = new SQLite3ExpressionGenerator(globalState).setColumns(columns).deterministicOnly()
-                    .generateExpression();
+            SQLite3Expression expr = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly()
+                    .generateExpression(Randomly.fromOptions(SQLite3DataType.values()));
             SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();
             visitor.fullyQualifiedNames = false;
             visitor.visit(expr);
@@ -100,8 +102,8 @@ public class SQLite3IndexGenerator {
         sb.append(")");
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
-            SQLite3Expression expr = new SQLite3ExpressionGenerator(globalState).setColumns(columns).deterministicOnly()
-                    .generateExpression();
+            SQLite3Expression expr = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly()
+                    .generateExpression(Randomly.fromOptions(SQLite3DataType.values()));
             SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();
             visitor.fullyQualifiedNames = false;
             visitor.visit(expr);

@@ -27,7 +27,7 @@ public class MySQLSchema extends AbstractSchema<MySQLGlobalState, MySQLTable> {
     private static final int NR_SCHEMA_READ_TRIES = 10;
 
     public enum MySQLDataType {
-        INT, VARCHAR, FLOAT, DOUBLE, DECIMAL;
+        INT, VARCHAR, FLOAT, DOUBLE, DECIMAL, BOOLEAN;
 
         public static MySQLDataType getRandom(MySQLGlobalState globalState) {
             if (globalState.usesPQS()) {
@@ -43,6 +43,7 @@ public class MySQLSchema extends AbstractSchema<MySQLGlobalState, MySQLTable> {
             case DOUBLE:
             case FLOAT:
             case DECIMAL:
+            case BOOLEAN:
                 return true;
             case VARCHAR:
                 return false;
@@ -135,6 +136,7 @@ public class MySQLSchema extends AbstractSchema<MySQLGlobalState, MySQLTable> {
     private static MySQLDataType getColumnType(String typeString) {
         switch (typeString) {
         case "tinyint":
+            return MySQLDataType.BOOLEAN;
         case "smallint":
         case "mediumint":
         case "int":

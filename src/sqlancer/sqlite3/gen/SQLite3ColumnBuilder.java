@@ -47,7 +47,7 @@ public class SQLite3ColumnBuilder {
         sb.append(" ");
         String dataType = Randomly.fromOptions("INT", "TEXT", "BLOB", "REAL", "INTEGER");
         sb.append(dataType);
-
+        SQLite3Column target = columns.stream().filter(p -> p.getName().contentEquals(columnName)).collect(Collectors.toList()).get(0);
         if (Randomly.getBooleanWithRatherLowProbability()) {
             List<Constraints> constraints = Randomly.subset(Constraints.values());
             if (!Randomly.getBooleanWithSmallProbability()
@@ -62,10 +62,10 @@ public class SQLite3ColumnBuilder {
                 switch (c) {
                 case GENERATED_AS:
                     sb.append(" GENERATED ALWAYS AS (");
-                    sb.append(SQLite3Visitor.asString(new SQLite3ExpressionGenerator(globalState)
+                    sb.append(SQLite3Visitor.asString(new SQLite3TypedExpressionGenerator(globalState)
                             .deterministicOnly().setColumns(columns.stream()
                                     .filter(p -> !p.getName().contentEquals(columnName)).collect(Collectors.toList()))
-                            .generateExpression()));
+                            .generateExpression(target.getType())));
                     sb.append(")");
                     break;
                 case PRIMARY_KEY:
@@ -118,7 +118,7 @@ public class SQLite3ColumnBuilder {
         }
         if (allowDefaultValue && Randomly.getBooleanWithSmallProbability()) {
             sb.append(" DEFAULT ");
-            sb.append(SQLite3Visitor.asString(SQLite3ExpressionGenerator.getRandomLiteralValue(globalState)));
+            sb.append(SQLite3Visitor.asString(SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, target.getType())));
         }
         if (Randomly.getBooleanWithSmallProbability()) {
             String randomCollate = SQLite3Common.getRandomCollate();

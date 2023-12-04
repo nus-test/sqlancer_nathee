@@ -11,6 +11,8 @@ import sqlancer.sqlite3.SQLite3GlobalState;
 import sqlancer.sqlite3.SQLite3Visitor;
 import sqlancer.sqlite3.ast.SQLite3Constant;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
 
@@ -75,7 +77,7 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
             String whereClause = SQLite3Visitor.asString(
-                    new SQLite3ExpressionGenerator(globalState).setColumns(table.getColumns()).generateExpression());
+                    new SQLite3TypedExpressionGenerator(globalState).setColumns(table.getColumns()).generateExpression(SQLite3DataType.BOOLEAN));
             sb.append(whereClause);
         }
 
@@ -107,7 +109,7 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
         if (column.isIntegerPrimaryKey()) {
             sb.append(SQLite3Visitor.asString(SQLite3Constant.createIntConstant(r.getInteger())));
         } else {
-            sb.append(SQLite3Visitor.asString(SQLite3ExpressionGenerator.getRandomLiteralValue(globalState)));
+            sb.append(SQLite3Visitor.asString(SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, column.getType())));
         }
     }
 

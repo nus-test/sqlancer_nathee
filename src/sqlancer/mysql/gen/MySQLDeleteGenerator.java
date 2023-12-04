@@ -7,6 +7,7 @@ import sqlancer.common.query.ExpectedErrors;
 import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.mysql.MySQLErrors;
 import sqlancer.mysql.MySQLGlobalState;
+import sqlancer.mysql.MySQLSchema.MySQLDataType;
 import sqlancer.mysql.MySQLSchema.MySQLTable;
 import sqlancer.mysql.MySQLVisitor;
 
@@ -25,7 +26,7 @@ public class MySQLDeleteGenerator {
 
     private SQLQueryAdapter generate() {
         MySQLTable randomTable = globalState.getSchema().getRandomTable();
-        MySQLExpressionGenerator gen = new MySQLExpressionGenerator(globalState).setColumns(randomTable.getColumns());
+        MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(randomTable.getColumns());
         ExpectedErrors errors = new ExpectedErrors();
         sb.append("DELETE");
         if (Randomly.getBoolean()) {
@@ -42,7 +43,7 @@ public class MySQLDeleteGenerator {
         sb.append(randomTable.getName());
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
-            sb.append(MySQLVisitor.asString(gen.generateExpression()));
+            sb.append(MySQLVisitor.asString(gen.generateExpression(MySQLDataType.BOOLEAN)));
             MySQLErrors.addExpressionErrors(errors);
         }
         errors.addAll(Arrays.asList("doesn't have this option",

@@ -9,6 +9,8 @@ import sqlancer.sqlite3.SQLite3Errors;
 import sqlancer.sqlite3.SQLite3GlobalState;
 import sqlancer.sqlite3.SQLite3Visitor;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
 
 public final class SQLite3DeleteGenerator {
@@ -27,8 +29,8 @@ public final class SQLite3DeleteGenerator {
         sb.append(tableName.getName());
         if (Randomly.getBoolean()) {
             sb.append(" WHERE ");
-            sb.append(SQLite3Visitor.asString(new SQLite3ExpressionGenerator(globalState)
-                    .setColumns(tableName.getColumns()).generateExpression()));
+            sb.append(SQLite3Visitor.asString(new SQLite3TypedExpressionGenerator(globalState)
+                    .setColumns(tableName.getColumns()).generateExpression(SQLite3DataType.BOOLEAN)));
         }
         ExpectedErrors errors = new ExpectedErrors();
         SQLite3Errors.addExpectedExpressionErrors(errors);

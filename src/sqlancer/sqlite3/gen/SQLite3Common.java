@@ -24,16 +24,16 @@ public final class SQLite3Common {
     }
 
     public static String getCheckConstraint(SQLite3GlobalState globalState, List<SQLite3Column> columns) {
-        SQLite3Expression expression = new SQLite3ExpressionGenerator(globalState).setColumns(columns)
-                .generateExpression();
+        SQLite3Expression expression = new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)
+                .generateExpression(SQLite3DataType.BOOLEAN);
         return " CHECK ( " + SQLite3Visitor.asString(expression) + ")";
     }
 
     // TODO: refactor others to use this method
     // https://www.sqlite.org/syntax/ordering-term.html
     public static String getOrderingTerm(List<SQLite3Column> columns, SQLite3GlobalState globalState) {
-        SQLite3Expression randExpr = new SQLite3ExpressionGenerator(globalState).setColumns(columns)
-                .generateExpression();
+        SQLite3Expression randExpr = new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)
+                .generateExpression(SQLite3DataType.INT);
         StringBuilder sb = new StringBuilder(SQLite3Visitor.asString(randExpr));
         sb.append(" ");
         if (Randomly.getBoolean()) {
@@ -98,7 +98,7 @@ public final class SQLite3Common {
 
     public static String getOrderByAsString(List<SQLite3Column> columns, SQLite3GlobalState globalState) {
         StringBuilder sb = new StringBuilder();
-        SQLite3ExpressionGenerator gen = new SQLite3ExpressionGenerator(globalState).setColumns(columns);
+        SQLite3TypedExpressionGenerator gen = new SQLite3TypedExpressionGenerator(globalState).setColumns(columns);
         sb.append(" ORDER BY ");
         for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
             if (i != 0) {
@@ -110,7 +110,7 @@ public final class SQLite3Common {
     }
 
     public static List<SQLite3Expression> getOrderBy(List<SQLite3Column> columns, SQLite3GlobalState globalState) {
-        SQLite3ExpressionGenerator gen = new SQLite3ExpressionGenerator(globalState).setColumns(columns);
+        SQLite3TypedExpressionGenerator gen = new SQLite3TypedExpressionGenerator(globalState).setColumns(columns);
         List<SQLite3Expression> list = new ArrayList<>();
         for (int i = 0; i < 1 + Randomly.smallNumber(); i++) {
             list.add(gen.generateOrderingTerm());

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sqlancer.IgnoreMeException;
 import sqlancer.Randomly;
 import sqlancer.sqlite3.SQLite3Visitor;
 import sqlancer.sqlite3.schema.SQLite3DataType;
@@ -56,6 +57,66 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         @Override
         public SQLite3Constant applyLess(SQLite3Constant right, SQLite3CollateSequence collate) {
             return SQLite3Constant.createNullConstant();
+        }
+
+    }
+
+    public static class SQLite3BooleanConstant extends SQLite3Constant {
+
+        private final boolean value;
+
+        SQLite3BooleanConstant(boolean value) {
+            this.value = value;
+        }
+
+        @Override
+        String getStringRepresentation() {
+            return value ? "TRUE" : "FALSE";
+        }
+
+        @Override
+        public boolean isNull() {
+            return false;
+        }
+
+        @Override
+        public boolean asBoolean() {
+        	return value;
+        }
+        
+        @Override
+        public Object getValue() {
+            return value;
+        }
+
+        @Override
+        public SQLite3DataType getDataType() {
+            return SQLite3DataType.BOOLEAN;
+        }
+
+        @Override
+        public SQLite3Constant applyNumericAffinity() {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public SQLite3Constant applyTextAffinity() {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public SQLite3Constant applyEquals(SQLite3Constant right, SQLite3CollateSequence collate) {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public SQLite3Constant applyLess(SQLite3Constant right, SQLite3CollateSequence collate) {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public SQLite3Constant castToBoolean() {
+            return this;
         }
 
     }
@@ -527,6 +588,10 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         throw new UnsupportedOperationException(this.getDataType().toString());
     }
 
+    public boolean asBoolean() {
+    	throw new UnsupportedOperationException(this.getDataType().toString());
+    }
+    
     public long asInt() {
         throw new UnsupportedOperationException(this.getDataType().toString());
     }
@@ -559,6 +624,10 @@ public abstract class SQLite3Constant extends SQLite3Expression {
 
     public static SQLite3Constant createBinaryConstant(String val) {
         return new SQLite3BinaryConstant(SQLite3Visitor.hexStringToByteArray(val));
+    }
+
+    public static SQLite3Constant createBooleanConstant(boolean val) {
+        return new SQLite3BooleanConstant(val);
     }
 
     public static SQLite3Constant createRealConstant(double real) {
@@ -597,15 +666,15 @@ public abstract class SQLite3Constant extends SQLite3Expression {
     public abstract SQLite3Constant applyTextAffinity();
 
     public static SQLite3Constant createTrue() {
-        return new SQLite3Constant.SQLite3IntConstant(1);
+        return new SQLite3Constant.SQLite3BooleanConstant(true);
     }
 
     public static SQLite3Constant createFalse() {
-        return new SQLite3Constant.SQLite3IntConstant(0);
+        return new SQLite3Constant.SQLite3BooleanConstant(false);
     }
 
     public static SQLite3Constant createBoolean(boolean tr) {
-        return new SQLite3Constant.SQLite3IntConstant(tr ? 1 : 0);
+        return new SQLite3Constant.SQLite3BooleanConstant(tr);
     }
 
     public abstract SQLite3Constant applyEquals(SQLite3Constant right, SQLite3CollateSequence collate);

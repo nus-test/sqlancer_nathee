@@ -209,6 +209,51 @@ public abstract class MySQLConstant implements MySQLExpression {
 
     }
 
+    public static class MySQLBooleanConstant extends MySQLConstant {
+
+        private final boolean value;
+
+        MySQLBooleanConstant(boolean value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean asBooleanNotNull() {
+            return value;
+        }
+
+        @Override
+        public String getTextRepresentation() {
+            return value ? "TRUE" : "FALSE";
+        }
+
+        @Override
+        public MySQLConstant isEquals(MySQLConstant rightVal) {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public MySQLConstant castAs(CastType type) {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public String castAsString() {
+            throw new IgnoreMeException();
+        }
+
+        @Override
+        public MySQLDataType getType() {
+            return MySQLDataType.BOOLEAN;
+        }
+
+        @Override
+        protected MySQLConstant isLessThan(MySQLConstant rightVal) {
+            throw new IgnoreMeException();
+        }
+
+    }
+
     public static class MySQLIntConstant extends MySQLConstant {
 
         private final long value;
@@ -393,8 +438,16 @@ public abstract class MySQLConstant implements MySQLExpression {
         return false;
     }
 
+    public static MySQLConstant createDoubleConstant(double value) {
+        return new MySQLDoubleConstant(value);
+    }
+
     public static MySQLConstant createNullConstant() {
         return new MySQLNullConstant();
+    }
+
+    public static MySQLConstant createBooleanConstant(boolean value) {
+        return new MySQLBooleanConstant(value);
     }
 
     public static MySQLConstant createIntConstant(long value) {
@@ -423,15 +476,15 @@ public abstract class MySQLConstant implements MySQLExpression {
     public abstract String getTextRepresentation();
 
     public static MySQLConstant createFalse() {
-        return MySQLConstant.createIntConstant(0);
+        return MySQLConstant.createBoolean(false);
     }
 
     public static MySQLConstant createBoolean(boolean isTrue) {
-        return MySQLConstant.createIntConstant(isTrue ? 1 : 0);
+        return MySQLConstant.createBooleanConstant(isTrue);
     }
 
     public static MySQLConstant createTrue() {
-        return MySQLConstant.createIntConstant(1);
+        return MySQLConstant.createBoolean(true);
     }
 
     @Override

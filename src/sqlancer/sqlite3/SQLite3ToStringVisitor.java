@@ -215,6 +215,9 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
                 sb.append(SQLite3Visitor.byteArrayToHex(arr));
                 sb.append("'");
                 break;
+            case BOOLEAN:
+                sb.append(c.asBoolean() ? "TRUE" : "FALSE");
+                break;
             default:
                 throw new AssertionError(c.getDataType());
             }

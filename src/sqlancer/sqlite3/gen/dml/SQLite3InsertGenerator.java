@@ -14,6 +14,7 @@ import sqlancer.sqlite3.SQLite3Visitor;
 import sqlancer.sqlite3.ast.SQLite3Constant;
 import sqlancer.sqlite3.ast.SQLite3Expression;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
 
@@ -143,9 +144,9 @@ public class SQLite3InsertGenerator {
                 literal = SQLite3Constant.createIntConstant(r.getInteger(0, 1000));
             } else {
                 if (Randomly.getBooleanWithSmallProbability()) {
-                    literal = new SQLite3ExpressionGenerator(globalState).generateExpression();
+                    literal = new SQLite3TypedExpressionGenerator(globalState).generateExpression(columns.get(i).getType());
                 } else {
-                    literal = SQLite3ExpressionGenerator.getRandomLiteralValue(globalState);
+                    literal = SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, columns.get(i).getType());
                 }
             }
             SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();

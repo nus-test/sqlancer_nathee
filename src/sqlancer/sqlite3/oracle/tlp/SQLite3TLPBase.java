@@ -17,6 +17,7 @@ import sqlancer.sqlite3.ast.SQLite3Expression.SQLite3ColumnName;
 import sqlancer.sqlite3.ast.SQLite3Select;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
 import sqlancer.sqlite3.schema.SQLite3Schema;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
@@ -27,7 +28,7 @@ public class SQLite3TLPBase extends TernaryLogicPartitioningOracleBase<SQLite3Ex
 
     SQLite3Schema s;
     SQLite3Tables targetTables;
-    SQLite3ExpressionGenerator gen;
+    SQLite3TypedExpressionGenerator gen;
     SQLite3Select select;
 
     public SQLite3TLPBase(SQLite3GlobalState state) {
@@ -40,7 +41,7 @@ public class SQLite3TLPBase extends TernaryLogicPartitioningOracleBase<SQLite3Ex
     public void check() throws SQLException {
         s = state.getSchema();
         targetTables = s.getRandomTableNonEmptyTables();
-        gen = new SQLite3ExpressionGenerator(state).setColumns(targetTables.getColumns());
+        gen = new SQLite3TypedExpressionGenerator(state).setColumns(targetTables.getColumns());
         initializeTernaryPredicateVariants();
         select = new SQLite3Select();
         select.setFetchColumns(generateFetchColumns());

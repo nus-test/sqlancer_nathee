@@ -62,7 +62,7 @@ public class MySQLInsertGenerator {
         sb.append(columns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
         sb.append(") ");
         sb.append("VALUES");
-        MySQLExpressionGenerator gen = new MySQLExpressionGenerator(globalState);
+        MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState);
         int nrRows;
         if (Randomly.getBoolean()) {
             nrRows = 1;
@@ -78,7 +78,7 @@ public class MySQLInsertGenerator {
                 if (c != 0) {
                     sb.append(", ");
                 }
-                sb.append(MySQLVisitor.asString(gen.generateConstant()));
+                sb.append(MySQLVisitor.asString(gen.generateConstant(columns.get(c).getType())));
 
             }
             sb.append(")");

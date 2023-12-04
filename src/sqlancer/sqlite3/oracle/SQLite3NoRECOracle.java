@@ -26,6 +26,8 @@ import sqlancer.sqlite3.ast.SQLite3Expression.SQLite3PostfixUnaryOperation.Postf
 import sqlancer.sqlite3.ast.SQLite3Select;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
@@ -35,7 +37,7 @@ public class SQLite3NoRECOracle extends NoRECBase<SQLite3GlobalState> implements
 
     private static final int NO_VALID_RESULT = -1;
     private final SQLite3Schema s;
-    private SQLite3ExpressionGenerator gen;
+    private SQLite3TypedExpressionGenerator gen;
     private Reproducer<SQLite3GlobalState> reproducer;
 
     private class SQLite3NoRECReproducer implements Reproducer<SQLite3GlobalState> {
@@ -73,8 +75,8 @@ public class SQLite3NoRECOracle extends NoRECBase<SQLite3GlobalState> implements
         reproducer = null;
         SQLite3Tables randomTables = s.getRandomTableNonEmptyTables();
         List<SQLite3Column> columns = randomTables.getColumns();
-        gen = new SQLite3ExpressionGenerator(state).setColumns(columns);
-        SQLite3Expression randomWhereCondition = gen.generateExpression();
+        gen = new SQLite3TypedExpressionGenerator(state).setColumns(columns);
+        SQLite3Expression randomWhereCondition = gen.generateExpression(SQLite3DataType.BOOLEAN);
         List<SQLite3Table> tables = randomTables.getTables();
         List<Join> joinStatements = gen.getRandomJoinClauses(tables);
         List<SQLite3Expression> tableRefs = SQLite3Common.getTableRefs(tables, s);

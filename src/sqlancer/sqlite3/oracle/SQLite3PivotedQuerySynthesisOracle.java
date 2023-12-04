@@ -35,6 +35,8 @@ import sqlancer.sqlite3.ast.SQLite3UnaryOperation.UnaryOperator;
 import sqlancer.sqlite3.ast.SQLite3WindowFunction;
 import sqlancer.sqlite3.gen.SQLite3Common;
 import sqlancer.sqlite3.gen.SQLite3ExpressionGenerator;
+import sqlancer.sqlite3.gen.SQLite3TypedExpressionGenerator;
+import sqlancer.sqlite3.schema.SQLite3DataType;
 import sqlancer.sqlite3.schema.SQLite3Schema;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Column;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3RowValue;
@@ -221,8 +223,8 @@ public class SQLite3PivotedQuerySynthesisOracle
         if (allTablesContainOneRow && Randomly.getBoolean()) {
             List<SQLite3Expression> collect = new ArrayList<>();
             for (int i = 0; i < Randomly.smallNumber(); i++) {
-                collect.add(new SQLite3ExpressionGenerator(globalState).setColumns(columns).setRowValue(rw)
-                        .generateExpression());
+                collect.add(((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).setRowValue(rw)
+                        .generateExpression(Randomly.fromOptions(SQLite3DataType.values())));
             }
             return collect;
         }
@@ -232,8 +234,8 @@ public class SQLite3PivotedQuerySynthesisOracle
                     .collect(Collectors.toList());
             if (Randomly.getBoolean()) {
                 for (int i = 0; i < Randomly.smallNumber(); i++) {
-                    collect.add(new SQLite3ExpressionGenerator(globalState).setColumns(columns).setRowValue(rw)
-                            .generateExpression());
+                    collect.add(((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).setRowValue(rw)
+                        .generateExpression(Randomly.fromOptions(SQLite3DataType.values())));
                 }
             }
             return collect;
@@ -254,7 +256,7 @@ public class SQLite3PivotedQuerySynthesisOracle
      */
     private SQLite3Expression generateRectifiedExpression(List<SQLite3Column> columns, SQLite3RowValue pivotRow,
             boolean allowAggregates) {
-        SQLite3ExpressionGenerator gen = new SQLite3ExpressionGenerator(globalState).setRowValue(pivotRow)
+                SQLite3TypedExpressionGenerator gen = new SQLite3TypedExpressionGenerator(globalState).setRowValue(pivotRow)
                 .setColumns(columns);
         if (allowAggregates) {
             gen = gen.allowAggregateFunctions();

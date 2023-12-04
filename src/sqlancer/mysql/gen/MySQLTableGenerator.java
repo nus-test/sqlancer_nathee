@@ -329,6 +329,9 @@ public class MySQLTableGenerator {
 
     private void appendTypeString(MySQLDataType randomType) {
         switch (randomType) {
+        case BOOLEAN:
+            sb.append("BOOLEAN");
+            break;
         case DECIMAL:
             sb.append("DECIMAL");
             optionallyAddPrecisionAndScale(sb);

@@ -414,11 +414,11 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
             columnType = SQLite3DataType.TEXT;
             break;
         case "INTEGER":
+        case "INT":
             columnType = SQLite3DataType.INT;
             break;
-        case "INT":
         case "BOOLEAN":
-            columnType = SQLite3DataType.INT;
+            columnType = SQLite3DataType.BOOLEAN;
             break;
         case "":
             columnType = SQLite3DataType.NONE;
