@@ -193,6 +193,9 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
         sb.append(" (");
         visit(op.getRight());
         sb.append(")");
+        if (op.getOp().getTextRepresentation() == "LIKE") {
+            sb.append(" ESCAPE '\\'");
+        }
     }
 
     @Override

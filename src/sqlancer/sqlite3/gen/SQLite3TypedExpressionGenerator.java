@@ -199,21 +199,21 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum BooleanExpression {
-        RANDOM_QUERY, UNARY_OPERATOR, POSTFIX_UNARY_OPERATOR, MATCH, AND_OR_CHAIN,
+        RANDOM_QUERY, UNARY_OPERATOR, POSTFIX_UNARY_OPERATOR/*, MATCH*/, AND_OR_CHAIN,
         BETWEEN_OPERATOR, BINARY_COMPARISON_OPERATOR, IN_OPERATOR, CASE_OPERATOR;
     }
 
     private SQLite3Expression generateBooleaExpression(int depth) {
         List<BooleanExpression> list = new ArrayList<>(Arrays.asList(BooleanExpression.values()));
-        if (!allowMatchClause) {
-            list.remove(BooleanExpression.MATCH);
-        }
+        // if (!allowMatchClause) {
+        //     list.remove(BooleanExpression.MATCH);
+        // }
         if (!allowSubqueries) {
             list.remove(BooleanExpression.RANDOM_QUERY);
         }
-        if (!globalState.getDbmsSpecificOptions().testMatch) {
-            list.remove(BooleanExpression.MATCH);
-        }
+        // if (!globalState.getDbmsSpecificOptions().testMatch) {
+        //     list.remove(BooleanExpression.MATCH);
+        // }
         if (!globalState.getDbmsSpecificOptions().testIn) {
             list.remove(BooleanExpression.IN_OPERATOR);
         }
@@ -225,8 +225,8 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return new SQLite3UnaryOperation(UnaryOperator.NOT, subExpression);
             case POSTFIX_UNARY_OPERATOR:
                 return getRandomPostfixUnaryOperator(depth + 1);
-            case MATCH:
-                return getMatchClause(depth + 1);
+            // case MATCH:
+            //     return getMatchClause(depth + 1);
             case AND_OR_CHAIN:
                 return getAndOrChain(depth + 1);
             case BETWEEN_OPERATOR:
@@ -410,7 +410,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         List<BinaryComparisonOperator> validOptions = new ArrayList<>(Arrays.asList(BinaryComparisonOperator.values()));
         if (type != SQLite3DataType.TEXT && type != SQLite3DataType.NONE/* || type != SQLite3DataType.BINARY*/) {
             validOptions.remove(BinaryComparisonOperator.LIKE);
-            validOptions.remove(BinaryComparisonOperator.GLOB);
+            // validOptions.remove(BinaryComparisonOperator.GLOB);
         }
         // if (type != SQLite3DataType.BOOLEAN) {
         //     validOptions.remove(BinaryComparisonOperator.IS);
@@ -497,21 +497,21 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         // CHANGES("CHANGES", 0, Attribute.NONDETERMINISTIC), //
         // CHAR("CHAR", 1, Attribute.VARIADIC), //
         // COALESCE("COALESCE", 2, Attribute.VARIADIC), //
-        GLOB("GLOB", 2), //
+        // GLOB("GLOB", 2), //
         IFNULL("IFNULL", 2), //
         // HEX("HEX", 1), //
         // INSTR("INSTR", 2), //
         // LAST_INSERT_ROWID("LAST_INSERT_ROWID", 0, Attribute.NONDETERMINISTIC), //
         // LENGTH("LENGTH", 1, SQLite3DataType.INT, SQLite3DataType.TEXT), //
-        LIKE("LIKE", 2), //
-        LIKE2("LIKE", 3) {
-            @Override
-            List<SQLite3Expression> generateArguments(int nrArgs, int depth, SQLite3TypedExpressionGenerator gen) {
-                List<SQLite3Expression> args = super.generateArguments(nrArgs, depth, gen);
-                args.set(2, gen.getRandomSingleCharString());
-                return args;
-            }
-        }, //
+        // LIKE("LIKE", 2), //
+        // LIKE2("LIKE", 3) {
+        //     @Override
+        //     List<SQLite3Expression> generateArguments(int nrArgs, int depth, SQLite3TypedExpressionGenerator gen) {
+        //         List<SQLite3Expression> args = super.generateArguments(nrArgs, depth, gen);
+        //         args.set(2, gen.getRandomSingleCharString());
+        //         return args;
+        //     }
+        // }, //
         LIKELIHOOD("LIKELIHOOD", 2), //
         LIKELY("LIKELY", 1), //
         LOAD_EXTENSION("load_extension", 1), //
