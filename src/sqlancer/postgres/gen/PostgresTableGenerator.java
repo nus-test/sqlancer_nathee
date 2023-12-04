@@ -70,7 +70,7 @@ public class PostgresTableGenerator {
         if (Randomly.getBoolean()) {
             sb.append(" ");
             isTemporaryTable = true;
-            sb.append(Randomly.fromOptions("TEMPORARY", "TEMP"));
+            sb.append(Randomly.fromOptions("TEMPORARY"/*, "TEMP"*/));
         } else if (Randomly.getBoolean()) {
             sb.append(" UNLOGGED");
         }
@@ -114,11 +114,11 @@ public class PostgresTableGenerator {
         generatePartitionBy();
         generateUsing();
         PostgresCommon.generateWith(sb, globalState, errors);
-        if (Randomly.getBoolean() && isTemporaryTable) {
-            sb.append(" ON COMMIT ");
-            sb.append(Randomly.fromOptions("PRESERVE ROWS", "DELETE ROWS", "DROP"));
-            sb.append(" ");
-        }
+        // if (Randomly.getBoolean() && isTemporaryTable) {
+        //     sb.append(" ON COMMIT ");
+        //     sb.append(Randomly.fromOptions("PRESERVE ROWS", "DELETE ROWS", "DROP"));
+        //     sb.append(" ");
+        // }
     }
 
     private void createLike() {

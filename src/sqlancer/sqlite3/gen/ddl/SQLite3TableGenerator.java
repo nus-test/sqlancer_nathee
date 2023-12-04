@@ -74,10 +74,10 @@ public class SQLite3TableGenerator {
         if (globalState.getDbmsSpecificOptions().testTempTables && Randomly.getBoolean()) {
             tempTable = true;
             if (Randomly.getBoolean()) {
-                sb.append("TEMP ");
-            } else {
                 sb.append("TEMPORARY ");
-            }
+            } //else {
+                // sb.append("TEMP ");
+            // }
         }
         sb.append("TABLE ");
         if (Randomly.getBoolean()) {
