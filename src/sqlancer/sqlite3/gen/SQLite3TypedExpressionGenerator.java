@@ -356,7 +356,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return generateBooleaExpression(depth);
             case INT:
                 return generateIntExpression(depth);
-            case NONE:
+            // case NONE:
             case TEXT:
             // case BINARY:
                 return generateTextExpression(depth);
@@ -408,7 +408,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private SQLite3Expression getBinaryComparisonOperator(int depth) {
         SQLite3DataType type = getRandomType();
         List<BinaryComparisonOperator> validOptions = new ArrayList<>(Arrays.asList(BinaryComparisonOperator.values()));
-        if (type != SQLite3DataType.TEXT && type != SQLite3DataType.NONE/* || type != SQLite3DataType.BINARY*/) {
+        if (type != SQLite3DataType.TEXT/* && type != SQLite3DataType.NONE || type != SQLite3DataType.BINARY*/) {
             validOptions.remove(BinaryComparisonOperator.LIKE);
             // validOptions.remove(BinaryComparisonOperator.GLOB);
         }
@@ -728,7 +728,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             // }
         case REAL:
             return SQLite3Constant.createRealConstant(r.getDouble());
-        case NONE:
+        // case NONE:
         case TEXT:
             return SQLite3Constant.createTextConstant(r.getString());
         // case BINARY:

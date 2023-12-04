@@ -120,7 +120,7 @@ public final class SQLite3Common {
     }
 
     public static SQLite3Column createColumn(int i) {
-        return new SQLite3Column(DBMSCommon.createColumnName(i), SQLite3DataType.NONE, false, false, null);
+        return new SQLite3Column(DBMSCommon.createColumnName(i), Randomly.fromOptions(SQLite3DataType.values()), false, false, null);
     }
 
     public static List<SQLite3Expression> getTableRefs(List<SQLite3Table> tables, SQLite3Schema s) {

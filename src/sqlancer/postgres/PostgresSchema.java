@@ -31,7 +31,7 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
     private final String databaseName;
 
     public enum PostgresDataType {
-        INT, BOOLEAN, TEXT, DECIMAL, FLOAT, REAL, RANGE, MONEY, BIT, INET;
+        INT, BOOLEAN, TEXT, DECIMAL, FLOAT, REAL/*, RANGE, MONEY, BIT, INET*/;
 
         public static PostgresDataType getRandomType() {
             List<PostgresDataType> dataTypes = new ArrayList<>(Arrays.asList(values()));
@@ -39,10 +39,10 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
                 dataTypes.remove(PostgresDataType.DECIMAL);
                 dataTypes.remove(PostgresDataType.FLOAT);
                 dataTypes.remove(PostgresDataType.REAL);
-                dataTypes.remove(PostgresDataType.INET);
-                dataTypes.remove(PostgresDataType.RANGE);
-                dataTypes.remove(PostgresDataType.MONEY);
-                dataTypes.remove(PostgresDataType.BIT);
+//                dataTypes.remove(PostgresDataType.INET);
+//                dataTypes.remove(PostgresDataType.RANGE);
+//                dataTypes.remove(PostgresDataType.MONEY);
+//                dataTypes.remove(PostgresDataType.BIT);
             }
             return Randomly.fromList(dataTypes);
         }
@@ -132,15 +132,15 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
             return PostgresDataType.FLOAT;
         case "real":
             return PostgresDataType.REAL;
-        case "int4range":
-            return PostgresDataType.RANGE;
-        case "money":
-            return PostgresDataType.MONEY;
-        case "bit":
-        case "bit varying":
-            return PostgresDataType.BIT;
-        case "inet":
-            return PostgresDataType.INET;
+//        case "int4range":
+//            return PostgresDataType.RANGE;
+//        case "money":
+//            return PostgresDataType.MONEY;
+//        case "bit":
+//        case "bit varying":
+//            return PostgresDataType.BIT;
+//        case "inet":
+//            return PostgresDataType.INET;
         default:
             throw new AssertionError(typeString);
         }
