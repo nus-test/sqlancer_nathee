@@ -1,0 +1,69 @@
+---
+layout: minimal
+title: CREATE TABLE
+parent: Uncommon SQL Changes
+nav_order: 4
+---
+
+# CREATE TABLE
+
+| _ID_     | _Name_                               | _Difference_            | _Action Taken_  | _DBMS_                      | _Description_                                                                                        |
+| :------- | :----------------------------------- | :---------------------- | :-------------- | :-------------------------- | :--------------------------------------------------------------------------------------------------- |
+| **CT01** | **LIKE clause**                      | **Syntactic**           | **Remove**      | **MySQL, Postgres**         | **Create table by copying from another table**                                                       |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT02** | **Uncommon constraints**             | **Syntactic, Semantic** | **Remove, Add** | **MySQL, SQLite, Postgres** |                                                                                                      |
+|          |                                      |                         |                 |                             |                                                                                                      |
+|          | COMMENT                              | Syntactic               | Remove          | MySQL                       |                                                                                                      |
+|          | COLUMN_FORMAT                        | Syntactic               | Remove          | MySQL                       |                                                                                                      |
+|          | STORAGE                              | Syntactic               | Remove          | MySQL                       |                                                                                                      |
+|          | UNIQUE KEY                           | Syntactic               | Remove          | MySQL                       | UNIQUE KEY is not common, but UNIQUE is                                                              |
+|          | BY DEFAULT                           | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | AS IDENTITY                          | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | Inline CHECK constraint              | Semantic                | Remove          | Postgres, SQLite            | Removes CHECK from (c0 INT CHECK()) but (c0 INT, CHECK()) is still present, reduce errors from MySQL |
+|          | NULL with PRIMARY KEY                | Semantic                | Remove          | Postgres                    | MySQL does not allow NULL PRIMARY KEY constraint                                                     |
+|          | Constraints order                    | Syntactic               | Add             | MySQL, SQLite, Postgres     | MySQL requires specific order of constraints                                                         |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT03** | **Uncommon PRIMARY KEY options**     | **Syntactic**           | **Remove**      | **SQLite**                  |                                                                                                      |
+|          | ASC                                  | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | DESC                                 | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | AUTOINCREMENT                        | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT04** | **Uncommon confilct clause**         | **Syntactic**           | **Remove**      | **SQLite**                  |                                                                                                      |
+|          | ON CONFLICT                          | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | ROLLBACK                             | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | ABORT                                | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | FAIL                                 | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | IGNORE                               | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | REPLACE                              | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT05** | **Uncommon temporary table options** | **Syntactic**           | **Remove**      | **Postgres, SQLite**        |                                                                                                      |
+|          | TEMP                                 | Syntactic               | Remove          | Postgres, SQLite            |                                                                                                      |
+|          | ON COMMIT                            | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | PRESERVE ROWS                        | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | DELETE ROWS                          | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | DROP                                 | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT06** | **Uncommon FOREIGN KEY options**     | **Syntactic**           | **Remove**      | **Postgres, SQLite**        |                                                                                                      |
+|          | DEFERRABLE                           | Syntactic               | Remove          | Postgres, SQLite            |                                                                                                      |
+|          | NOT DEFERRABLE                       | Syntactic               | Remove          | Postgres, SQLite            |                                                                                                      |
+|          | INITIALLY DEFERRED                   | Syntactic               | Remove          | Postgres, SQLite            |                                                                                                      |
+|          | INITIALLY IMMEDIATE                  | Syntactic               | Remove          | Postgres, SQLite            |                                                                                                      |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT07** | **PARTITION BY clause**              | **Syntactic**           | **Remove**      | **Postgres, MySQL**         | **Remove PARTITION BY and its specific options**                                                     |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT08** | **STORED keyword**                   | **Syntactic**           | **Add**         | **SQLite**                  | **Add STORED to GENERATED ALWAYS AS**                                                                |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT09** | **MATCH options**                    | **Syntactic**           | **Remove**      | **Postgres**                |                                                                                                      |
+|          | MATCH FULL                           | Syntactic               | Remove          | Postgres                    | Using it ignores other clause in MySQL                                                               |
+|          | MATCH SIMPLE                         | Syntactic               | Remove          | Postgres                    | Using it ignores other clause in MySQL                                                               |
+|          |                                      |                         |                 |                             |                                                                                                      |
+| **CT10** | **Other specific options**           | **Syntactic**           | **Remove**      | **Postgres, SQLite, MySQL** |                                                                                                      |
+|          | EXCLUDE                              | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | USING                                | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | table options                        | Syntactic               | Remove          | MySQL                       |                                                                                                      |
+|          | index parameteres                    | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | UNLOGGED                             | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | INHERITS                             | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | NO INHERITS                          | Syntactic               | Remove          | Postgres                    |                                                                                                      |
+|          | ROWID                                | Syntactic               | Remove          | SQLite                      |                                                                                                      |
+|          | WITH                                 | Syntactic               | Remove          | Postgres                    |                                                                                                      |
