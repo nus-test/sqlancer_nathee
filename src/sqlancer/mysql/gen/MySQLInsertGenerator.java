@@ -25,11 +25,11 @@ public class MySQLInsertGenerator {
     }
 
     public static SQLQueryAdapter insertRow(MySQLGlobalState globalState) throws SQLException {
-        if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) {
             return new MySQLInsertGenerator(globalState).generateInsert();
-        } else {
-            return new MySQLInsertGenerator(globalState).generateReplace();
-        }
+        // } else {
+        //     return new MySQLInsertGenerator(globalState).generateReplace();
+        // }
     }
 
     private SQLQueryAdapter generateReplace() {

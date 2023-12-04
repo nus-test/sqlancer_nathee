@@ -29,7 +29,6 @@ import sqlancer.sqlite3.gen.SQLite3ExplainGenerator;
 import sqlancer.sqlite3.gen.SQLite3PragmaGenerator;
 import sqlancer.sqlite3.gen.SQLite3TransactionGenerator;
 import sqlancer.sqlite3.gen.SQLite3VacuumGenerator;
-import sqlancer.sqlite3.gen.SQLite3VirtualFTSTableCommandGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3AlterTable;
 import sqlancer.sqlite3.gen.ddl.SQLite3CreateTriggerGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3DropIndexGenerator;
@@ -39,7 +38,6 @@ import sqlancer.sqlite3.gen.ddl.SQLite3TableGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3ViewGenerator;
 import sqlancer.sqlite3.gen.dml.SQLite3DeleteGenerator;
 import sqlancer.sqlite3.gen.dml.SQLite3InsertGenerator;
-import sqlancer.sqlite3.gen.dml.SQLite3StatTableGenerator;
 import sqlancer.sqlite3.gen.dml.SQLite3UpdateGenerator;
 import sqlancer.sqlite3.schema.SQLite3Schema.SQLite3Table;
 
@@ -81,8 +79,8 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             String format = String.format("SELECT rtreecheck('%s');", table.getName());
             return new SQLQueryAdapter(format, ExpectedErrors.from("The database file is locked"));
         }), // 18
-        VIRTUAL_TABLE_ACTION(SQLite3VirtualFTSTableCommandGenerator::create), // 19
-        MANIPULATE_STAT_TABLE(SQLite3StatTableGenerator::getQuery), // 20
+        // VIRTUAL_TABLE_ACTION(SQLite3VirtualFTSTableCommandGenerator::create), // 19
+        // MANIPULATE_STAT_TABLE(SQLite3StatTableGenerator::getQuery), // 20
         TRANSACTION_START(SQLite3TransactionGenerator::generateBeginTransaction) {
             @Override
             public boolean canBeRetried() {
@@ -146,13 +144,13 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         case INSERT:
             nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
-        case MANIPULATE_STAT_TABLE:
-            nrPerformed = r.getInteger(0, 5);
-            break;
+        // case MANIPULATE_STAT_TABLE:
+        //     nrPerformed = r.getInteger(0, 5);
+        //     break;
         case CREATE_INDEX:
             nrPerformed = r.getInteger(0, 5);
             break;
-        case VIRTUAL_TABLE_ACTION:
+        // case VIRTUAL_TABLE_ACTION:
         case UPDATE:
             nrPerformed = r.getInteger(0, 30);
             break;
