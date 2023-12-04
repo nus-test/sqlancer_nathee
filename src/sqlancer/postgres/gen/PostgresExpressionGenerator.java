@@ -370,7 +370,7 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
     }
 
     private enum TextExpression {
-        CAST, FUNCTION, CONCAT//, COLLATE
+        /*CAST, */FUNCTION, CONCAT//, COLLATE
     }
 
     private PostgresExpression generateTextExpression(int depth) {
@@ -385,8 +385,8 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
         option = Randomly.fromList(validOptions);
 
         switch (option) {
-        case CAST:
-            return new PostgresCastOperation(generateExpression(depth + 1), getCompoundDataType(PostgresDataType.TEXT));
+        // case CAST:
+        //     return new PostgresCastOperation(generateExpression(depth + 1), getCompoundDataType(PostgresDataType.TEXT));
         case FUNCTION:
             return generateFunction(depth + 1, PostgresDataType.TEXT);
         case CONCAT:

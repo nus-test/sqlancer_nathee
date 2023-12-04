@@ -219,10 +219,10 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         // case INT: // TODO support also other int types
         //     sb.append("INT");
         //     break;
-        case TEXT:
-            // TODO: append TEXT, CHAR
-            sb.append(Randomly.fromOptions("CHAR"));
-            break;
+        // case TEXT:
+        //     // TODO: append TEXT, CHAR
+        //     sb.append(Randomly.fromOptions("CHAR"));
+        //     break;
         case REAL:
             sb.append("FLOAT");
             break;

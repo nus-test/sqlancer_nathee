@@ -153,20 +153,21 @@ public final class PostgresCommon {
             // }
             break;
         case TEXT:
-            if (Randomly.getBoolean()) {
-                sb.append("TEXT");
-            } else if (Randomly.getBoolean()) {
+            // if (Randomly.getBoolean()) {
+            //     sb.append("TEXT");
+            // } else {
+            // } else if (Randomly.getBoolean()) {
                 // TODO: support CHAR (without VAR)
-                if (PostgresProvider.generateOnlyKnown || Randomly.getBoolean()) {
+                // if (PostgresProvider.generateOnlyKnown || Randomly.getBoolean()) {
                     sb.append("VAR");
-                }
+                // }
                 sb.append("CHAR");
                 sb.append("(");
                 sb.append(ThreadLocalRandom.current().nextInt(1, 500));
                 sb.append(")");
+            // }
             } else {
                 sb.append("name");
-            }
             }
             // if (Randomly.getBoolean() && !PostgresProvider.generateOnlyKnown) {
             //     sb.append(" COLLATE ");
