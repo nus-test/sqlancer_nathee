@@ -71,11 +71,11 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         // REINDEX(SQLite3ReindexGenerator::executeReindex), // 15
         // ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16
         EXPLAIN(SQLite3ExplainGenerator::explain), // 17
-        CHECK_RTREE_TABLE((g) -> {
-            SQLite3Table table = g.getSchema().getRandomTableOrBailout(t -> t.getName().startsWith("r"));
-            String format = String.format("SELECT rtreecheck('%s');", table.getName());
-            return new SQLQueryAdapter(format, ExpectedErrors.from("The database file is locked"));
-        }), // 18
+        // CHECK_RTREE_TABLE((g) -> {
+        //     SQLite3Table table = g.getSchema().getRandomTableOrBailout(t -> t.getName().startsWith("r"));
+        //     String format = String.format("SELECT rtreecheck('%s');", table.getName());
+        //     return new SQLQueryAdapter(format, ExpectedErrors.from("The database file is locked"));
+        // }), // 18
         // VIRTUAL_TABLE_ACTION(SQLite3VirtualFTSTableCommandGenerator::create), // 19
         // MANIPULATE_STAT_TABLE(SQLite3StatTableGenerator::getQuery), // 20
         TRANSACTION_START(SQLite3TransactionGenerator::generateBeginTransaction) {
@@ -135,9 +135,9 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             nrPerformed = r.getInteger(0, 0);
             break;
         // case VACUUM:
-        case CHECK_RTREE_TABLE:
-            nrPerformed = r.getInteger(0, 3);
-            break;
+        // case CHECK_RTREE_TABLE:
+        //     nrPerformed = r.getInteger(0, 3);
+        //     break;
         case INSERT:
             nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;

@@ -28,7 +28,6 @@ import sqlancer.postgres.gen.PostgresDeleteGenerator;
 import sqlancer.postgres.gen.PostgresDropIndexGenerator;
 import sqlancer.postgres.gen.PostgresIndexGenerator;
 import sqlancer.postgres.gen.PostgresInsertGenerator;
-import sqlancer.postgres.gen.PostgresNotifyGenerator;
 import sqlancer.postgres.gen.PostgresTableGenerator;
 import sqlancer.postgres.gen.PostgresTransactionGenerator;
 import sqlancer.postgres.gen.PostgresUpdateGenerator;
@@ -102,9 +101,9 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         //                                                * https://www.postgresql.org/docs/devel/sql-reset.html TODO: also
         //                                                * configuration parameter
         //                                                */), //
-        NOTIFY(PostgresNotifyGenerator::createNotify), //
-        LISTEN((g) -> PostgresNotifyGenerator.createListen()), //
-        UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), //
+        // NOTIFY(PostgresNotifyGenerator::createNotify), //
+        // LISTEN((g) -> PostgresNotifyGenerator.createListen()), //
+        // UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), //
         // COMMENT_ON(PostgresCommentGenerator::generate), //
         // CREATE_SEQUENCE(PostgresSequenceGenerator::createSequence), //
         CREATE_VIEW(PostgresViewGenerator::create);
@@ -157,9 +156,9 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         //     nrPerformed = r.getInteger(0, 3);
         //     break;
         // case VACUUM:
-        case NOTIFY:
-        case LISTEN:
-        case UNLISTEN:
+        // case NOTIFY:
+        // case LISTEN:
+        // case UNLISTEN:
         // case SET_CONSTRAINTS:
         // case COMMENT_ON:
         // case CREATE_SEQUENCE:

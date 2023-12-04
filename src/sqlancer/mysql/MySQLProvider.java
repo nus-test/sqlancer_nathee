@@ -45,9 +45,9 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         /* FLUSH(MySQLFlush::create), RESET(MySQLReset::create), */CREATE_INDEX(MySQLIndexGenerator::create), //
         ALTER_TABLE(MySQLAlterTable::create), //
         // TRUNCATE_TABLE(MySQLTruncateTableGenerator::generate), //
-        SELECT_INFO((g) -> new SQLQueryAdapter(
-                "select TABLE_NAME, ENGINE from information_schema.TABLES where table_schema = '" + g.getDatabaseName()
-                        + "'")), //
+        // SELECT_INFO((g) -> new SQLQueryAdapter(
+        //         "select TABLE_NAME, ENGINE from information_schema.TABLES where table_schema = '" + g.getDatabaseName()
+        //                 + "'")), //
         CREATE_TABLE((g) -> {
             // TODO refactor
             String tableName = DBMSCommon.createTableName(g.getSchema().getDatabaseTables().size());
@@ -116,9 +116,9 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         // case TRUNCATE_TABLE:
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
-        case SELECT_INFO:
-            nrPerformed = r.getInteger(0, 10);
-            break;
+        // case SELECT_INFO:
+        //     nrPerformed = r.getInteger(0, 10);
+        //     break;
         case UPDATE:
             nrPerformed = r.getInteger(0, 10);
             break;
