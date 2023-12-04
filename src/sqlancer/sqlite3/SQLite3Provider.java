@@ -24,11 +24,8 @@ import sqlancer.common.query.SQLQueryAdapter;
 import sqlancer.common.query.SQLQueryProvider;
 import sqlancer.common.query.SQLancerResultSet;
 import sqlancer.sqlite3.SQLite3Options.SQLite3OracleFactory;
-import sqlancer.sqlite3.gen.SQLite3AnalyzeGenerator;
 import sqlancer.sqlite3.gen.SQLite3ExplainGenerator;
-import sqlancer.sqlite3.gen.SQLite3PragmaGenerator;
 import sqlancer.sqlite3.gen.SQLite3TransactionGenerator;
-import sqlancer.sqlite3.gen.SQLite3VacuumGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3AlterTable;
 import sqlancer.sqlite3.gen.ddl.SQLite3CreateTriggerGenerator;
 import sqlancer.sqlite3.gen.ddl.SQLite3DropIndexGenerator;
@@ -56,7 +53,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
     }
 
     public enum Action implements AbstractAction<SQLite3GlobalState> {
-        PRAGMA(SQLite3PragmaGenerator::insertPragma), // 0
+        // PRAGMA(SQLite3PragmaGenerator::insertPragma), // 0
         CREATE_INDEX(SQLite3IndexGenerator::insertIndex), // 1
         CREATE_VIEW(SQLite3ViewGenerator::generate), // 2
         CREATE_TRIGGER(SQLite3CreateTriggerGenerator::create), // 3
@@ -70,9 +67,9 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         DROP_INDEX(SQLite3DropIndexGenerator::dropIndex), // 11
         DROP_TABLE(SQLite3DropTableGenerator::dropTable), // 12
         DROP_VIEW(SQLite3ViewGenerator::dropView), // 13
-        VACUUM(SQLite3VacuumGenerator::executeVacuum), // 14
-        ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16
+        // VACUUM(SQLite3VacuumGenerator::executeVacuum), // 14
         // REINDEX(SQLite3ReindexGenerator::executeReindex), // 15
+        // ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16
         EXPLAIN(SQLite3ExplainGenerator::explain), // 17
         CHECK_RTREE_TABLE((g) -> {
             SQLite3Table table = g.getSchema().getRandomTableOrBailout(t -> t.getName().startsWith("r"));
@@ -137,7 +134,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         case DROP_TABLE:
             nrPerformed = r.getInteger(0, 0);
             break;
-        case VACUUM:
+        // case VACUUM:
         case CHECK_RTREE_TABLE:
             nrPerformed = r.getInteger(0, 3);
             break;
@@ -154,9 +151,9 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         case UPDATE:
             nrPerformed = r.getInteger(0, 30);
             break;
-        case PRAGMA:
-            nrPerformed = r.getInteger(0, 20);
-            break;
+        // case PRAGMA:
+        //     nrPerformed = r.getInteger(0, 20);
+        //     break;
         case CREATE_TABLE:
         // case CREATE_VIRTUALTABLE:
         // case CREATE_RTREETABLE:
@@ -164,7 +161,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         //     break;
         case TRANSACTION_START:
         // case REINDEX:
-        case ANALYZE:
+        // case ANALYZE:
         case ROLLBACK_TRANSACTION:
         case COMMIT:
         default:

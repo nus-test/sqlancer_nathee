@@ -24,18 +24,14 @@ import sqlancer.common.query.SQLQueryProvider;
 import sqlancer.common.query.SQLancerResultSet;
 import sqlancer.postgres.PostgresOptions.PostgresOracleFactory;
 import sqlancer.postgres.gen.PostgresAlterTableGenerator;
-import sqlancer.postgres.gen.PostgresAnalyzeGenerator;
 import sqlancer.postgres.gen.PostgresDeleteGenerator;
-import sqlancer.postgres.gen.PostgresDiscardGenerator;
 import sqlancer.postgres.gen.PostgresDropIndexGenerator;
 import sqlancer.postgres.gen.PostgresIndexGenerator;
 import sqlancer.postgres.gen.PostgresInsertGenerator;
 import sqlancer.postgres.gen.PostgresNotifyGenerator;
-import sqlancer.postgres.gen.PostgresSetGenerator;
 import sqlancer.postgres.gen.PostgresTableGenerator;
 import sqlancer.postgres.gen.PostgresTransactionGenerator;
 import sqlancer.postgres.gen.PostgresUpdateGenerator;
-import sqlancer.postgres.gen.PostgresVacuumGenerator;
 import sqlancer.postgres.gen.PostgresViewGenerator;
 
 // EXISTS
@@ -68,7 +64,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
     }
 
     public enum Action implements AbstractAction<PostgresGlobalState> {
-        ANALYZE(PostgresAnalyzeGenerator::create), //
+        // ANALYZE(PostgresAnalyzeGenerator::create), //
         ALTER_TABLE(g -> PostgresAlterTableGenerator.create(g.getSchema().getRandomTable(t -> !t.isView()), g,
                 generateOnlyKnown)), //
         // CLUSTER(PostgresClusterGenerator::create), //
@@ -86,13 +82,13 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         // CREATE_STATISTICS(PostgresStatisticsGenerator::insert), //
         // DROP_STATISTICS(PostgresStatisticsGenerator::remove), //
         DELETE(PostgresDeleteGenerator::create), //
-        DISCARD(PostgresDiscardGenerator::create), //
+        // DISCARD(PostgresDiscardGenerator::create), //
         DROP_INDEX(PostgresDropIndexGenerator::create), //
         INSERT(PostgresInsertGenerator::insert), //
         UPDATE(PostgresUpdateGenerator::create), //
         // TRUNCATE(PostgresTruncateGenerator::create), //
-        VACUUM(PostgresVacuumGenerator::create), //
-        SET(PostgresSetGenerator::create), //
+        // VACUUM(PostgresVacuumGenerator::create), //
+        // SET(PostgresSetGenerator::create), //
         // REINDEX(PostgresReindexGenerator::create), //
         CREATE_INDEX(PostgresIndexGenerator::generate), //
         // SET_CONSTRAINTS((g) -> {
@@ -101,11 +97,11 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         //     sb.append(Randomly.fromOptions("DEFERRED", "IMMEDIATE"));
         //     return new SQLQueryAdapter(sb.toString());
         // }), //
-        RESET_ROLE((g) -> new SQLQueryAdapter("RESET ROLE")), //
-        RESET((g) -> new SQLQueryAdapter("RESET ALL") /*
-                                                       * https://www.postgresql.org/docs/devel/sql-reset.html TODO: also
-                                                       * configuration parameter
-                                                       */), //
+        // RESET_ROLE((g) -> new SQLQueryAdapter("RESET ROLE")), //
+        // RESET((g) -> new SQLQueryAdapter("RESET ALL") /*
+        //                                                * https://www.postgresql.org/docs/devel/sql-reset.html TODO: also
+        //                                                * configuration parameter
+        //                                                */), //
         NOTIFY(PostgresNotifyGenerator::createNotify), //
         LISTEN((g) -> PostgresNotifyGenerator.createListen()), //
         UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), //
@@ -138,6 +134,7 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         // case CREATE_STATISTICS:
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
+        // case DISCARD:
         case DROP_INDEX:
             nrPerformed = r.getInteger(0, 5);
             break;
@@ -148,18 +145,18 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             nrPerformed = r.getInteger(0, 5);
             break;
         // case REINDEX:
-        case RESET:
-            nrPerformed = r.getInteger(0, 3);
-            break;
+        // case RESET:
+        //     nrPerformed = r.getInteger(0, 3);
+        //     break;
         case DELETE:
-        case RESET_ROLE:
-        case SET:
+        // case RESET_ROLE:
+        // case SET:
             nrPerformed = r.getInteger(0, 5);
             break;
-        case ANALYZE:
-            nrPerformed = r.getInteger(0, 3);
-            break;
-        case VACUUM:
+        // case ANALYZE:
+        //     nrPerformed = r.getInteger(0, 3);
+        //     break;
+        // case VACUUM:
         case NOTIFY:
         case LISTEN:
         case UNLISTEN:
