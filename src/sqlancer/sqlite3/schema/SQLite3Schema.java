@@ -411,6 +411,7 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
         SQLite3DataType columnType;
         switch (trimmedTypeString) {
         case "TEXT":
+        case "VARCHAR(255)":
             columnType = SQLite3DataType.TEXT;
             break;
         case "INTEGER":

@@ -343,7 +343,7 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
                                                                              */) {
                 return PostgresCompoundDataType.create(type);
             } else {
-                return PostgresCompoundDataType.create(type, (int) Randomly.getNotCachedInteger(1, 1000));
+                return PostgresCompoundDataType.create(type, (int) Randomly.getNotCachedInteger(1, 255));
             }
         default:
             throw new AssertionError(type);

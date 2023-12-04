@@ -163,7 +163,7 @@ public final class PostgresCommon {
                 // }
                 sb.append("CHAR");
                 sb.append("(");
-                sb.append(ThreadLocalRandom.current().nextInt(1, 500));
+                sb.append(ThreadLocalRandom.current().nextInt(1, 255));
                 sb.append(")");
             // } else {
             //     sb.append("name");
