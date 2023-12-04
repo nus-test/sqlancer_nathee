@@ -20,7 +20,7 @@ public final class PostgresDeleteGenerator {
         errors.add("violates not-null constraint");
         errors.add("could not determine which collation to use for string comparison");
         StringBuilder sb = new StringBuilder("DELETE FROM");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // D01
         //     sb.append(" ONLY");
         // }
         sb.append(" ");
@@ -30,7 +30,7 @@ public final class PostgresDeleteGenerator {
             sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
                     table.getColumns(), PostgresDataType.BOOLEAN)));
         }
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // D02
         //     sb.append(" RETURNING ");
         //     sb.append(PostgresVisitor
         //             .asString(PostgresExpressionGenerator.generateExpression(globalState, table.getColumns())));

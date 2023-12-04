@@ -617,10 +617,10 @@ public class SQLite3ExpressionGenerator implements ExpressionGenerator<SQLite3Ex
             }
         }
         // The second argument of LIKELIHOOD must be a float number within 0.0 -1.0
-        if (func == ComputableFunction.LIKELIHOOD) {
-            SQLite3Expression lastArg = SQLite3Constant.createRealConstant(Randomly.getPercentage());
-            args[args.length - 1] = lastArg;
-        }
+        // if (func == ComputableFunction.LIKELIHOOD) {
+        //     SQLite3Expression lastArg = SQLite3Constant.createRealConstant(Randomly.getPercentage());
+        //     args[args.length - 1] = lastArg;
+        // }
         return new SQLite3Function(func, args);
     }
 

@@ -48,7 +48,7 @@ public class SQLite3UnaryOperation extends SQLite3Expression implements UnaryOpe
                 }
                 SQLite3Constant intConstant;
                 if (constant.getDataType() == SQLite3DataType.TEXT
-                        /*|| constant.getDataType() == SQLite3DataType.BINARY*/) {
+                        /*|| constant.getDataType() == SQLite3DataType.BINARY*/) { // E10
                     intConstant = SQLite3Cast.castToNumericFromNumOperand(constant);
                 } else {
                     intConstant = constant;
@@ -74,7 +74,7 @@ public class SQLite3UnaryOperation extends SQLite3Expression implements UnaryOpe
             }
 
         },
-        // NEGATE("~") {
+        // NEGATE("~") { // E02
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant constant) {
         //         SQLite3Constant intValue = SQLite3Cast.castToInt(constant);

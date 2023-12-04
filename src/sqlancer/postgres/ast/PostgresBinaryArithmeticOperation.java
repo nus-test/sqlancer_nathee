@@ -32,7 +32,7 @@ public class PostgresBinaryArithmeticOperation extends BinaryOperatorNode<Postgr
                 return applyBitOperation(left, right, (l, r) -> l * r);
             }
         },
-        // DIVISION("/") {
+        // DIVISION("/") { // E08
 
         //     @Override
         //     public PostgresConstant apply(PostgresConstant left, PostgresConstant right) {
@@ -48,7 +48,7 @@ public class PostgresBinaryArithmeticOperation extends BinaryOperatorNode<Postgr
 
             }
         };//,
-        // EXPONENTIATION("^") {
+        // EXPONENTIATION("^") {  // E08
         //     @Override
         //     public PostgresConstant apply(PostgresConstant left, PostgresConstant right) {
         //         return null;

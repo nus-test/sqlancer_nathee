@@ -16,14 +16,14 @@ public class PostgresBinaryComparisonOperation
                 return leftVal.isEquals(rightVal);
             }
         },
-        // IS_DISTINCT("IS DISTINCT FROM") {
+        // IS_DISTINCT("IS DISTINCT FROM") { // E03
         //     @Override
         //     public PostgresConstant getExpectedValue(PostgresConstant leftVal, PostgresConstant rightVal) {
         //         return PostgresConstant
         //                 .createBooleanConstant(!IS_NOT_DISTINCT.getExpectedValue(leftVal, rightVal).asBoolean());
         //     }
         // },
-        // IS_NOT_DISTINCT("IS NOT DISTINCT FROM") {
+        // IS_NOT_DISTINCT("IS NOT DISTINCT FROM") { // E03
         //     @Override
         //     public PostgresConstant getExpectedValue(PostgresConstant leftVal, PostgresConstant rightVal) {
         //         if (leftVal.isNull()) {

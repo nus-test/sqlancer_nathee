@@ -129,11 +129,11 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
             constant = SQLite3Constant.createRealConstant((double) value);
             break;
         case TEXT:
-        // case NONE:
+        // case NONE: // T03
             value = randomRowValues.getString(columnIndex);
             constant = SQLite3Constant.createTextConstant((String) value);
             break;
-        // case BINARY:
+        // case BINARY: // E10
         //     value = randomRowValues.getBytes(columnIndex);
         //     constant = SQLite3Constant.createBinaryConstant((byte[]) value);
         //     if (((byte[]) value).length == 0) {
@@ -411,7 +411,7 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
         SQLite3DataType columnType;
         switch (trimmedTypeString) {
         case "TEXT":
-        case "VARCHAR(255)":
+        case "VARCHAR(255)": // T06
             columnType = SQLite3DataType.TEXT;
             break;
         case "INTEGER":
@@ -421,15 +421,15 @@ public class SQLite3Schema extends AbstractSchema<SQLite3GlobalState, SQLite3Tab
         case "BOOLEAN":
             columnType = SQLite3DataType.BOOLEAN;
             break;
-        // case "":
+        // case "": // T03
         //     columnType = SQLite3DataType.NONE;
         //     break;
-        // case "BLOB":
+        // case "BLOB": // T03
         //     columnType = SQLite3DataType.BINARY;
         //     break;
         case "REAL":
         case "NUM":
-        case "DOUBLE PRECISION":
+        case "DOUBLE PRECISION": // T08
             columnType = SQLite3DataType.REAL;
             break;
         case "NULL":

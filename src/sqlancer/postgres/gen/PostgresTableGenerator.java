@@ -70,9 +70,9 @@ public class PostgresTableGenerator {
         if (Randomly.getBoolean()) {
             sb.append(" ");
             isTemporaryTable = true;
-            sb.append(Randomly.fromOptions("TEMPORARY"/*, "TEMP"*/));
+            sb.append(Randomly.fromOptions("TEMPORARY"/*, "TEMP"*/)); // CT05
         } //else if (Randomly.getBoolean()) {
-        //     sb.append(" UNLOGGED");
+        //     sb.append(" UNLOGGED"); // CT10
         // }
         sb.append(" TABLE");
         if (Randomly.getBoolean()) {
@@ -81,7 +81,7 @@ public class PostgresTableGenerator {
         sb.append(" ");
         sb.append(tableName);
         // if (Randomly.getBoolean() && !newSchema.getDatabaseTables().isEmpty()) {
-        //     createLike();
+        //     createLike(); // CT01
         // } else {
             createStandard();
         // }
@@ -110,13 +110,13 @@ public class PostgresTableGenerator {
             PostgresCommon.addTableConstraints(columnHasPrimaryKey, sb, table, globalState, errors);
         }
         sb.append(")");
-        // generateInherits();
-        // generatePartitionBy();
-        // generateUsing();
-        // PostgresCommon.generateWith(sb, globalState, errors);
+        // generateInherits(); // CT10
+        // generatePartitionBy(); // CT07
+        // generateUsing(); // CT10
+        // PostgresCommon.generateWith(sb, globalState, errors); // CT10
         // if (Randomly.getBoolean() && isTemporaryTable) {
-        //     sb.append(" ON COMMIT ");
-        //     sb.append(Randomly.fromOptions("PRESERVE ROWS", "DELETE ROWS", "DROP"));
+        //     sb.append(" ON COMMIT "); // CT05
+        //     sb.append(Randomly.fromOptions("PRESERVE ROWS", "DELETE ROWS", "DROP")); // CT05
         //     sb.append(" ");
         // }
     }
@@ -222,15 +222,15 @@ public class PostgresTableGenerator {
     }
 
     private enum ColumnConstraint {
-        GENERATED, NULL_OR_NOT_NULL, DEFAULT, UNIQUE, PRIMARY_KEY//, CHECK
+        GENERATED, NULL_OR_NOT_NULL, DEFAULT, UNIQUE, PRIMARY_KEY//, CHECK // CT02
     };
 
     private void createColumnConstraint(PostgresDataType type, boolean serial) {
         List<ColumnConstraint> constraintSubset = Randomly.nonEmptySubset(ColumnConstraint.values());
-        constraintSubset = constraintSubset.stream().sorted(ColumnConstraint::compareTo).collect(Collectors.toList()); //Sort options in correct order
+        constraintSubset = constraintSubset.stream().sorted(ColumnConstraint::compareTo).collect(Collectors.toList()); //Sort options in correct order // CT02
         // if (Randomly.getBoolean()) {
         //     // make checks constraints less likely
-        //     constraintSubset.remove(ColumnConstraint.CHECK);
+        //     constraintSubset.remove(ColumnConstraint.CHECK); // CT02
         // }
         if (!columnCanHavePrimaryKey || columnHasPrimaryKey) {
             constraintSubset.remove(ColumnConstraint.PRIMARY_KEY);
@@ -245,7 +245,7 @@ public class PostgresTableGenerator {
             constraintSubset.remove(ColumnConstraint.GENERATED);
         }
         if (constraintSubset.contains(ColumnConstraint.UNIQUE)
-                || constraintSubset.contains(ColumnConstraint.PRIMARY_KEY)) {
+                || constraintSubset.contains(ColumnConstraint.PRIMARY_KEY)) {  // CT02
             constraintSubset.remove(ColumnConstraint.NULL_OR_NOT_NULL);
         }
         if (serial) {
@@ -277,13 +277,13 @@ public class PostgresTableGenerator {
                 errors.add("out of range");
                 errors.add("is a generated column");
                 break;
-            // case CHECK:
+            // case CHECK: // CT02
             //     sb.append("CHECK (");
             //     sb.append(PostgresVisitor.asString(PostgresExpressionGenerator.generateExpression(globalState,
             //             columnsToBeAdded, PostgresDataType.BOOLEAN)));
             //     sb.append(")");
             //     if (Randomly.getBoolean()) {
-            //         sb.append(" NO INHERIT");
+            //         sb.append(" NO INHERIT"); // CT10
             //     }
             //     errors.add("out of range");
             //     break;
@@ -299,8 +299,8 @@ public class PostgresTableGenerator {
                     errors.add("generation expression is not immutable");
                     errors.add("cannot use column reference in DEFAULT expression");
                 // } else {
-                //     sb.append(Randomly.fromOptions("ALWAYS", "BY DEFAULT"));
-                //     sb.append(" AS IDENTITY");
+                //     sb.append(Randomly.fromOptions("ALWAYS", "BY DEFAULT")); // CT02
+                //     sb.append(" AS IDENTITY"); // CT02
                 // }
                 break;
             default:

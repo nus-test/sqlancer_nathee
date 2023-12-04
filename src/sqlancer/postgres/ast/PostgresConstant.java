@@ -425,12 +425,12 @@ public abstract class PostgresConstant implements PostgresExpression {
     }
         // @Override
         // public PostgresDataType getExpressionType() {
-        //     return PostgresDataType.DECIMAL;
+        //     return PostgresDataType.DECIMAL; // T08
         // }
 
     }
 
-//    public static class InetConstant extends PostgresConstantBase {
+//    public static class InetConstant extends PostgresConstantBase { // T03
 //
 //        private final String val;
 //
@@ -495,7 +495,7 @@ public abstract class PostgresConstant implements PostgresExpression {
             return PostgresDataType.FLOAT;
         }
 
-//    public static class BitConstant extends PostgresConstantBase {
+//    public static class BitConstant extends PostgresConstantBase { // T03
 //
 //        private final long val;
 //
@@ -515,7 +515,7 @@ public abstract class PostgresConstant implements PostgresExpression {
 //
 //    }
 
-//    public static class RangeConstant extends PostgresConstantBase {
+//    public static class RangeConstant extends PostgresConstantBase { // T03
 //
 //        private final long left;
 //        private final boolean leftIsInclusive;
@@ -570,8 +570,8 @@ public abstract class PostgresConstant implements PostgresExpression {
         return new DoubleConstant(val);
     }
 
-//    public static PostgresConstant createRange(long left, boolean leftIsInclusive, long right,
-//            boolean rightIsInclusive) {
+//    public static PostgresConstant createRange(long left, boolean leftIsInclusive, long right, 
+//            boolean rightIsInclusive) { // T03
 //        long realLeft;
 //        long realRight;
 //        if (left > right) {
@@ -584,11 +584,11 @@ public abstract class PostgresConstant implements PostgresExpression {
 //        return new RangeConstant(realLeft, leftIsInclusive, realRight, rightIsInclusive);
 //    }
 //
-//    public static PostgresExpression createBitConstant(long integer) {
+//    public static PostgresExpression createBitConstant(long integer) { // T03
 //        return new BitConstant(integer);
 //    }
 //
-//    public static PostgresExpression createInetConstant(String val) {
+//    public static PostgresExpression createInetConstant(String val) { // T03
 //        return new InetConstant(val);
 //    }
 

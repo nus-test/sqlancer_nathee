@@ -55,7 +55,7 @@ public final class PostgresRandomQueryGenerator {
             }
         }
         // if (Randomly.getBooleanWithRatherLowProbability()) {
-        //     select.setForClause(ForClause.getRandom());
+        //     select.setForClause(ForClause.getRandom()); // S03
         // }
         return select;
     }

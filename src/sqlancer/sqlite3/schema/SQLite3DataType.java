@@ -1,6 +1,6 @@
 package sqlancer.sqlite3.schema;
 
 public enum SQLite3DataType {
-    NULL, INT, TEXT, REAL/*, NONE, BINARY*/, BOOLEAN;
+    NULL, INT, TEXT, REAL/*, NONE, BINARY*/, BOOLEAN; // T03, E10
 
 }

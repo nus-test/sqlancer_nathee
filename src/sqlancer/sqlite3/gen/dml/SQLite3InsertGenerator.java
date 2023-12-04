@@ -54,10 +54,10 @@ public class SQLite3InsertGenerator {
         SQLite3Errors.addExpectedExpressionErrors(errors);
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT ");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // I04
         //     sb.append("OR IGNORE "); // TODO: try to generate REPLACE
         // } else {
-        //     String fromOptions = Randomly.fromOptions("OR REPLACE ", "OR ABORT ", "OR FAIL ", "OR ROLLBACK ");
+        //     String fromOptions = Randomly.fromOptions("OR REPLACE ", "OR ABORT ", "OR FAIL ", "OR ROLLBACK "); // I04
         //     sb.append(fromOptions);
         // }
         boolean defaultValues = false;
@@ -80,7 +80,7 @@ public class SQLite3InsertGenerator {
         appendNrValues(sb, cols, nrRows);
         // boolean columnsInConflictClause = Randomly.getBoolean();
         // if (!defaultValues && Randomly.getBooleanWithSmallProbability() && !table.isVirtual()) {
-        //     sb.append(" ON CONFLICT");
+        //     sb.append(" ON CONFLICT"); // I02
         //     if (columnsInConflictClause) {
         //         sb.append("(");
         //         sb.append(table.getRandomNonEmptyColumnSubset().stream().map(c -> c.getName())
@@ -90,9 +90,9 @@ public class SQLite3InsertGenerator {
         //     }
         //     sb.append(" DO ");
         //     if (Randomly.getBoolean() || !columnsInConflictClause) {
-        //         sb.append("NOTHING");
+        //         sb.append("NOTHING"); // I02
         //     } else {
-        //         sb.append("UPDATE SET ");
+        //         sb.append("UPDATE SET "); // I02
         //         List<SQLite3Column> columns = table.getRandomNonEmptyColumnSubset();
         //         for (int i = 0; i < columns.size(); i++) {
         //             if (i != 0) {

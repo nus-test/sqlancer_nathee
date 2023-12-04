@@ -11,7 +11,7 @@ public class PostgresPostfixOperation implements PostgresExpression {
     private final String operatorTextRepresentation;
 
     public enum PostfixOperator implements Operator {
-        IS_NULL("IS NULL"/*, "ISNULL"*/) {
+        IS_NULL("IS NULL"/*, "ISNULL"*/) { // E03
             @Override
             public PostgresConstant apply(PostgresConstant expectedValue) {
                 return PostgresConstant.createBooleanConstant(expectedValue.isNull());
@@ -23,7 +23,7 @@ public class PostgresPostfixOperation implements PostgresExpression {
             }
 
         },
-        // IS_UNKNOWN("IS UNKNOWN") {
+        // IS_UNKNOWN("IS UNKNOWN") { // E03
         //     @Override
         //     public PostgresConstant apply(PostgresConstant expectedValue) {
         //         return PostgresConstant.createBooleanConstant(expectedValue.isNull());
@@ -35,7 +35,7 @@ public class PostgresPostfixOperation implements PostgresExpression {
         //     }
         // },
 
-        IS_NOT_NULL("IS NOT NULL"/*, "NOTNULL"*/) {
+        IS_NOT_NULL("IS NOT NULL"/*, "NOTNULL"*/) { // E03
 
             @Override
             public PostgresConstant apply(PostgresConstant expectedValue) {
@@ -48,7 +48,7 @@ public class PostgresPostfixOperation implements PostgresExpression {
             }
 
         },
-        // IS_NOT_UNKNOWN("IS NOT UNKNOWN") {
+        // IS_NOT_UNKNOWN("IS NOT UNKNOWN") { // E03
         //     @Override
         //     public PostgresConstant apply(PostgresConstant expectedValue) {
         //         return PostgresConstant.createBooleanConstant(!expectedValue.isNull());

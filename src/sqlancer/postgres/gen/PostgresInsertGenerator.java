@@ -42,7 +42,7 @@ public final class PostgresInsertGenerator {
         sb.append(columns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
         sb.append(")");
         // if (Randomly.getBooleanWithRatherLowProbability()) {
-        //     sb.append(" OVERRIDING");
+        //     sb.append(" OVERRIDING"); // I04
         //     sb.append(" ");
         //     sb.append(Randomly.fromOptions("SYSTEM", "USER"));
         //     sb.append(" VALUE");
@@ -78,14 +78,14 @@ public final class PostgresInsertGenerator {
             }
         }
         // if (Randomly.getBooleanWithRatherLowProbability()) {
-        //     sb.append(" ON CONFLICT ");
+        //     sb.append(" ON CONFLICT "); // I02
         //     if (Randomly.getBoolean()) {
         //         sb.append("(");
         //         sb.append(table.getRandomColumn().getName());
         //         sb.append(")");
         //         errors.add("there is no unique or exclusion constraint matching the ON CONFLICT specification");
         //     }
-        //     sb.append(" DO NOTHING");
+        //     sb.append(" DO NOTHING"); // I02
         // }
         errors.add("duplicate key value violates unique constraint");
         errors.add("identity column defined as GENERATED ALWAYS");
@@ -117,7 +117,7 @@ public final class PostgresInsertGenerator {
                 }
                 sb.append(PostgresVisitor.asString(generateConstant));
             // } else {
-            //     sb.append("DEFAULT");
+            //     sb.append("DEFAULT"); // I03
             // }
         }
         sb.append(")");

@@ -51,13 +51,13 @@ public class MySQLIndexGenerator {
         }
         sb.append("INDEX ");
         sb.append(globalState.getSchema().getFreeIndexName());
-        // indexType();
+        // indexType(); // CI05
         sb.append(" ON ");
         MySQLTable table = schema.getRandomTable();
         MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(table.getColumns());
         sb.append(table.getName());
         sb.append("(");
-        MySQLToStringVisitor.fullyQualifiedNames = false;
+        MySQLToStringVisitor.fullyQualifiedNames = false; // CI01
         if (table.getEngine() == MySQLEngine.INNO_DB && Randomly.getBoolean()) {
             for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
                 if (i != 0) {
@@ -65,7 +65,7 @@ public class MySQLIndexGenerator {
                 }
                 sb.append("(");
                 List<MySQLDataType> validOptions = new ArrayList<>(Arrays.asList(MySQLDataType.values()));
-                validOptions.remove(MySQLDataType.VARCHAR);
+                validOptions.remove(MySQLDataType.VARCHAR); // CI02
                 MySQLExpression randExpr = gen.generateExpression(Randomly.fromList(validOptions));
                 sb.append(MySQLVisitor.asString(randExpr));
                 sb.append(")");
@@ -82,7 +82,7 @@ public class MySQLIndexGenerator {
                     columnIsPrimaryKey = true;
                 }
                 sb.append(c.getName());
-                // if (Randomly.getBoolean() && c.getType() == MySQLDataType.VARCHAR) {
+                // if (Randomly.getBoolean() && c.getType() == MySQLDataType.VARCHAR) { // CI05
                 //     sb.append("(");
                 //     // TODO for string
                 //     sb.append(r.getInteger(1, 5));
@@ -95,9 +95,9 @@ public class MySQLIndexGenerator {
             }
         }
         sb.append(")");
-        MySQLToStringVisitor.fullyQualifiedNames = true;
-        // indexOption();
-        // algorithmOption();
+        MySQLToStringVisitor.fullyQualifiedNames = true; // CI01
+        // indexOption(); // CI05
+        // algorithmOption(); // CI05
         String string = sb.toString();
         sb = new StringBuilder();
         if (containsInPlace) {

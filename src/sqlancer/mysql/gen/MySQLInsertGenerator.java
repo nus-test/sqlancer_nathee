@@ -28,7 +28,7 @@ public class MySQLInsertGenerator {
         // if (Randomly.getBoolean()) {
             return new MySQLInsertGenerator(globalState).generateInsert();
         // } else {
-        //     return new MySQLInsertGenerator(globalState).generateReplace();
+        //     return new MySQLInsertGenerator(globalState).generateReplace(); // ST02
         // }
     }
 
@@ -46,10 +46,10 @@ public class MySQLInsertGenerator {
         sb.append("INSERT");
         // if (Randomly.getBoolean()) {
         //     sb.append(" ");
-        //     sb.append(Randomly.fromOptions("LOW_PRIORITY", "DELAYED", "HIGH_PRIORITY"));
+        //     sb.append(Randomly.fromOptions("LOW_PRIORITY", "DELAYED", "HIGH_PRIORITY")); // I01
         // }
         // if (Randomly.getBoolean()) {
-        //     sb.append(" IGNORE");
+        //     sb.append(" IGNORE"); // I01
         // }
         return generateInto();
     }

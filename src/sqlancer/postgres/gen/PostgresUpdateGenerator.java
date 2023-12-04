@@ -66,7 +66,7 @@ public final class PostgresUpdateGenerator extends AbstractUpdateGenerator<Postg
                     column.getType());
             sb.append(PostgresVisitor.asString(constant));
         // } else if (Randomly.getBoolean()) {
-        //     sb.append("DEFAULT");
+        //     sb.append("DEFAULT"); // U01
         } else {
             sb.append("(");
             PostgresExpression expr = PostgresExpressionGenerator.generateExpression(globalState,
