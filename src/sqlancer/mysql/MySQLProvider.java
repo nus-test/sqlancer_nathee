@@ -176,6 +176,9 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         try (Statement s = con.createStatement()) {
             s.execute("USE " + databaseName);
         }
+        try (Statement s = con.createStatement()) {
+            s.execute("SET sql_mode = 'NO_BACKSLASH_ESCAPES'");
+        }
         return new SQLConnection(con);
     }
 
