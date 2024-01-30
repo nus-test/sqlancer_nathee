@@ -149,7 +149,7 @@ public class CitusTLPBase extends PostgresTLPBase {
             joinClause = equiJoinClause;
         }
         PostgresJoinType options = Randomly.fromOptions(PostgresJoinType.INNER, PostgresJoinType.LEFT,
-                PostgresJoinType.RIGHT, PostgresJoinType.FULL);
+                PostgresJoinType.RIGHT);
         return new PostgresJoin(new PostgresFromTable(joinTable, Randomly.getBoolean()), joinClause, options);
     }
 

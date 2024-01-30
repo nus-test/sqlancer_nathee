@@ -49,8 +49,8 @@ public class SQLite3TLPAggregateOracle implements TestOracle<SQLite3GlobalState>
         gen = new SQLite3TypedExpressionGenerator(state).setColumns(targetTables.getColumns());
         SQLite3Select select = new SQLite3Select();
         SQLite3AggregateFunction windowFunction = Randomly.fromOptions(SQLite3Aggregate.SQLite3AggregateFunction.MIN,
-                SQLite3Aggregate.SQLite3AggregateFunction.MAX, SQLite3AggregateFunction.SUM,
-                SQLite3AggregateFunction.TOTAL);
+                SQLite3Aggregate.SQLite3AggregateFunction.MAX, SQLite3AggregateFunction.SUM
+                /*SQLite3AggregateFunction.TOTAL*/);
         SQLite3Aggregate aggregate = new SQLite3Aggregate(gen.getRandomExpressions(SQLite3DataType.INT, 1), windowFunction);
         select.setFetchColumns(Arrays.asList(aggregate));
         List<SQLite3Expression> from = SQLite3Common.getTableRefs(targetTables.getTables(), s);

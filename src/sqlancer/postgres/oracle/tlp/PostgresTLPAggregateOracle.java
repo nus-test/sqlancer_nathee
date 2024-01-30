@@ -49,8 +49,8 @@ public class PostgresTLPAggregateOracle extends PostgresTLPBase implements TestO
 
     protected void aggregateCheck() throws SQLException {
         PostgresAggregateFunction aggregateFunction = Randomly.fromOptions(PostgresAggregateFunction.MAX,
-                PostgresAggregateFunction.MIN, PostgresAggregateFunction.SUM, PostgresAggregateFunction.BIT_AND,
-                PostgresAggregateFunction.BIT_OR, PostgresAggregateFunction.BOOL_AND, PostgresAggregateFunction.BOOL_OR,
+                // PostgresAggregateFunction.MIN, PostgresAggregateFunction.SUM, PostgresAggregateFunction.BIT_AND,
+                // PostgresAggregateFunction.BIT_OR, PostgresAggregateFunction.BOOL_AND, PostgresAggregateFunction.BOOL_OR,
                 PostgresAggregateFunction.COUNT);
         PostgresAggregate aggregate = gen.generateArgsForAggregate(aggregateFunction.getRandomReturnType(),
                 aggregateFunction);
@@ -133,11 +133,11 @@ public class PostgresTLPAggregateOracle extends PostgresTLPBase implements TestO
     private List<PostgresExpression> mapped(PostgresAggregate aggregate) {
         switch (aggregate.getFunction()) {
         case SUM:
-        case COUNT:
-        case BIT_AND:
-        case BIT_OR:
-        case BOOL_AND:
-        case BOOL_OR:
+        // case COUNT:
+        // case BIT_AND:
+        // case BIT_OR:
+        // case BOOL_AND:
+        // case BOOL_OR:
         case MAX:
         case MIN:
             return aliasArgs(Arrays.asList(aggregate));

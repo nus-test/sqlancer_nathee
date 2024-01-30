@@ -24,7 +24,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.JCommander.Builder;
 
 import sqlancer.arangodb.ArangoDBProvider;
-import sqlancer.citus.CitusProvider;
+// import sqlancer.citus.CitusProvider;
 import sqlancer.clickhouse.ClickHouseProvider;
 import sqlancer.cnosdb.CnosDBProvider;
 import sqlancer.cockroachdb.CockroachDBProvider;
@@ -629,9 +629,9 @@ public final class Main {
         List<DatabaseProvider<?, ?, ?>> providers = new ArrayList<>();
         @SuppressWarnings("rawtypes")
         ServiceLoader<DatabaseProvider> loader = ServiceLoader.load(DatabaseProvider.class);
-        for (DatabaseProvider<?, ?, ?> provider : loader) {
-            providers.add(provider);
-        }
+        // for (DatabaseProvider<?, ?, ?> provider : loader) {
+        //     providers.add(provider);
+        // }
         checkForIssue799(providers);
         return providers;
     }
@@ -639,10 +639,10 @@ public final class Main {
     // see https://github.com/sqlancer/sqlancer/issues/799
     private static void checkForIssue799(List<DatabaseProvider<?, ?, ?>> providers) {
         if (providers.isEmpty()) {
-            System.err.println(
-                    "No DBMS implementations (i.e., instantiations of the DatabaseProvider class) were found. You likely ran into an issue described in https://github.com/sqlancer/sqlancer/issues/799. As a workaround, I now statically load all supported providers as of June 7, 2023.");
+            // System.err.println(
+            //         "No DBMS implementations (i.e., instantiations of the DatabaseProvider class) were found. You likely ran into an issue described in https://github.com/sqlancer/sqlancer/issues/799. As a workaround, I now statically load all supported providers as of June 7, 2023.");
             providers.add(new ArangoDBProvider());
-            providers.add(new CitusProvider());
+            // providers.add(new CitusProvider());
             providers.add(new ClickHouseProvider());
             providers.add(new CnosDBProvider());
             providers.add(new CockroachDBProvider());
