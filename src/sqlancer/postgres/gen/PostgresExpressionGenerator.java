@@ -402,7 +402,7 @@ public class PostgresExpressionGenerator implements ExpressionGenerator<Postgres
 
     private PostgresExpression generateConcat(int depth) {
         PostgresExpression left = generateExpression(depth + 1, PostgresDataType.TEXT);
-        PostgresExpression right = generateExpression(depth + 1);
+        PostgresExpression right = generateExpression(depth + 1, PostgresDataType.TEXT);
         return new PostgresConcatOperation(left, right);
     }
 

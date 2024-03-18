@@ -87,15 +87,15 @@ public class SQLite3Function extends SQLite3Expression {
 
         },
 
-        HEX(1, "HEX") {
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                return null;
-                // SQLite3Constant binaryValue = SQLite3Cast.castToBlob(args[0]);
-                // return
-                // SQLite3Constant.createTextConstant(binaryValue.getStringRepresentation());
-            }
-        },
+        // HEX(1, "HEX") {
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         return null;
+        //         // SQLite3Constant binaryValue = SQLite3Cast.castToBlob(args[0]);
+        //         // return
+        //         // SQLite3Constant.createTextConstant(binaryValue.getStringRepresentation());
+        //     }
+        // },
 
         LOWER(1, "LOWER") {
             @Override
@@ -246,58 +246,6 @@ public class SQLite3Function extends SQLite3Expression {
                 return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
         },
-        TRIM_TWO_ARGS(2, "TRIM") {
-
-            @Override
-            public SQLite3Constant apply(SQLite3Constant... args) {
-                if (args[0].isNull() || args[1].isNull()) {
-                    return SQLite3Constant.createNullConstant();
-                }
-                SQLite3Constant str = SQLite3Cast.castToText(args[0]);
-                SQLite3Constant castToText = SQLite3Cast.castToText(args[1]);
-                if (str == null || castToText == null) {
-                    return null;
-                }
-                String remove = castToText.asString();
-                StringBuilder text = new StringBuilder(str.asString());
-                int i = 0;
-                while (i < text.length()) {
-                    boolean shouldRemoveChar = false;
-                    char c = text.charAt(i);
-                    for (char charToRemove : remove.toCharArray()) {
-                        if (charToRemove == c) {
-                            shouldRemoveChar = true;
-                            break;
-                        }
-                    }
-                    if (shouldRemoveChar) {
-                        text.deleteCharAt(i);
-                    } else {
-                        break;
-                    }
-                }
-                i = text.length() - 1;
-                while (i >= 0) {
-                    boolean shouldRemoveChar = false;
-                    char c = text.charAt(i);
-                    for (char charToRemove : remove.toCharArray()) {
-                        if (charToRemove == c) {
-                            shouldRemoveChar = true;
-                            break;
-                        }
-                    }
-                    if (shouldRemoveChar) {
-                        text.deleteCharAt(i);
-                        i--;
-                    } else {
-                        break;
-                    }
-                }
-                String string = text.toString();
-                assert string != null;
-                return SQLite3Constant.createTextConstant(string);
-            }
-        },
         UNLIKELY(1, "UNLIKELY") {
             @Override
             public SQLite3Constant apply(SQLite3Constant... args) {
@@ -305,6 +253,58 @@ public class SQLite3Function extends SQLite3Expression {
             }
 
         };
+        // TRIM_TWO_ARGS(2, "TRIM") {
+
+        //     @Override
+        //     public SQLite3Constant apply(SQLite3Constant... args) {
+        //         if (args[0].isNull() || args[1].isNull()) {
+        //             return SQLite3Constant.createNullConstant();
+        //         }
+        //         SQLite3Constant str = SQLite3Cast.castToText(args[0]);
+        //         SQLite3Constant castToText = SQLite3Cast.castToText(args[1]);
+        //         if (str == null || castToText == null) {
+        //             return null;
+        //         }
+        //         String remove = castToText.asString();
+        //         StringBuilder text = new StringBuilder(str.asString());
+        //         int i = 0;
+        //         while (i < text.length()) {
+        //             boolean shouldRemoveChar = false;
+        //             char c = text.charAt(i);
+        //             for (char charToRemove : remove.toCharArray()) {
+        //                 if (charToRemove == c) {
+        //                     shouldRemoveChar = true;
+        //                     break;
+        //                 }
+        //             }
+        //             if (shouldRemoveChar) {
+        //                 text.deleteCharAt(i);
+        //             } else {
+        //                 break;
+        //             }
+        //         }
+        //         i = text.length() - 1;
+        //         while (i >= 0) {
+        //             boolean shouldRemoveChar = false;
+        //             char c = text.charAt(i);
+        //             for (char charToRemove : remove.toCharArray()) {
+        //                 if (charToRemove == c) {
+        //                     shouldRemoveChar = true;
+        //                     break;
+        //                 }
+        //             }
+        //             if (shouldRemoveChar) {
+        //                 text.deleteCharAt(i);
+        //                 i--;
+        //             } else {
+        //                 break;
+        //             }
+        //         }
+        //         String string = text.toString();
+        //         assert string != null;
+        //         return SQLite3Constant.createTextConstant(string);
+        //     }
+        // },
         // TYPEOF(1, "TYPEOF") {
 
         //     @Override
