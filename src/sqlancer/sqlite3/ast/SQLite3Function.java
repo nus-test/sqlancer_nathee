@@ -22,10 +22,10 @@ public class SQLite3Function extends SQLite3Expression {
             @Override
             public SQLite3Constant apply(SQLite3Constant... args) {
                 SQLite3Constant castValue;
-                if (args[0].getDataType() == SQLite3DataType.BINARY) {
-                    throw new IgnoreMeException(); // TODO
-                                                   // implement
-                }
+                // if (args[0].getDataType() == SQLite3DataType.BINARY) {
+                //     throw new IgnoreMeException(); // TODO
+                //                                    // implement
+                // }
                 if (args[0].getDataType() == SQLite3DataType.INT) {
                     castValue = SQLite3Cast.castToInt(args[0]);
                 } else {

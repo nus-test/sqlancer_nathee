@@ -1394,8 +1394,8 @@ public abstract class SQLite3Expression {
         @Override
         public TypeAffinity getAffinity() {
             switch (column.getType()) {
-            case BINARY:
-                return TypeAffinity.BLOB;
+            // case BINARY:
+            //     return TypeAffinity.BLOB;
             case INT:
                 return TypeAffinity.INTEGER;
             case NONE:

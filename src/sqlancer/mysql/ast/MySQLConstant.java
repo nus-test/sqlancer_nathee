@@ -82,7 +82,7 @@ public abstract class MySQLConstant implements MySQLExpression {
 
         public MySQLTextConstant(String value) {
             this.value = value;
-            singleQuotes = Randomly.getBoolean();
+            singleQuotes = true; //Randomly.getBoolean();
 
         }
 

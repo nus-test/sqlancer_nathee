@@ -31,7 +31,7 @@ public final class SQLite3Cast {
         if (value.getDataType() == SQLite3DataType.NULL) {
             return Optional.empty();
         }
-        if (value.getDataType() == SQLite3DataType.TEXT || value.getDataType() == SQLite3DataType.BINARY) {
+        if (value.getDataType() == SQLite3DataType.TEXT /*|| value.getDataType() == SQLite3DataType.BINARY*/) {
             numericValue = castToNumeric(value);
         } else {
             numericValue = value;
@@ -60,10 +60,10 @@ public final class SQLite3Cast {
     // SELECT CAST('-1.370998801E9' AS INTEGER) == -1
     public static SQLite3Constant castToInt(SQLite3Constant originalCons) {
         SQLite3Constant cons = originalCons;
-        if (cons.getDataType() == SQLite3DataType.BINARY) {
-            String text = new String(cons.asBinary(), DEFAULT_ENCODING);
-            cons = SQLite3Constant.createTextConstant(text);
-        }
+        // if (cons.getDataType() == SQLite3DataType.BINARY) {
+        //     String text = new String(cons.asBinary(), DEFAULT_ENCODING);
+        //     cons = SQLite3Constant.createTextConstant(text);
+        // }
         switch (cons.getDataType()) {
         case NULL:
             return SQLite3Constant.createNullConstant();
@@ -138,10 +138,10 @@ public final class SQLite3Cast {
     private static SQLite3Constant convertInternal(SQLite3Constant originalValue, boolean convertRealToInt,
             boolean noNumIsRealZero, boolean convertIntToReal) throws AssertionError {
         SQLite3Constant value = originalValue;
-        if (value.getDataType() == SQLite3DataType.BINARY) {
-            String text = new String(value.asBinary(), DEFAULT_ENCODING);
-            value = SQLite3Constant.createTextConstant(text);
-        }
+        // if (value.getDataType() == SQLite3DataType.BINARY) {
+        //     String text = new String(value.asBinary(), DEFAULT_ENCODING);
+        //     value = SQLite3Constant.createTextConstant(text);
+        // }
         switch (value.getDataType()) {
         case NULL:
             return SQLite3Constant.createNullConstant();
@@ -273,11 +273,11 @@ public final class SQLite3Cast {
             return cons;
         } else {
             SQLite3Constant stringVal = SQLite3Cast.castToText(cons);
-            if (stringVal == null) {
+            // if (stringVal == null) {
                 return null;
-            } else {
-                return SQLite3Constant.createBinaryConstant(stringVal.asString().getBytes(DEFAULT_ENCODING));
-            }
+            // } else {
+            //     return SQLite3Constant.createBinaryConstant(stringVal.asString().getBytes(DEFAULT_ENCODING));
+            // }
         }
     }
 

@@ -48,7 +48,7 @@ public class SQLite3UnaryOperation extends SQLite3Expression implements UnaryOpe
                 }
                 SQLite3Constant intConstant;
                 if (constant.getDataType() == SQLite3DataType.TEXT
-                        || constant.getDataType() == SQLite3DataType.BINARY) {
+                        /*|| constant.getDataType() == SQLite3DataType.BINARY*/) {
                     intConstant = SQLite3Cast.castToNumericFromNumOperand(constant);
                 } else {
                     intConstant = constant;

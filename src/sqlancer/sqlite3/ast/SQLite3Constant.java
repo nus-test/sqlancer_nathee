@@ -203,7 +203,7 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         public SQLite3Constant applyLess(SQLite3Constant right, SQLite3CollateSequence collate) {
             if (right.isNull()) {
                 return right;
-            } else if (right.getDataType() == SQLite3DataType.TEXT || right.getDataType() == SQLite3DataType.BINARY) {
+            } else if (right.getDataType() == SQLite3DataType.TEXT/*|| right.getDataType() == SQLite3DataType.BINARY*/) {
                 return SQLite3Constant.createTrue();
             } else if (right.getDataType() == SQLite3DataType.INT) {
                 long rightValue = right.asInt();
@@ -293,7 +293,7 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         public SQLite3Constant applyLess(SQLite3Constant right, SQLite3CollateSequence collate) {
             if (right.isNull()) {
                 return right;
-            } else if (right.getDataType() == SQLite3DataType.TEXT || right.getDataType() == SQLite3DataType.BINARY) {
+            } else if (right.getDataType() == SQLite3DataType.TEXT/*|| right.getDataType() == SQLite3DataType.BINARY*/) {
                 return SQLite3Constant.createTrue();
             } else if (right.getDataType() == SQLite3DataType.REAL) {
                 double rightValue = right.asDouble();
@@ -450,8 +450,8 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         public SQLite3Constant applyLess(SQLite3Constant right, SQLite3CollateSequence collate) {
             if (right.isNull()) {
                 return right;
-            } else if (right.getDataType() == SQLite3DataType.BINARY) {
-                return SQLite3Constant.createTrue();
+            // } else if (right.getDataType() == SQLite3DataType.BINARY) {
+            //     return SQLite3Constant.createTrue();
             } else if (right.getDataType() == SQLite3DataType.TEXT) {
                 String other = right.asString();
                 boolean lessThan;
@@ -491,7 +491,7 @@ public abstract class SQLite3Constant extends SQLite3Expression {
 
         @Override
         public SQLite3DataType getDataType() {
-            return SQLite3DataType.BINARY;
+            return SQLite3DataType.TEXT; //BINARY
         }
 
         @Override
@@ -533,18 +533,18 @@ public abstract class SQLite3Constant extends SQLite3Expression {
         public SQLite3Constant applyEquals(SQLite3Constant right, SQLite3CollateSequence collate) {
             if (right.isNull()) {
                 return SQLite3Constant.createNullConstant();
-            } else if (right.getDataType() == SQLite3DataType.BINARY) {
-                byte[] otherArr = right.asBinary();
-                if (bytes.length == otherArr.length) {
-                    for (int i = 0; i < bytes.length; i++) {
-                        if (bytes[i] != otherArr[i]) {
-                            return SQLite3Constant.createFalse();
-                        }
-                    }
-                    return SQLite3Constant.createTrue();
-                } else {
-                    return SQLite3Constant.createFalse();
-                }
+            // } else if (right.getDataType() == SQLite3DataType.BINARY) {
+            //     byte[] otherArr = right.asBinary();
+            //     if (bytes.length == otherArr.length) {
+            //         for (int i = 0; i < bytes.length; i++) {
+            //             if (bytes[i] != otherArr[i]) {
+            //                 return SQLite3Constant.createFalse();
+            //             }
+            //         }
+            //         return SQLite3Constant.createTrue();
+            //     } else {
+            //         return SQLite3Constant.createFalse();
+            //     }
             } else {
                 return SQLite3Constant.createFalse();
             }
