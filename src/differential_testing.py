@@ -16,7 +16,7 @@ import shutil
 mode = 'console' #output errors in consoles or log files
 run_number = 0
 
-def run_from_file(files, conn):
+def run_from_file(files, conn, errors_dict):
     for file in files:
         errors = []
         logs = open(file, 'r', encoding="utf8")
@@ -140,39 +140,63 @@ def run_from_file(files, conn):
             try:
                 mysql_cur.execute(statement)
             except mysql.connector.Error as e: #mysql stop executing after finding an error
-                errors.append({
-                    "where": f"\nMySQL error at {database_name}:",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "sql syntax" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["MySQL"])):
+                    pattern = errors_dict["MySQL"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nMySQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_create_successful = False
             ## execute statements on postgres with python lib
             try:
                 postgres_cur.execute(statement.encode())
                 postgres_count = postgres_cur.rowcount
             except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-                errors.append({
-                    "where": f"\nPostgreSQL error at {database_name}:",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["Postgres"])):
+                    pattern = errors_dict["Postgres"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nPostgreSQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_create_successful = False
             ## execute statements on sqlite with python lib
             try:
                 sqlite_cur.execute(statement)
                 sqlite_count = sqlite_cur.rowcount
             except sqlite3.Error as e: #sqlite stop executing after finding an error
-                errors.append({
-                    "where": f"\nSQLite error at {database_name}: ",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["SQLite"])):
+                    pattern = errors_dict["SQLite"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nSQLite error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_create_successful = False
 
         ## begin transaction for all dbms
@@ -195,39 +219,63 @@ def run_from_file(files, conn):
                 mysql_cur.execute(statement)
                 mysql_count = mysql_cur.rowcount
             except mysql.connector.Error as e: #mysql stop executing after finding an error
-                errors.append({
-                    "where": f"\nMySQL error at {database_name}:",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "sql syntax" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["MySQL"])):
+                    pattern = errors_dict["MySQL"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nMySQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_successful = False
             ## execute statements on postgres with python lib
             try:
                 postgres_cur.execute(statement.encode())
                 postgres_count = postgres_cur.rowcount
             except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-                errors.append({
-                    "where": f"\nPostgreSQL error at {database_name}:",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["Postgres"])):
+                    pattern = errors_dict["Postgres"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nPostgreSQL error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_successful = False
             ## execute statements on sqlite with python lib
             try:
                 sqlite_cur.execute(statement)
                 sqlite_count = sqlite_cur.rowcount
             except sqlite3.Error as e: #sqlite stop executing after finding an error
-                errors.append({
-                    "where": f"\nSQLite error at {database_name}: ",
-                    "statement": statement,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["SQLite"])):
+                    pattern = errors_dict["SQLite"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nSQLite error at {database_name}:",
+                        "statement": statement,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_successful = False
             ## Check for unequal changes    
             if is_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
@@ -278,13 +326,21 @@ def run_from_file(files, conn):
                     except:
                         mysql_multiset[str(res)] += 1
             except mysql.connector.Error as e: #mysql stop executing after finding an error
-                errors.append({
-                    "where": f"\nMySQL error at {database_name}:",
-                    "statement": select,
-                    "error": e,
-                    "syntax": "sql syntax" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["MySQL"])):
+                    pattern = errors_dict["MySQL"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nMySQL error at {database_name}:",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_select_successful = False
             ## execute select statements on postgres with python lib
             try:
@@ -309,13 +365,21 @@ def run_from_file(files, conn):
                     except:
                         postgres_multiset[str(res)] += 1
             except psycopg.Error as e: #postgres will not execute from the start if an error is detected
-                errors.append({
-                    "where": f"\nPostgreSQL error at {database_name}:",
-                    "statement": select,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["Postgres"])):
+                    pattern = errors_dict["Postgres"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nPostgreSQL error at {database_name}:",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_select_successful = False
             ## execute select statements on sqlite with python lib
             try:
@@ -340,13 +404,21 @@ def run_from_file(files, conn):
                     except:    
                         sqlite_multiset[str(res)] += 1
             except sqlite3.Error as e: #sqlite stop executing after finding an error
-                errors.append({
-                    "where": f"\nSQLite error at {database_name}: ",
-                    "statement": select,
-                    "error": e,
-                    "syntax": "syntax error" in str(e).lower(),
-                    "diff": False
-                })
+                is_found = False
+                for i in range(len(errors_dict["SQLite"])):
+                    pattern = errors_dict["SQLite"][i]
+                    if re.findall(pattern, str(e)):
+                        is_found = True
+                        break
+                
+                if not is_found:
+                    errors.append({
+                        "where": f"\nSQLite error at {database_name}:",
+                        "statement": select,
+                        "error": e,
+                        "syntax": "sql syntax" in str(e).lower(),
+                        "diff": False
+                    })
                 is_select_successful = False
             if is_select_successful and ((mysql_count != postgres_count) or (sqlite_count != postgres_count) or (mysql_count != sqlite_count)):
                 errors.append({
@@ -450,6 +522,38 @@ if __name__ == '__main__':
     log_files = glob.glob("./target/logs/*/database*")
     files_per_thread = int(len(log_files) / num_threads)
     remains = len(log_files) % num_threads
+
+    mysql_file = open('./src/MySQL_expected_errors.txt', 'r', encoding="utf8")
+    sqlite_file = open('./src/SQLite_expected_errors.txt', 'r', encoding="utf8")
+    postgres_file = open('./src/Postgres_expected_errors.txt', 'r', encoding="utf8")
+    
+    mysql_errors = list()
+    while True:
+        line = mysql_file.readline().strip()
+        if not line:
+            break
+        mysql_errors.append(line)
+
+    sqlite_errors = list()
+    while True:
+        line = sqlite_file.readline().strip()
+        if not line:
+            break
+        sqlite_errors.append(line)
+
+    postgres_errors = list()
+    while True:
+        line = postgres_file.readline().strip()
+        if not line:
+            break
+        postgres_errors.append(line)
+
+    errors = {
+        "MySQL": mysql_errors,
+        "SQLite": sqlite_errors,
+        "Postgres": postgres_errors
+    }
+
     threads = []
     for _ in range(num_threads):
         files = []
@@ -460,7 +564,7 @@ if __name__ == '__main__':
             files.append(log_files.pop(0))
         postgres_con = psycopg.connect("dbname=postgres user=sqlancer password=sqlancer host=127.0.0.1")
         postgres_con.autocommit = True
-        t = threading.Thread(target=run_from_file, args=[files, postgres_con])
+        t = threading.Thread(target=run_from_file, args=[files, postgres_con, errors])
         threads.append(t)
         t.start()
     
