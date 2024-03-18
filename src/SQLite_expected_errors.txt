@@ -1,0 +1,77 @@
+A table in the database is locked
+Abort due to constraint violation
+Data type mismatch
+FTS expression tree is too large
+GROUP BY term out of range
+JSON cannot hold BLOB values
+JSON path error
+LIMIT clause should come after
+ON CONFLICT clause does not match any PRIMARY KEY or UNIQUE constraint
+ORDER BY clause should come after
+ORDER BY term does not match any column in the result set
+ORDER BY term out of range
+RANGE with offset PRECEDING/FOLLOWING requires one ORDER BY expression
+SQL error or missing database
+SQL error or missing database \(foreign key mismatch
+SQL error or missing database \(integer overflow\)
+SQL error or missing database \(no such column:
+SQL error or missing database \(no such table:
+SQL error or missing database \(parser stack overflow\)
+SQL error or missing database \(second argument to likelihood\(\) must be a constant between 0.0 and 1.0\)
+SQLITE_CONSTRAINT
+SQLITE_CONSTRAINT_CHECK
+SQLITE_CONSTRAINT_NOTNULL
+SQLITE_CONSTRAINT_PRIMARYKEY
+SQLITE_CONSTRAINT_UNIQUE
+SQLITE_FULL
+String or BLOB exceeds size limit
+The database file is locked
+UNIQUE constraint failed
+aggregate functions are not allowed in the GROUP BY clause
+already exists
+argument of ntile must be a positive integer
+cannot INSERT into generated column
+cannot UPDATE generated column
+circularly defined
+columns but
+exceeds size limit
+frame ending offset must be a non-negative integer
+frame ending offset must be a non-negative number
+frame starting offset must be a non-negative integer
+frame starting offset must be a non-negative number
+generated columns cannot be part of the PRIMARY KEY
+json_insert\(\) needs an odd number of arguments
+json_object\(\) labels must be TEXT
+json_object\(\) requires an even number of arguments
+load_extension\(\) prohibited in triggers and views
+malformed JSON
+misuse of aggregate
+must have at least one non-generated column
+no query solution
+no such collation sequence: UINT
+no such column
+no such index
+non-deterministic functions prohibited
+non-deterministic functions prohibited in CHECK constraints
+non-deterministic functions prohibited in generated columns
+non-deterministic use of date
+non-deterministic use of datetime
+non-deterministic use of julianday
+non-deterministic use of strftime
+non-deterministic use of time
+not authorized
+parser stack overflow
+second argument to likelihood\(\) must be a constant between 0.0 and 1.0
+second argument to nth_value must be a positive integer
+subqueries prohibited in CHECK constraints
+subqueries prohibited in generated columns
+subqueries prohibited in index expressions
+subqueries prohibited in partial index WHERE clauses
+table does not support scanning
+too many levels of trigger recursion
+unknown function: json_type
+unsafe use of load_extension
+unsupported frame specification
+values were supplie
+operator prohibited in index expressions
+operator prohibited in generated columns

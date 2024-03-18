@@ -1,0 +1,132 @@
+collations are not supported
+A generated column cannot reference another generated column.
+ERROR: functions in index expression must be marked IMMUTABLE
+ERROR: invalid ON DELETE action for foreign key constraint containing generated column
+FULL JOIN is only supported with merge-joinable or hash-joinable join conditions
+GROUP BY position
+LIKE pattern must not end with escape character
+View columns that are not columns of their base relation are not updatable
+You might need to add explicit type casts
+You might need to add explicit type casts.
+a negative number raised to a non-integer power yields a complex result
+aggregate functions are not allowed in GROUP BY
+already exists
+and decimal point together
+because it has pending trigger events
+bit string too long
+but default expression is of type text
+but expression is of type
+but it cannot be referenced from this part of the query
+can only be updated to DEFAULT
+canceling statement due to statement timeout
+cannot add NO INHERIT constraint to partitioned table
+cannot be implemented
+cannot cast
+cannot cast type
+cannot convert infinity to \w+
+cannot create partitioned table as inheritance child
+cannot insert a non-DEFAULT value into column
+cannot insert into column
+cannot reference partitioned table
+cannot take logarithm of a negative number
+cannot take logarithm of zero
+cannot use column reference in DEFAULT expression
+cannot use constant expression
+cannot use generated column in partition key
+character number must be positive
+collation mismatch
+conflicting NULL/NOT NULL declarations
+conflicting key value violates exclusion constraint
+constraint must be added to child tables too
+constraints on permanent tables may reference only permanent tables
+constraints on temporary tables may reference only temporary tables
+constraints on unlogged tables may reference only permanent or unlogged tables
+could not create unique index
+could not determine polymorphic type because input has type unknown
+could not determine which collation to use
+could not determine which collation to use for index expression
+could not determine which collation to use for string comparison
+current transaction is aborted
+data type unknown
+division by zero
+does not accept
+does not accept data type
+does not exist for access method
+does not support
+duplicate key value violates unique constraint
+exclusion constraints are not supported on partitioned tables
+functions in index expression must be marked IMMUTABLE
+functions in index predicate must be marked IMMUTABLE
+functions in partition key expression must be marked IMMUTABLE
+generation expression is not immutable
+has no default operator class
+has no default operator class for access method
+has pseudo-type unknown
+identity column defined as GENERATED ALWAYS
+inherits from generated column but specifies default
+inherits from generated column but specifies identity
+insufficient columns in UNIQUE constraint definition
+integer out of range
+invalid ON UPDATE action for foreign key constraint containing generated column
+invalid hexadecimal data: odd number of digits
+invalid hexadecimal digit
+invalid input syntax
+invalid input syntax for
+invalid input syntax for type
+invalid input syntax for type money
+invalid regular expression
+is a generated column
+is duplicated
+is not a number
+is not a valid binary digit
+is not a valid hexadecimal digit
+is not commutative
+is not in select list
+is not unique
+is of type boolean but expression is of type text
+missing FROM-clause entry for table
+multiple assignments to same column
+multiple decimal points
+must appear in the GROUP BY clause or be used in an aggregate function
+must be type
+must be type boolean
+must be type boolean, not type text
+new row violates check option for view
+no collation was derived for partition key column
+no partition of relation
+non-integer constant in GROUP BY
+not found in view targetlist
+null character not permitted
+operator does not exist
+operator does not exist: text = boolean
+operator is not unique
+operator requires run-time type coercion
+out of range
+out of valid range
+quantifier operand invalid
+reached maximum value of sequence
+requested character not valid for encoding
+requested character too large for encoding
+result of range difference would not be contiguous
+there is no unique constraint matching given keys for referenced table
+there is no unique or exclusion constraint matching the ON CONFLICT specification
+unrecognized parameter
+unsupported ON COMMIT and foreign key combination
+unsupported PRIMARY KEY constraint with partition key definition
+unsupported UNIQUE constraint with partition key definition
+value overflows numeric format
+value too long for type character
+value too long for type character varying
+violates check constraint
+violates foreign key constraint
+violates not-null constraint
+violates unique constraint
+which is part of the partition key
+which is part of the partition key.
+zero raised to a negative power is undefined
+non-integer constant in ORDER BY
+for SELECT DISTINCT, ORDER BY expressions must appear in select list
+appears twice in unique constraint
+appears twice in primary key constraint
+foreign key referenced-columns list must not contain duplicates
+JOIN/USING types integer and character varying cannot be matched
