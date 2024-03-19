@@ -145,12 +145,12 @@ public final class PostgresCommon {
             sb.append("boolean");
             break;
         case INT:
-            if (Randomly.getBoolean() && allowSerial) {
-                serial = true;
-                sb.append(Randomly.fromOptions("serial", "bigserial"));
-            } else {
-                sb.append(Randomly.fromOptions("smallint", "integer", "bigint"));
-            }
+            // if (Randomly.getBoolean() && allowSerial) {
+            //     serial = true;
+            //     sb.append(Randomly.fromOptions("serial", "bigserial"));
+            // } else {
+                sb.append(Randomly.fromOptions(/*"smallint", "integer", */"bigint"));
+            // }
             break;
         case TEXT:
             if (Randomly.getBoolean()) {

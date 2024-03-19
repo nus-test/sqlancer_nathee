@@ -338,13 +338,13 @@ public class MySQLTableGenerator {
             optionallyAddPrecisionAndScale(sb);
             break;
         case INT:
-            sb.append(Randomly.fromOptions("TINYINT", "SMALLINT", "MEDIUMINT", "INT", "BIGINT"));
-            if (Randomly.getBoolean()) {
-                sb.append("(");
-                sb.append(Randomly.getNotCachedInteger(0, 255)); // Display width out of range for column 'c0' (max =
-                // 255)
-                sb.append(")");
-            }
+            sb.append(Randomly.fromOptions(/*"TINYINT", "SMALLINT", "MEDIUMINT", "INT", */"BIGINT"));
+            // if (Randomly.getBoolean()) {
+            //     sb.append("(");
+            //     sb.append(Randomly.getNotCachedInteger(0, 255)); // Display width out of range for column 'c0' (max =
+            //     // 255)
+            //     sb.append(")");
+            // }
             break;
         case VARCHAR:
             sb.append(Randomly.fromOptions("VARCHAR(500)", "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"));
@@ -360,14 +360,14 @@ public class MySQLTableGenerator {
         default:
             throw new AssertionError();
         }
-        if (randomType.isNumeric()) {
-            if (Randomly.getBoolean() && randomType != MySQLDataType.INT && !MySQLBugs.bug99127) {
-                sb.append(" UNSIGNED");
-            }
-            if (!globalState.usesPQS() && Randomly.getBoolean()) {
-                sb.append(" ZEROFILL");
-            }
-        }
+        // if (randomType.isNumeric()) {
+        //     if (Randomly.getBoolean() && randomType != MySQLDataType.INT && !MySQLBugs.bug99127) {
+        //         sb.append(" UNSIGNED");
+        //     }
+        //     if (!globalState.usesPQS() && Randomly.getBoolean()) {
+        //         sb.append(" ZEROFILL");
+        //     }
+        // }
     }
 
     public static void optionallyAddPrecisionAndScale(StringBuilder sb) {
