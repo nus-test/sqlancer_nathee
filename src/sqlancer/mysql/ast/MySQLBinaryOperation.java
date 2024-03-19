@@ -27,7 +27,7 @@ public class MySQLBinaryOperation implements MySQLExpression {
                 return applyBitOperation(left, right, (l, r) -> l | r);
             }
         };
-        // XOR("^") {
+        // XOR("^") { // E02
         //     @Override
         //     public MySQLConstant apply(MySQLConstant left, MySQLConstant right) {
         //         return applyBitOperation(left, right, (l, r) -> l ^ r);

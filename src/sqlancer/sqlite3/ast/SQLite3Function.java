@@ -22,7 +22,7 @@ public class SQLite3Function extends SQLite3Expression {
             @Override
             public SQLite3Constant apply(SQLite3Constant... args) {
                 SQLite3Constant castValue;
-                // if (args[0].getDataType() == SQLite3DataType.BINARY) {
+                // if (args[0].getDataType() == SQLite3DataType.BINARY) { // E10
                 //     throw new IgnoreMeException(); // TODO
                 //                                    // implement
                 // }
@@ -87,7 +87,7 @@ public class SQLite3Function extends SQLite3Expression {
 
         },
 
-        // HEX(1, "HEX") {
+        // HEX(1, "HEX") { // E07
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
         //         return null;
@@ -128,21 +128,21 @@ public class SQLite3Function extends SQLite3Expression {
                 return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
         },
-        // LIKELY(1, "LIKELY") {
+        // LIKELY(1, "LIKELY") { // E14
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
         //         return args[0];
         //     }
 
         // },
-        // LIKELIHOOD(2, "LIKELIHOOD") {
+        // LIKELIHOOD(2, "LIKELIHOOD") { // E14
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
         //         return args[0];
         //     }
 
         // },
-        // IFNULL(2, "IFNULL") {
+        // IFNULL(2, "IFNULL") { // E14
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
         //         for (SQLite3Expression arg : args) {
@@ -246,7 +246,7 @@ public class SQLite3Function extends SQLite3Expression {
                 return new SQLite3DataType[] { SQLite3DataType.TEXT };
             }
         };
-        // TRIM_TWO_ARGS(2, "TRIM") {
+        // TRIM_TWO_ARGS(2, "TRIM") { // E07
 
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
@@ -298,7 +298,7 @@ public class SQLite3Function extends SQLite3Expression {
         //         return SQLite3Constant.createTextConstant(string);
         //     }
         // },
-        // TYPEOF(1, "TYPEOF") {
+        // TYPEOF(1, "TYPEOF") { // E06
 
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
@@ -319,7 +319,7 @@ public class SQLite3Function extends SQLite3Expression {
         //     }
 
         // },
-        // UNLIKELY(1, "UNLIKELY") {
+        // UNLIKELY(1, "UNLIKELY") { // E14
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant... args) {
         //         return args[0];

@@ -17,7 +17,7 @@ public abstract class ToStringVisitor<T> extends NodeVisitor<T> {
         sb.append('(');
         visit(op.getRight());
         sb.append(')');
-        if (op.getOperatorRepresentation() == "LIKE") {
+        if (op.getOperatorRepresentation() == "LIKE") { // E13
         	sb.append(" ESCAPE '\\'");
         }
         sb.append(')');

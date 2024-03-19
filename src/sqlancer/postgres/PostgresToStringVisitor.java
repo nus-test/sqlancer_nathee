@@ -71,11 +71,11 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
     @Override
     public void visit(PostgresFromTable from) {
         // if (from.isOnly()) {
-        //     sb.append("ONLY ");
+        //     sb.append("ONLY "); // S06
         // }
         sb.append(from.getTable().getName());
         // if (!from.isOnly() && Randomly.getBoolean()) {
-        //     sb.append("*");
+        //     sb.append("*"); // S06
         // }
     }
 
@@ -94,7 +94,7 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         case DISTINCT:
             sb.append("DISTINCT ");
             // if (s.getDistinctOnClause() != null) {
-            //     sb.append("ON (");
+            //     sb.append("ON ("); // S06
             //     visit(s.getDistinctOnClause());
             //     sb.append(") ");
             // }
@@ -129,7 +129,7 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
                 sb.append("RIGHT OUTER JOIN");
                 break;
 //            case FULL:
-//                sb.append("FULL OUTER JOIN");
+//                sb.append("FULL OUTER JOIN"); // S01
 //                break;
             case CROSS:
                 sb.append("CROSS JOIN");
@@ -205,7 +205,7 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         // } else {
         //     sb.append("(");
         //     visit(cast.getExpression());
-        //     sb.append(")::");
+        //     sb.append(")::"); // E04
         //     appendType(cast);
         // }
     }
@@ -214,34 +214,34 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         PostgresCompoundDataType compoundType = cast.getCompoundType();
         switch (compoundType.getDataType()) {
         // case BOOLEAN:
-        //     sb.append("BOOLEAN");
+        //     sb.append("BOOLEAN"); // E04
         //     break;
         // case INT: // TODO support also other int types
-        //     sb.append("INT");
+        //     sb.append("INT"); // E04
         //     break;
-        // case TEXT:
+        // case TEXT: // T02
         //     // TODO: append TEXT, CHAR
-        //     sb.append(Randomly.fromOptions("CHAR"));
+        //     sb.append(Randomly.fromOptions("CHAR")); // E04
         //     break;
         // case REAL:
-        //     sb.append("FLOAT");
+        //     sb.append("FLOAT"); // T07
         //     break;
         // case DECIMAL:
-        //     sb.append("DECIMAL");
+        //     sb.append("DECIMAL"); // T07
         //     break;
         case FLOAT:
-            sb.append("DOUBLE PRECISION");
+            sb.append("DOUBLE PRECISION"); // T07
             break;
-//        case RANGE:
+//        case RANGE: // T03
 //            sb.append("int4range");
 //            break;
-//        case MONEY:
+//        case MONEY: // T03
 //            sb.append("MONEY");
 //            break;
-//        case INET:
+//        case INET: // T03
 //            sb.append("INET");
 //            break;
-//        case BIT:
+//        case BIT: // T03
 //            sb.append("BIT");
             // if (Randomly.getBoolean()) {
             // sb.append("(");
@@ -266,11 +266,11 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         visit(op.getExpr());
         // if (PostgresProvider.generateOnlyKnown && op.getExpr().getExpressionType() == PostgresDataType.TEXT
         //         && op.getLeft().getExpressionType() == PostgresDataType.TEXT) {
-        //     sb.append(" COLLATE \"C\"");
+        //     sb.append(" COLLATE \"C\""); // E14
         // }
         sb.append(") BETWEEN ");
         // if (op.isSymmetric()) {
-        //     sb.append("SYMMETRIC ");
+        //     sb.append("SYMMETRIC "); // E03
         // }
         sb.append("(");
         visit(op.getLeft());
@@ -278,7 +278,7 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
         visit(op.getRight());
         // if (PostgresProvider.generateOnlyKnown && op.getExpr().getExpressionType() == PostgresDataType.TEXT
         //         && op.getRight().getExpressionType() == PostgresDataType.TEXT) {
-        //     sb.append(" COLLATE \"C\"");
+        //     sb.append(" COLLATE \"C\""); // E14
         // }
         sb.append(")");
     }
@@ -333,7 +333,7 @@ public final class PostgresToStringVisitor extends ToStringVisitor<PostgresExpre
     public void visit(PostgresCollate op) {
         sb.append("(");
         visit(op.getExpr());
-//        sb.append(" COLLATE ");
+//        sb.append(" COLLATE "); // E14
 //        sb.append('"');
 //        sb.append(op.getCollate());
 //        sb.append('"');

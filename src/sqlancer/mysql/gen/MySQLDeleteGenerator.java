@@ -29,13 +29,13 @@ public class MySQLDeleteGenerator {
         MySQLTypedExpressionGenerator gen = new MySQLTypedExpressionGenerator(globalState).setColumns(randomTable.getColumns());
         ExpectedErrors errors = new ExpectedErrors();
         sb.append("DELETE");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // D01
         //     sb.append(" LOW_PRIORITY");
         // }
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // D01
         //     sb.append(" QUICK");
         // }
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // D01
         //     sb.append(" IGNORE");
         // }
         // TODO: support partitions

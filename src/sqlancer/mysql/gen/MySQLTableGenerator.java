@@ -56,7 +56,7 @@ public class MySQLTableGenerator {
         sb.append(" ");
         sb.append(tableName);
         // if (Randomly.getBoolean() && !schema.getDatabaseTables().isEmpty()) {
-        //     sb.append(" LIKE ");
+        //     sb.append(" LIKE "); // CT01
         //     sb.append(schema.getRandomTable().getName());
         //     return new SQLQueryAdapter(sb.toString(), true);
         // } else {
@@ -69,8 +69,8 @@ public class MySQLTableGenerator {
             }
             sb.append(")");
             sb.append(" ");
-            // appendTableOptions();
-            // appendPartitionOptions();
+            // appendTableOptions(); // CT10
+            // appendPartitionOptions(); // CT07
             if ((tableHasNullableColumn || setPrimaryKey) && engine == MySQLEngine.CSV) {
                 if (true) { // TODO
                     // results in an error
@@ -257,7 +257,7 @@ public class MySQLTableGenerator {
     }
 
     private enum ColumnOptions {
-        NULL_OR_NOT_NULL, UNIQUE, /*COMMENT, COLUMN_FORMAT, STORAGE,*/ PRIMARY_KEY
+        NULL_OR_NOT_NULL, UNIQUE, /*COMMENT, COLUMN_FORMAT, STORAGE,*/ PRIMARY_KEY // CT02
     }
 
     private void appendColumnDefinition() {
@@ -270,7 +270,7 @@ public class MySQLTableGenerator {
         boolean columnHasPrimaryKey = false;
 
         List<ColumnOptions> columnOptions = Randomly.subset(ColumnOptions.values());
-        columnOptions = columnOptions.stream().sorted(ColumnOptions::compareTo).collect(Collectors.toList()); //Sort options in correct order
+        columnOptions = columnOptions.stream().sorted(ColumnOptions::compareTo).collect(Collectors.toList()); //Sort options in correct order // CT02
         if (!columnOptions.contains(ColumnOptions.NULL_OR_NOT_NULL)) {
             tableHasNullableColumn = true;
         }
@@ -298,18 +298,18 @@ public class MySQLTableGenerator {
                 sb.append("UNIQUE");
                 keysSpecified++;
                 // if (Randomly.getBoolean()) {
-                //     sb.append(" KEY");
+                //     sb.append(" KEY"); // CT02
                 // }
                 break;
-            // case COMMENT:
+            // case COMMENT: // CT02
             //     // TODO: generate randomly
             //     sb.append(String.format("COMMENT '%s' ", "asdf"));
             //     break;
-            // case COLUMN_FORMAT:
+            // case COLUMN_FORMAT: // CT02
             //     sb.append("COLUMN_FORMAT ");
             //     sb.append(Randomly.fromOptions("FIXED", "DYNAMIC", "DEFAULT"));
             //     break;
-            // case STORAGE:
+            // case STORAGE: // CT02
             //     sb.append("STORAGE ");
             //     sb.append(Randomly.fromOptions("DISK", "MEMORY"));
             //     break;
@@ -334,11 +334,11 @@ public class MySQLTableGenerator {
             sb.append("BOOLEAN");
             break;
         case DECIMAL:
-            sb.append("DECIMAL");
-            optionallyAddPrecisionAndScale(sb);
-            break;
+            // sb.append("DECIMAL"); // T07
+            // optionallyAddPrecisionAndScale(sb);
+            // break;
         case INT:
-            sb.append(Randomly.fromOptions(/*"TINYINT", "SMALLINT", "MEDIUMINT", "INT", */"BIGINT"));
+            sb.append(Randomly.fromOptions(/*"TINYINT", "SMALLINT", "MEDIUMINT", "INT", */"BIGINT")); // T01
             // if (Randomly.getBoolean()) {
             //     sb.append("(");
             //     sb.append(Randomly.getNotCachedInteger(0, 255)); // Display width out of range for column 'c0' (max =
@@ -347,14 +347,14 @@ public class MySQLTableGenerator {
             // }
             break;
         case VARCHAR:
-            sb.append(Randomly.fromOptions("VARCHAR(255)"/*, "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"*/));
+            sb.append(Randomly.fromOptions("VARCHAR(255)"/*, "TINYTEXT", "TEXT", "MEDIUMTEXT", "LONGTEXT"*/)); // T02, T05
             break;
         case FLOAT:
             // sb.append("FLOAT");
-            // optionallyAddPrecisionAndScale(sb);
+            // optionallyAddPrecisionAndScale(sb); // T07
             // break;
         case DOUBLE:
-            sb.append(Randomly.fromOptions("DOUBLE PRECISION"/*, "FLOAT"*/));
+            sb.append(Randomly.fromOptions("DOUBLE PRECISION"/*, "FLOAT"*/)); // T04, T07
             optionallyAddPrecisionAndScale(sb);
             break;
         default:
@@ -362,10 +362,10 @@ public class MySQLTableGenerator {
         }
         // if (randomType.isNumeric()) {
         //     if (Randomly.getBoolean() && randomType != MySQLDataType.INT && !MySQLBugs.bug99127) {
-        //         sb.append(" UNSIGNED");
+        //         sb.append(" UNSIGNED"); // T01
         //     }
         //     if (!globalState.usesPQS() && Randomly.getBoolean()) {
-        //         sb.append(" ZEROFILL");
+        //         sb.append(" ZEROFILL"); // T01
         //     }
         // }
     }

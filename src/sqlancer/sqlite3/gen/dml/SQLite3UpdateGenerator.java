@@ -38,13 +38,13 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
     }
 
     private SQLQueryAdapter generate(SQLite3Table table) {
-        List<SQLite3Column> columnsToUpdate = Randomly.nonEmptySubset(table.getColumns()); //Randomly.nonEmptySubsetPotentialDuplicates(table.getColumns());
+        List<SQLite3Column> columnsToUpdate = Randomly.nonEmptySubset(table.getColumns()); //Randomly.nonEmptySubsetPotentialDuplicates(table.getColumns()); // U02
         sb.append("UPDATE ");
         // if (Randomly.getBoolean()) {
-        //     sb.append("OR IGNORE ");
+        //     sb.append("OR IGNORE "); // U03
         // } else {
             // if (Randomly.getBoolean()) {
-            //     String fromOptions = Randomly.fromOptions("OR ROLLBACK", "OR ABORT", "OR REPLACE", "OR FAIL");
+            //     String fromOptions = Randomly.fromOptions("OR ROLLBACK", "OR ABORT", "OR REPLACE", "OR FAIL"); // U03
             //     sb.append(fromOptions);
             //     sb.append(" ");
             // }
@@ -56,7 +56,7 @@ public class SQLite3UpdateGenerator extends AbstractUpdateGenerator<SQLite3Colum
 
         sb.append(table.getName());
         sb.append(" SET ");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // U02
         //     sb.append("(");
         //     sb.append(columnsToUpdate.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
         //     sb.append(")");

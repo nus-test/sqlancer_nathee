@@ -16,11 +16,11 @@ public class PostgresAggregate extends FunctionNode<PostgresAggregateFunction, P
         implements PostgresExpression {
 
     public enum PostgresAggregateFunction {
-        AVG(PostgresDataType.INT, PostgresDataType.FLOAT, PostgresDataType.REAL/*, PostgresDataType.DECIMAL*/),
-        // BIT_AND(PostgresDataType.INT), BIT_OR(PostgresDataType.INT), BOOL_AND(PostgresDataType.BOOLEAN),
-        /*BOOL_OR(PostgresDataType.BOOLEAN),*/ COUNT(PostgresDataType.INT)/*, EVERY(PostgresDataType.BOOLEAN)*/, MAX, MIN,
+        AVG(PostgresDataType.INT, PostgresDataType.FLOAT, PostgresDataType.REAL/*, PostgresDataType.DECIMAL*/), // T07
+        // BIT_AND(PostgresDataType.INT), BIT_OR(PostgresDataType.INT), BOOL_AND(PostgresDataType.BOOLEAN), // S02
+        /*BOOL_OR(PostgresDataType.BOOLEAN),*/ COUNT(PostgresDataType.INT)/*, EVERY(PostgresDataType.BOOLEAN)*/, MAX, MIN, // S02
         // STRING_AGG
-        SUM(PostgresDataType.INT, PostgresDataType.FLOAT, PostgresDataType.REAL/*, PostgresDataType.DECIMAL*/);
+        SUM(PostgresDataType.INT, PostgresDataType.FLOAT, PostgresDataType.REAL/*, PostgresDataType.DECIMAL*/); // T07
 
         private PostgresDataType[] supportedReturnTypes;
 

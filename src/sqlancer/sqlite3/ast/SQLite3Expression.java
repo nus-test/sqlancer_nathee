@@ -131,7 +131,7 @@ public abstract class SQLite3Expression {
     public static class Join extends SQLite3Expression {
 
         public enum JoinType {
-            INNER, CROSS, OUTER, NATURAL, RIGHT/*, FULL*/;
+            INNER, CROSS, OUTER, NATURAL, RIGHT/*, FULL*/; // S01
         }
 
         private final SQLite3Table table;
@@ -490,7 +490,7 @@ public abstract class SQLite3Expression {
             implements UnaryOperation<SQLite3Expression> {
 
         public enum PostfixUnaryOperator {
-            ISNULL("IS NULL") {
+            ISNULL("IS NULL") { // E03
                 @Override
                 public SQLite3Constant apply(SQLite3Constant expectedValue) {
                     if (expectedValue.isNull()) {
@@ -500,7 +500,7 @@ public abstract class SQLite3Expression {
                     }
                 }
             },
-            // NOT_NULL("NOT NULL") {
+            // NOT_NULL("NOT NULL") { // E03
             //     @Override
             //     public SQLite3Constant apply(SQLite3Constant expectedValue) {
             //         if (expectedValue.isNull()) {
@@ -512,7 +512,7 @@ public abstract class SQLite3Expression {
 
             // },
 
-            // NOTNULL("NOTNULL") {
+            // NOTNULL("NOTNULL") { // E03
 
             //     @Override
             //     public SQLite3Constant apply(SQLite3Constant expectedValue) {
@@ -826,7 +826,7 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            EQUALS("="/*, "=="*/) {
+            EQUALS("="/*, "=="*/) { // E03
                 @Override
                 SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
                     return left.applyEquals(right, collate);
@@ -852,7 +852,7 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            // IS("IS") {
+            // IS("IS") { // E03
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
             //         if (left == null || right == null) {
@@ -867,7 +867,7 @@ public abstract class SQLite3Expression {
             //     }
 
             // },
-            // IS_NOT("IS NOT") {
+            // IS_NOT("IS NOT") { // E03
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right, SQLite3CollateSequence collate) {
             //         if (left == null || right == null) {
@@ -911,7 +911,7 @@ public abstract class SQLite3Expression {
                 }
 
             };
-            // GLOB("GLOB") {
+            // GLOB("GLOB") { // E13
 
             //     @Override
             //     public boolean shouldApplyAffinity() {
@@ -1139,7 +1139,7 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            // DIVIDE("/") {
+            // DIVIDE("/") { // E08
 
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
@@ -1171,7 +1171,7 @@ public abstract class SQLite3Expression {
                 }
 
             },
-            // SHIFT_LEFT("<<") {
+            // SHIFT_LEFT("<<") { // E02
 
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
@@ -1192,7 +1192,7 @@ public abstract class SQLite3Expression {
             //     }
 
             // },
-            // SHIFT_RIGHT(">>") {
+            // SHIFT_RIGHT(">>") { // E02
 
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
@@ -1213,7 +1213,7 @@ public abstract class SQLite3Expression {
             //     }
 
             // },
-            // ARITHMETIC_AND("&") {
+            // ARITHMETIC_AND("&") { // E02
 
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
@@ -1221,7 +1221,7 @@ public abstract class SQLite3Expression {
             //     }
 
             // },
-            // ARITHMETIC_OR("|") {
+            // ARITHMETIC_OR("|") { // E02
 
             //     @Override
             //     SQLite3Constant apply(SQLite3Constant left, SQLite3Constant right) {
@@ -1394,11 +1394,11 @@ public abstract class SQLite3Expression {
         @Override
         public TypeAffinity getAffinity() {
             switch (column.getType()) {
-            // case BINARY:
+            // case BINARY: // E10
             //     return TypeAffinity.BLOB;
             case INT:
                 return TypeAffinity.INTEGER;
-            // case NONE:
+            // case NONE: // T03
             //     return TypeAffinity.NONE;
             case REAL:
                 return TypeAffinity.REAL;

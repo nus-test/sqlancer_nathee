@@ -37,7 +37,7 @@ public final class SQLite3Common {
         StringBuilder sb = new StringBuilder(SQLite3Visitor.asString(randExpr));
         sb.append(" ");
         // if (Randomly.getBoolean()) {
-        //     sb.append(SQLite3Common.getRandomCollate());
+        //     sb.append(SQLite3Common.getRandomCollate()); // E14
         // }
         if (Randomly.getBoolean()) {
             if (Randomly.getBoolean()) {
@@ -120,7 +120,7 @@ public final class SQLite3Common {
     }
 
     public static SQLite3Column createColumn(int i) {
-        return new SQLite3Column(DBMSCommon.createColumnName(i), Randomly.fromOptions(SQLite3DataType.values()), false, false, null);
+        return new SQLite3Column(DBMSCommon.createColumnName(i), Randomly.fromOptions(SQLite3DataType.values()), false, false, null); // T03
     }
 
     public static List<SQLite3Expression> getTableRefs(List<SQLite3Table> tables, SQLite3Schema s) {

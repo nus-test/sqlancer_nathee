@@ -20,7 +20,7 @@ public final class PostgresIndexGenerator {
     private PostgresIndexGenerator() {
     }
 
-    // public enum IndexType {
+    // public enum IndexType { // CI05
     //     BTREE, HASH, GIST, GIN
     // }
 
@@ -44,13 +44,13 @@ public final class PostgresIndexGenerator {
         String indexName = getNewIndexName(randomTable);
         sb.append(indexName);
         sb.append(" ON ");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // CI05
         //     sb.append("ONLY ");
         // }
         sb.append(randomTable.getName());
-        // IndexType method;
+        // IndexType method; // CI05
         // if (Randomly.getBoolean()) {
-        //     sb.append(" USING ");
+        //     sb.append(" USING "); // CI05
         //     method = Randomly.fromOptions(IndexType.values());
         //     sb.append(method);
         // } else {
@@ -58,7 +58,7 @@ public final class PostgresIndexGenerator {
         // }
 
         sb.append("(");
-        // if (method == IndexType.HASH) {
+        // if (method == IndexType.HASH) { // CI05
         //     sb.append(randomTable.getRandomColumn().getName());
         // } else {
             for (int i = 0; i < Randomly.smallNumber() + 1; i++) {
@@ -80,7 +80,7 @@ public final class PostgresIndexGenerator {
                 // sb.append("COLLATE ");
                 // sb.append(Randomly.fromOptions("C", "POSIX"));
                 // }
-                // if (Randomly.getBooleanWithRatherLowProbability()) {
+                // if (Randomly.getBooleanWithRatherLowProbability()) { // CI05
                 //     sb.append(" ");
                 //     sb.append(globalState.getRandomOpclass());
                 //     errors.add("does not accept");
@@ -90,7 +90,7 @@ public final class PostgresIndexGenerator {
                     sb.append(" ");
                     sb.append(Randomly.fromOptions("ASC", "DESC"));
                 }
-                // if (Randomly.getBooleanWithRatherLowProbability()) {
+                // if (Randomly.getBooleanWithRatherLowProbability()) { // CI03
                 //     sb.append(" NULLS ");
                 //     sb.append(Randomly.fromOptions("FIRST", "LAST"));
                 // }
@@ -98,13 +98,13 @@ public final class PostgresIndexGenerator {
         // }
 
         sb.append(")");
-        // if (Randomly.getBoolean() && method != IndexType.HASH) {
+        // if (Randomly.getBoolean() && method != IndexType.HASH) { // CI04
         //     sb.append(" INCLUDE(");
         //     List<PostgresColumn> columns = randomTable.getRandomNonEmptyColumnSubset();
         //     sb.append(columns.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
         //     sb.append(")");
         // }
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // CI04
         //     sb.append(" WHERE ");
         //     PostgresExpression expr = new PostgresExpressionGenerator(globalState).setColumns(randomTable.getColumns())
         //             .setGlobalState(globalState).generateExpression(PostgresDataType.BOOLEAN);

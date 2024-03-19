@@ -63,10 +63,10 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
     }
 
     public enum Action implements AbstractAction<PostgresGlobalState> {
-        // ANALYZE(PostgresAnalyzeGenerator::create), //
+        // ANALYZE(PostgresAnalyzeGenerator::create), // // ST03
         ALTER_TABLE(g -> PostgresAlterTableGenerator.create(g.getSchema().getRandomTable(t -> !t.isView()), g,
                 generateOnlyKnown)), //
-        // CLUSTER(PostgresClusterGenerator::create), //
+        // CLUSTER(PostgresClusterGenerator::create), // // ST01
         COMMIT(g -> {
             SQLQueryAdapter query;
             if (Randomly.getBoolean()) {
@@ -78,34 +78,34 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
             }
             return query;
         }), //
-        // CREATE_STATISTICS(PostgresStatisticsGenerator::insert), //
-        // DROP_STATISTICS(PostgresStatisticsGenerator::remove), //
+        // CREATE_STATISTICS(PostgresStatisticsGenerator::insert), // // ST01
+        // DROP_STATISTICS(PostgresStatisticsGenerator::remove), // // ST01
         DELETE(PostgresDeleteGenerator::create), //
-        // DISCARD(PostgresDiscardGenerator::create), //
+        // DISCARD(PostgresDiscardGenerator::create), // // ST03
         DROP_INDEX(PostgresDropIndexGenerator::create), //
         INSERT(PostgresInsertGenerator::insert), //
         UPDATE(PostgresUpdateGenerator::create), //
-        // TRUNCATE(PostgresTruncateGenerator::create), //
-        // VACUUM(PostgresVacuumGenerator::create), //
-        // SET(PostgresSetGenerator::create), //
-        // REINDEX(PostgresReindexGenerator::create), //
+        // TRUNCATE(PostgresTruncateGenerator::create), // // ST01
+        // VACUUM(PostgresVacuumGenerator::create), // // ST03
+        // SET(PostgresSetGenerator::create), // // ST03
+        // REINDEX(PostgresReindexGenerator::create), // // ST01
         CREATE_INDEX(PostgresIndexGenerator::generate), //
-        // SET_CONSTRAINTS((g) -> {
+        // SET_CONSTRAINTS((g) -> { // ST01
         //     StringBuilder sb = new StringBuilder();
         //     sb.append("SET CONSTRAINTS ALL ");
         //     sb.append(Randomly.fromOptions("DEFERRED", "IMMEDIATE"));
         //     return new SQLQueryAdapter(sb.toString());
         // }), //
-        // RESET_ROLE((g) -> new SQLQueryAdapter("RESET ROLE")), //
-        // RESET((g) -> new SQLQueryAdapter("RESET ALL") /*
+        // RESET_ROLE((g) -> new SQLQueryAdapter("RESET ROLE")), // // ST03
+        // RESET((g) -> new SQLQueryAdapter("RESET ALL") /* // ST03
         //                                                * https://www.postgresql.org/docs/devel/sql-reset.html TODO: also
         //                                                * configuration parameter
         //                                                */), //
-        // NOTIFY(PostgresNotifyGenerator::createNotify), //
-        // LISTEN((g) -> PostgresNotifyGenerator.createListen()), //
-        // UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), //
-        // COMMENT_ON(PostgresCommentGenerator::generate), //
-        // CREATE_SEQUENCE(PostgresSequenceGenerator::createSequence), //
+        // NOTIFY(PostgresNotifyGenerator::createNotify), // // ST04
+        // LISTEN((g) -> PostgresNotifyGenerator.createListen()), // // ST04
+        // UNLISTEN((g) -> PostgresNotifyGenerator.createUnlisten()), // // ST04
+        // COMMENT_ON(PostgresCommentGenerator::generate), // // ST01
+        // CREATE_SEQUENCE(PostgresSequenceGenerator::createSequence), // // ST01
         CREATE_VIEW(PostgresViewGenerator::create);
 
         private final SQLQueryProvider<PostgresGlobalState> sqlQueryProvider;
@@ -127,13 +127,13 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         case CREATE_INDEX:
             nrPerformed = r.getInteger(0, 3);
             break;
-        // case CLUSTER:
+        // case CLUSTER: // ST01
         //     nrPerformed = r.getInteger(0, 3);
         //     break;
-        // case CREATE_STATISTICS:
+        // case CREATE_STATISTICS: // ST01
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
-        // case DISCARD:
+        // case DISCARD: // ST03
         case DROP_INDEX:
             nrPerformed = 0; //r.getInteger(0, 5);
             break;
@@ -143,27 +143,27 @@ public class PostgresProvider extends SQLProviderAdapter<PostgresGlobalState, Po
         case ALTER_TABLE:
             nrPerformed = 0; //r.getInteger(0, 5);
             break;
-        // case REINDEX:
-        // case RESET:
+        // case REINDEX: // ST01
+        // case RESET: // ST03
         //     nrPerformed = r.getInteger(0, 3);
         //     break;
         case DELETE:
-        // case RESET_ROLE:
-        // case SET:
+        // case RESET_ROLE: // ST03
+        // case SET: // ST03
             nrPerformed = r.getInteger(0, 5);
             break;
-        // case ANALYZE:
+        // case ANALYZE: // ST03
         //     nrPerformed = r.getInteger(0, 3);
         //     break;
-        // case VACUUM:
-        // case NOTIFY:
-        // case LISTEN:
-        // case UNLISTEN:
-        // case SET_CONSTRAINTS:
-        // case COMMENT_ON:
-        // case CREATE_SEQUENCE:
-        // case DROP_STATISTICS:
-        // case TRUNCATE:
+        // case VACUUM: // ST03
+        // case NOTIFY: // ST04
+        // case LISTEN: // ST04
+        // case UNLISTEN: // ST04
+        // case SET_CONSTRAINTS: // ST01
+        // case COMMENT_ON: // ST01
+        // case CREATE_SEQUENCE: // ST01
+        // case DROP_STATISTICS: // ST01
+        // case TRUNCATE: // ST01
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
         case CREATE_VIEW:

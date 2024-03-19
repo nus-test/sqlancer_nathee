@@ -182,19 +182,19 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
                     sb.append(c.asInt());
                 // } else {
                 //     long intVal = c.asInt();
-                //     asHexString(intVal);
+                //     asHexString(intVal); // E10
                 // }
                 // }
                 break;
             case REAL:
                 double asDouble = c.asDouble();
                 // if (Double.POSITIVE_INFINITY == asDouble) {
-                //     sb.append("1e500");
+                //     sb.append("1e500"); // E10
                 // } else if (Double.NEGATIVE_INFINITY == asDouble) {
-                //     sb.append("-1e500");
+                //     sb.append("-1e500"); // E10
                 // } else if (Double.isNaN(asDouble)) {
                 //     // throw new IgnoreMeException();
-                //     sb.append("1e500 / 1e500");
+                //     sb.append("1e500 / 1e500"); // E10
                 // } else {
                     sb.append(asDouble);
                 // }
@@ -204,7 +204,7 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
                 sb.append(c.asString().replace("'", "''"));
                 sb.append("'");
                 break;
-            // case BINARY:
+            // case BINARY: // E10
             //     sb.append('x');
             //     sb.append("'");
             //     byte[] arr;
@@ -245,14 +245,14 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
             sb.append("RIGHT OUTER");
             break;
         // case FULL:
-        //     sb.append("FULL OUTER");
+        //     sb.append("FULL OUTER"); // S01
         //     break;
         default:
             throw new AssertionError(join.getType());
         }
         sb.append(" JOIN ");
         sb.append(join.getTable().getName());
-        if (join.getOnClause() != null && join.getType() != JoinType.CROSS && join.getType() != JoinType.NATURAL) {
+        if (join.getOnClause() != null && join.getType() != JoinType.CROSS && join.getType() != JoinType.NATURAL) { // S01
             sb.append(" ON ");
             visit(join.getOnClause());
         }
@@ -416,7 +416,7 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
     public void visit(SQLite3WindowFunctionExpression windowFunction) {
         visit(windowFunction.getBaseWindowFunction());
         // if (windowFunction.getFilterClause() != null) {
-        //     sb.append(" FILTER(WHERE ");
+        //     sb.append(" FILTER(WHERE "); // S04
         //     visit(windowFunction.getFilterClause());
         //     sb.append(")");
         // }
@@ -436,7 +436,7 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
             visit(windowFunction.getFrameSpec());
             // if (windowFunction.getExclude() != null) {
             //     sb.append(" ");
-            //     sb.append(windowFunction.getExclude().getString());
+            //     sb.append(windowFunction.getExclude().getString()); // S04
             // }
         }
         sb.append(")");
@@ -464,10 +464,10 @@ public class SQLite3ToStringVisitor extends ToStringVisitor<SQLite3Expression> i
         sb.append(tableReference.getTable().getName());
         // if (tableReference.getIndexedBy() == null) {
         //     if (Randomly.getBooleanWithSmallProbability()) {
-        //         sb.append(" NOT INDEXED");
+        //         sb.append(" NOT INDEXED"); // S06  
         //     }
         // } else {
-        //     sb.append(" INDEXED BY ");
+        //     sb.append(" INDEXED BY "); // S06
         //     sb.append(tableReference.getIndexedBy());
         // }
     }

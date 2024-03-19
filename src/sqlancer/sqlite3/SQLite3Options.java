@@ -26,11 +26,11 @@ import sqlancer.sqlite3.oracle.tlp.SQLite3TLPWhereOracle;
 public class SQLite3Options implements DBMSSpecificOptions<SQLite3OracleFactory> {
 
     @Parameter(names = { "--test-fts" }, description = "Test the FTS extensions", arity = 1)
-    // public boolean testFts = true;
+    // public boolean testFts = true; // ST01
     public boolean testFts = false;
 
     @Parameter(names = { "--test-rtree" }, description = "Test the R*Tree extensions", arity = 1)
-    // public boolean testRtree = true;
+    // public boolean testRtree = true; // ST01
     public boolean testRtree = false;
 
     @Parameter(names = {

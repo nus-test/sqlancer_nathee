@@ -21,7 +21,7 @@ public class SQLite3WindowFunction extends SQLite3Expression {
         WindowFunction func = Randomly.fromOptions(WindowFunction.values());
         SQLite3Expression[] args = new SQLite3Expression[func.nrArgs];
         for (int i = 0; i < args.length; i++) {
-            args[i] = SQLite3Constant.createIntConstant(Randomly.getPositiveOrZeroNonCachedInteger());
+            args[i] = SQLite3Constant.createIntConstant(Randomly.getPositiveOrZeroNonCachedInteger()); // E10
         }
         return new SQLite3WindowFunction(func, args);
     }

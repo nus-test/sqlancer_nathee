@@ -56,7 +56,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private boolean allowAggregateFunctions;
     private boolean allowSubqueries;
     private boolean allowAggreates;
-    private boolean allowNullValue;
+    private boolean allowNullValue; // E10
 
     public SQLite3TypedExpressionGenerator(SQLite3TypedExpressionGenerator other) {
         this.rw = other.rw;
@@ -161,13 +161,13 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             throw new IgnoreMeException();
         }
         SQLite3Column column = Randomly.fromList(columns);
-        SQLite3Expression expr = new SQLite3ColumnName(column, rw == null ? null : rw.getValues().get(column));
+        SQLite3Expression expr = new SQLite3ColumnName(column, rw == null ? null : rw.getValues().get(column)); // S05
         // COLLATE is potentially already generated
         if (Randomly.getBoolean()) {
             expr = new SQLite3OrderingTerm(expr, Ordering.getRandomValue());
         }
         // if (globalState.getDbmsSpecificOptions().testNullsFirstLast && Randomly.getBoolean()) {
-        //     expr = new SQLite3PostfixText(expr, Randomly.fromOptions(" NULLS FIRST", " NULLS LAST"),
+        //     expr = new SQLite3PostfixText(expr, Randomly.fromOptions(" NULLS FIRST", " NULLS LAST"), // S05
         //             null /* expr.getExpectedValue() */) {
         //         @Override
         //         public boolean omitBracketsWhenPrinting() {
@@ -199,19 +199,19 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum BooleanExpression {
-        RANDOM_QUERY, UNARY_OPERATOR, POSTFIX_UNARY_OPERATOR/*, MATCH*/, AND_OR_CHAIN,
+        RANDOM_QUERY, UNARY_OPERATOR, POSTFIX_UNARY_OPERATOR/*, MATCH*/, AND_OR_CHAIN, // E13
         BETWEEN_OPERATOR, BINARY_COMPARISON_OPERATOR, IN_OPERATOR, CASE_OPERATOR;
     }
 
     private SQLite3Expression generateBooleaExpression(int depth) {
         List<BooleanExpression> list = new ArrayList<>(Arrays.asList(BooleanExpression.values()));
-        // if (!allowMatchClause) {
+        // if (!allowMatchClause) { // E13
         //     list.remove(BooleanExpression.MATCH);
         // }
         if (!allowSubqueries) {
             list.remove(BooleanExpression.RANDOM_QUERY);
         }
-        // if (!globalState.getDbmsSpecificOptions().testMatch) {
+        // if (!globalState.getDbmsSpecificOptions().testMatch) { // E13
         //     list.remove(BooleanExpression.MATCH);
         // }
         if (!globalState.getDbmsSpecificOptions().testIn) {
@@ -225,7 +225,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return new SQLite3UnaryOperation(UnaryOperator.NOT, subExpression);
             case POSTFIX_UNARY_OPERATOR:
                 return getRandomPostfixUnaryOperator(depth + 1);
-            // case MATCH:
+            // case MATCH: // E13
             //     return getMatchClause(depth + 1);
             case AND_OR_CHAIN:
                 return getAndOrChain(depth + 1);
@@ -236,7 +236,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             case IN_OPERATOR:
                 return getInOperator(depth + 1);
             case CASE_OPERATOR:
-                allowNullValue = false;
+                allowNullValue = false; // E10
                 SQLite3Expression expression = getCaseOperator(SQLite3DataType.BOOLEAN, depth + 1);
                 allowNullValue = true;
                 return expression;
@@ -246,7 +246,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum TextExpression {
-        RANDOM_QUERY, BINARY_OPERATOR/*, COLLATE, CAST_EXPRESSION*/, FUNCTION, CASE_OPERATOR
+        RANDOM_QUERY, BINARY_OPERATOR/*, COLLATE, CAST_EXPRESSION*/, FUNCTION, CASE_OPERATOR // E14, T02
     }
 
     private SQLite3Expression generateTextExpression(int depth) {
@@ -266,12 +266,12 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 SQLite3Expression leftExpression = getRandomExpression(SQLite3DataType.TEXT, depth + 1);
                 SQLite3Expression rightExpression = getRandomExpression(SQLite3DataType.TEXT, depth + 1);
                 return new SQLite3Expression.Sqlite3BinaryOperation(leftExpression, rightExpression, BinaryOperator.CONCATENATE);
-            // case COLLATE:
+            // case COLLATE: // E14
             //     return new CollateOperation(getRandomExpression(SQLite3DataType.TEXT, depth + 1), SQLite3CollateSequence.random());
-            // case CAST_EXPRESSION:
+            // case CAST_EXPRESSION: // T02
             //     return getCastOperator(TypeLiteral.Type.TEXT, depth + 1);
             case CASE_OPERATOR:
-                allowNullValue = false;
+                allowNullValue = false; // E10
                 SQLite3Expression expression = getCaseOperator(SQLite3DataType.TEXT, depth + 1);
                 allowNullValue = true;
                 return expression;
@@ -281,7 +281,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     }
 
     private enum IntExpression {
-        RANDOM_QUERY, UNARY_OPERATOR, BINARY_OPERATOR/*, CAST_EXPRESSION*/, AGGREGATE_FUNCTION, FUNCTION, CASE_OPERATOR
+        RANDOM_QUERY, UNARY_OPERATOR, BINARY_OPERATOR/*, CAST_EXPRESSION*/, AGGREGATE_FUNCTION, FUNCTION, CASE_OPERATOR // E04
     }
 
     private SQLite3Expression generateIntExpression(int depth) {
@@ -315,15 +315,15 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 BinaryOperator operator = Randomly.fromList(validOptions);
                 SQLite3Expression rightExpression = getRandomExpression(SQLite3DataType.INT, depth + 1);
                 return new SQLite3Expression.Sqlite3BinaryOperation(leftExpression, rightExpression, operator);
-            // case CAST_EXPRESSION:
+            // case CAST_EXPRESSION: // E04
             //     return getCastOperator(TypeLiteral.Type.INTEGER, depth + 1);
             case AGGREGATE_FUNCTION:
-                allowNullValue = false;
+                allowNullValue = false; // E10
                 SQLite3Expression expr = getAggregateFunction(depth + 1);
-                allowNullValue = true;
+                allowNullValue = true; // E10
                 return expr;
             case CASE_OPERATOR:
-                allowNullValue = false;
+                allowNullValue = false; // E10
                 SQLite3Expression expression = getCaseOperator(SQLite3DataType.INT, depth + 1);
                 allowNullValue = true;
                 return expression;
@@ -339,9 +339,9 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     @Override
     public SQLite3Expression generateExpression(SQLite3DataType type, int depth) {
         if (allowAggreates && Randomly.getBoolean()) {
-            allowNullValue = false;
+            allowNullValue = false; // E10
             SQLite3Expression expr = getAggregateFunction(depth + 1);
-            allowNullValue = true;
+            allowNullValue = true; // E10
             return expr;
         }
         if (depth >= globalState.getOptions().getMaxExpressionDepth()) {
@@ -356,9 +356,9 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
                 return generateBooleaExpression(depth);
             case INT:
                 return generateIntExpression(depth);
-            // case NONE:
+            // case NONE: // T03
             case TEXT:
-            // case BINARY:
+            // case BINARY: // E10
                 return generateTextExpression(depth);
             case REAL:
                 return generateLeafNode(type);
@@ -408,13 +408,13 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
     private SQLite3Expression getBinaryComparisonOperator(int depth) {
         SQLite3DataType type = getRandomType();
         List<BinaryComparisonOperator> validOptions = new ArrayList<>(Arrays.asList(BinaryComparisonOperator.values()));
-        if (type != SQLite3DataType.TEXT/* && type != SQLite3DataType.NONE || type != SQLite3DataType.BINARY*/) {
+        if (type != SQLite3DataType.TEXT/* && type != SQLite3DataType.NONE || type != SQLite3DataType.BINARY*/) { // T03, E10
             validOptions.remove(BinaryComparisonOperator.LIKE);
-            // validOptions.remove(BinaryComparisonOperator.GLOB);
+            // validOptions.remove(BinaryComparisonOperator.GLOB); // E13
         }
         // if (type != SQLite3DataType.BOOLEAN) {
-        //     validOptions.remove(BinaryComparisonOperator.IS);
-        //     validOptions.remove(BinaryComparisonOperator.IS_NOT);
+        //     validOptions.remove(BinaryComparisonOperator.IS); // E03
+        //     validOptions.remove(BinaryComparisonOperator.IS_NOT); // E03
         // }
         SQLite3Expression leftExpression = getRandomExpression(type, depth + 1);
         BinaryComparisonOperator operator = Randomly.fromList(validOptions);
@@ -494,17 +494,17 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
 
     private enum AnyFunction {
         // ABS("ABS", 1), //
-        // CHANGES("CHANGES", 0, Attribute.NONDETERMINISTIC), //
-        // CHAR("CHAR", 1, Attribute.VARIADIC), //
+        // CHANGES("CHANGES", 0, Attribute.NONDETERMINISTIC), // // E06
+        // CHAR("CHAR", 1, Attribute.VARIADIC), // // E07
         // COALESCE("COALESCE", 2, Attribute.VARIADIC), //
-        // GLOB("GLOB", 2), //
-        // HEX("HEX", 1), //
-        // IFNULL("IFNULL", 2), //
-        // INSTR("INSTR", 2), //
-        // LAST_INSERT_ROWID("LAST_INSERT_ROWID", 0, Attribute.NONDETERMINISTIC), //
-        // LENGTH("LENGTH", 1, SQLite3DataType.INT, SQLite3DataType.TEXT), //
-        // LIKE("LIKE", 2), //
-        // LIKE2("LIKE", 3) {
+        // GLOB("GLOB", 2), // // E13
+        // HEX("HEX", 1), // // E07
+        // IFNULL("IFNULL", 2), // // E14
+        // INSTR("INSTR", 2), // // E07
+        // LAST_INSERT_ROWID("LAST_INSERT_ROWID", 0, Attribute.NONDETERMINISTIC), // // E06
+        // LENGTH("LENGTH", 1, SQLite3DataType.INT, SQLite3DataType.TEXT), // // E07
+        // LIKE("LIKE", 2), // // E13
+        // LIKE2("LIKE", 3) { // E13
         //     @Override
         //     List<SQLite3Expression> generateArguments(int nrArgs, int depth, SQLite3TypedExpressionGenerator gen) {
         //         List<SQLite3Expression> args = super.generateArguments(nrArgs, depth, gen);
@@ -515,48 +515,48 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         // LIKELIHOOD("LIKELIHOOD", 2), //
         // LIKELY("LIKELY", 1), //
         // LOAD_EXTENSION("load_extension", 1), //
-        // LOAD_EXTENSION2("load_extension", 2, Attribute.NONDETERMINISTIC),// LOWER("LOWER", 1), //
+        // LOAD_EXTENSION2("load_extension", 2, Attribute.NONDETERMINISTIC),// LOWER("LOWER", 1), // // E14
         LTRIM1("LTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT), //
-        // LTRIM2("LTRIM", 2), //
-        // MAX("MAX", 2, Attribute.VARIADIC), //
-        // MIN("MIN", 2, Attribute.VARIADIC), //
+        // LTRIM2("LTRIM", 2), // // E07
+        // MAX("MAX", 2, Attribute.VARIADIC), // // E08
+        // MIN("MIN", 2, Attribute.VARIADIC), // // E08
         // NULLIF("NULLIF", 2), //
-        // PRINTF("PRINTF", 1, Attribute.VARIADIC), //
-        // QUOTE("QUOTE", 1), //
+        // PRINTF("PRINTF", 1, Attribute.VARIADIC), // // E14
+        // QUOTE("QUOTE", 1), // // E07
         ROUND("ROUND", 2, SQLite3DataType.REAL, SQLite3DataType.REAL, SQLite3DataType.INT), //
         RTRIM("RTRIM", 1, SQLite3DataType.TEXT, SQLite3DataType.TEXT); //
-        // SOUNDEX("soundex", 1), //
-        // SQLITE_COMPILEOPTION_GET("SQLITE_COMPILEOPTION_GET", 1, Attribute.NONDETERMINISTIC), //
-        // SQLITE_COMPILEOPTION_USED("SQLITE_COMPILEOPTION_USED", 1, Attribute.NONDETERMINISTIC), //
+        // SOUNDEX("soundex", 1), // // E07
+        // SQLITE_COMPILEOPTION_GET("SQLITE_COMPILEOPTION_GET", 1, Attribute.NONDETERMINISTIC), // // E06
+        // SQLITE_COMPILEOPTION_USED("SQLITE_COMPILEOPTION_USED", 1, Attribute.NONDETERMINISTIC), // // E06
         // SQLITE_OFFSET(1), //
-        // SQLITE_SOURCE_ID("SQLITE_SOURCE_ID", 0, Attribute.NONDETERMINISTIC),
-        // SQLITE_VERSION("SQLITE_VERSION", 0, Attribute.NONDETERMINISTIC), //
-        // SUBSTR("SUBSTR", 2, SQLite3DataType.TEXT, SQLite3DataType.TEXT, SQLite3DataType.INT); //
-        // TOTAL_CHANGES("TOTAL_CHANGES", 0, Attribute.NONDETERMINISTIC), //
+        // SQLITE_SOURCE_ID("SQLITE_SOURCE_ID", 0, Attribute.NONDETERMINISTIC), // E06
+        // SQLITE_VERSION("SQLITE_VERSION", 0, Attribute.NONDETERMINISTIC), // // E06
+        // SUBSTR("SUBSTR", 2, SQLite3DataType.TEXT, SQLite3DataType.TEXT, SQLite3DataType.INT); // // E07
+        // TOTAL_CHANGES("TOTAL_CHANGES", 0, Attribute.NONDETERMINISTIC), // // E06
         // TRIM("TRIM", 1), //
-        // TYPEOF("TYPEOF", 1), //
-        // UNICODE("UNICODE", 1), UNLIKELY("UNLIKELY", 1), //
+        // TYPEOF("TYPEOF", 1), // // E06
+        // UNICODE("UNICODE", 1), UNLIKELY("UNLIKELY", 1), // // E07
         // UPPER("UPPER", 1); // "ZEROBLOB"
         // ZEROBLOB("ZEROBLOB", 1),
-        // DATE("DATE", 3, Attribute.VARIADIC), //
-        // TIME("TIME", 3, Attribute.VARIADIC), //
-        // DATETIME("DATETIME", 3, Attribute.VARIADIC), //
-        // JULIANDAY("JULIANDAY", 3, Attribute.VARIADIC), //
-        // STRFTIME("STRFTIME", 3, Attribute.VARIADIC),
+        // DATE("DATE", 3, Attribute.VARIADIC), // // E11
+        // TIME("TIME", 3, Attribute.VARIADIC), // // E11
+        // DATETIME("DATETIME", 3, Attribute.VARIADIC), // // E11
+        // JULIANDAY("JULIANDAY", 3, Attribute.VARIADIC), // // E11
+        // STRFTIME("STRFTIME", 3, Attribute.VARIADIC), // E11
         // json functions
-        // JSON("json", 1), //
-        // JSON_ARRAY("json_array", 2, Attribute.VARIADIC), JSON_ARRAY_LENGTH("json_array_length", 1), //
-        // JSON_ARRAY_LENGTH2("json_array_length", 2), //
-        // JSON_EXTRACT("json_extract", 2, Attribute.VARIADIC), JSON_INSERT("json_insert", 3, Attribute.VARIADIC),
-        // JSON_OBJECT("json_object", 2, Attribute.VARIADIC), JSON_PATCH("json_patch", 2),
-        // JSON_REMOVE("json_remove", 2, Attribute.VARIADIC), JSON_TYPE("json_type", 1), //
-        // JSON_VALID("json_valid", 1), //
-        // JSON_QUOTE("json_quote", 1), //
+        // JSON("json", 1), // // E12
+        // JSON_ARRAY("json_array", 2, Attribute.VARIADIC), JSON_ARRAY_LENGTH("json_array_length", 1), // // E12
+        // JSON_ARRAY_LENGTH2("json_array_length", 2), // // E12
+        // JSON_EXTRACT("json_extract", 2, Attribute.VARIADIC), JSON_INSERT("json_insert", 3, Attribute.VARIADIC), // E12
+        // JSON_OBJECT("json_object", 2, Attribute.VARIADIC), JSON_PATCH("json_patch", 2), // E12
+        // JSON_REMOVE("json_remove", 2, Attribute.VARIADIC), JSON_TYPE("json_type", 1), // // E12
+        // JSON_VALID("json_valid", 1), // // E12
+        // JSON_QUOTE("json_quote", 1), // // E12
 
-        // RTREENODE("rtreenode", 2),
+        // RTREENODE("rtreenode", 2), // E14
 
         // FTS
-        // HIGHLIGHT("highlight", 4);
+        // HIGHLIGHT("highlight", 4); // E14
 
         // testing functions
         // EXPR_COMPARE("expr_compare", 2), EXPR_IMPLIES_EXPR("expr_implies_expr", 2);
@@ -657,7 +657,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             }
             List<SQLite3Expression> expressions = randomFunction.generateArguments(nrArgs, depth + 1, this);
             // The second argument of LIKELIHOOD must be a float number within 0.0 -1.0
-            // if (randomFunction == AnyFunction.LIKELIHOOD) {
+            // if (randomFunction == AnyFunction.LIKELIHOOD) { // E14
             //     SQLite3Expression lastArg = SQLite3Constant.createRealConstant(Randomly.getPercentage());
             //     expressions.remove(expressions.size() - 1);
             //     expressions.add(lastArg);
@@ -683,7 +683,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         SQLite3Expression[] args = new SQLite3Expression[nrArgs];
         for (int i = 0; i < args.length; i++) {
             args[i] = getRandomExpression(argTypes[i], depth + 1);
-            // if (i == 0 && Randomly.getBoolean()) {
+            // if (i == 0 && Randomly.getBoolean()) { // E14
             //     args[i] = new SQLite3Distinct(args[i]);
             // }
         }
@@ -703,7 +703,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
         return new SQLite3TextConstant(String.valueOf(s.charAt(0)));
     }
 
-    public void allowNullValue(boolean value) {
+    public void allowNullValue(boolean value) { // E10
         allowNullValue = value;
     }
     @Override
@@ -714,7 +714,7 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
 
     @Override
     public SQLite3Expression generateConstant(SQLite3DataType type) {
-        if (Randomly.getBooleanWithRatherLowProbability() && allowNullValue) {
+        if (Randomly.getBooleanWithRatherLowProbability() && allowNullValue) { // E10
             return SQLite3Constant.createNullConstant();
         }
         switch (type) {
@@ -722,16 +722,16 @@ public class SQLite3TypedExpressionGenerator extends TypedExpressionGenerator<SQ
             return SQLite3Constant.createBooleanConstant(Randomly.getBoolean());
         case INT:
             // if (Randomly.getBoolean()) {
-                return SQLite3Constant.createIntConstant(r.getInteger(), false);
+                return SQLite3Constant.createIntConstant(r.getInteger(), false); // E10
             // } else {
-            //     return SQLite3Constant.createTextConstant(String.valueOf(r.getInteger()));
+            //     return SQLite3Constant.createTextConstant(String.valueOf(r.getInteger())); // E10
             // }
         case REAL:
             return SQLite3Constant.createRealConstant(r.getDouble());
-        // case NONE:
+        // case NONE: // T03
         case TEXT:
             return SQLite3Constant.createTextConstant(r.getString());
-        // case BINARY:
+        // case BINARY: // E10
         //     return SQLite3Constant.getRandomBinaryConstant(r);
         case NULL:
             return SQLite3Constant.createNullConstant();

@@ -31,18 +31,18 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
     private final String databaseName;
 
     public enum PostgresDataType {
-        INT, BOOLEAN, TEXT/*, DECIMAL*/, FLOAT, REAL/*, RANGE, MONEY, BIT, INET*/;
+        INT, BOOLEAN, TEXT/*, DECIMAL*/, FLOAT, REAL/*, RANGE, MONEY, BIT, INET*/; // T03, T07
 
         public static PostgresDataType getRandomType() {
             List<PostgresDataType> dataTypes = new ArrayList<>(Arrays.asList(values()));
             if (PostgresProvider.generateOnlyKnown) {
-                // dataTypes.remove(PostgresDataType.DECIMAL);
+                // dataTypes.remove(PostgresDataType.DECIMAL); // T07
                 dataTypes.remove(PostgresDataType.FLOAT);
                 dataTypes.remove(PostgresDataType.REAL);
-//                dataTypes.remove(PostgresDataType.INET);
-//                dataTypes.remove(PostgresDataType.RANGE);
-//                dataTypes.remove(PostgresDataType.MONEY);
-//                dataTypes.remove(PostgresDataType.BIT);
+//                dataTypes.remove(PostgresDataType.INET); // T03
+//                dataTypes.remove(PostgresDataType.RANGE); // T03
+//                dataTypes.remove(PostgresDataType.MONEY); // T03
+//                dataTypes.remove(PostgresDataType.BIT); // T03
             }
             return Randomly.fromList(dataTypes);
         }
@@ -127,20 +127,20 @@ public class PostgresSchema extends AbstractSchema<PostgresGlobalState, Postgres
         case "regclass":
             return PostgresDataType.TEXT;
         // case "numeric":
-        //     return PostgresDataType.DECIMAL;
+        //     return PostgresDataType.DECIMAL; // T07
         case "double precision":
             return PostgresDataType.FLOAT;
         case "real":
             return PostgresDataType.REAL;
 //        case "int4range":
-//            return PostgresDataType.RANGE;
+//            return PostgresDataType.RANGE; // T03
 //        case "money":
-//            return PostgresDataType.MONEY;
+//            return PostgresDataType.MONEY; // T03
 //        case "bit":
 //        case "bit varying":
-//            return PostgresDataType.BIT;
+//            return PostgresDataType.BIT; // T03
 //        case "inet":
-//            return PostgresDataType.INET;
+//            return PostgresDataType.INET; // T03
         default:
             throw new AssertionError(typeString);
         }

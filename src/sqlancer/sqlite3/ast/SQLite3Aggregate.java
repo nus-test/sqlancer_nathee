@@ -44,7 +44,7 @@ public class SQLite3Aggregate extends SQLite3Expression {
                 return SQLite3Constant.createIntConstant(1);
             }
         },
-        // GROUP_CONCAT() {
+        // GROUP_CONCAT() { // S02
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant exprVal) {
         //         SQLite3Constant castToText = SQLite3Cast.castToText(exprVal);
@@ -73,7 +73,7 @@ public class SQLite3Aggregate extends SQLite3Expression {
             }
 
         };
-        // TOTAL() {
+        // TOTAL() { // S02
         //     @Override
         //     public SQLite3Constant apply(SQLite3Constant exprVal) {
         //         if (exprVal.isNull()) {
@@ -91,8 +91,8 @@ public class SQLite3Aggregate extends SQLite3Expression {
             List<SQLite3AggregateFunction> functions = new ArrayList<>(Arrays.asList(values()));
             if (SQLite3Provider.mustKnowResult) {
                 functions.remove(SQLite3AggregateFunction.SUM);
-                // functions.remove(SQLite3AggregateFunction.TOTAL);
-                // functions.remove(SQLite3AggregateFunction.GROUP_CONCAT);
+                // functions.remove(SQLite3AggregateFunction.TOTAL); // S02
+                // functions.remove(SQLite3AggregateFunction.GROUP_CONCAT); // S02
             }
             return Randomly.fromOptions(values());
         }

@@ -76,7 +76,7 @@ public class SQLite3TableGenerator {
             if (Randomly.getBoolean()) {
                 sb.append("TEMPORARY ");
             } //else {
-                // sb.append("TEMP ");
+                // sb.append("TEMP "); // CT05
             // }
         }
         sb.append("TABLE ");
@@ -131,7 +131,7 @@ public class SQLite3TableGenerator {
                                                                                * constraint as belonging to the column
                                                                                */
                 && Randomly.getBooleanWithRatherLowProbability()) {
-            sb.append(", ");
+            sb.append(", "); // CT02
             sb.append(SQLite3Common.getCheckConstraint(globalState, columns));
         }
 
@@ -139,7 +139,7 @@ public class SQLite3TableGenerator {
         // if (globalState.getDbmsSpecificOptions().testWithoutRowids && containsPrimaryKey && !containsAutoIncrement
         //         && Randomly.getBoolean()) {
         //     // see https://sqlite.org/withoutrowid.html
-        //     sb.append(" WITHOUT ROWID");
+        //     sb.append(" WITHOUT ROWID"); // CT10
         // }
     }
 
@@ -151,7 +151,7 @@ public class SQLite3TableGenerator {
             }
             sb.append(Randomly.fromList(columnNames));
             // if (Randomly.getBoolean()) {
-            //     sb.append(Randomly.fromOptions(" ASC", " DESC"));
+            //     sb.append(Randomly.fromOptions(" ASC", " DESC")); // CT03
             // }
         }
         sb.append(")");
@@ -212,7 +212,7 @@ public class SQLite3TableGenerator {
         //     String deferrable = Randomly.fromOptions("DEFERRABLE INITIALLY DEFERRED",
         //             "NOT DEFERRABLE INITIALLY DEFERRED", "NOT DEFERRABLE INITIALLY IMMEDIATE", "NOT DEFERRABLE",
         //             "DEFERRABLE INITIALLY IMMEDIATE", "DEFERRABLE");
-        //     sb.append(deferrable);
+        //     sb.append(deferrable); // CT06
         // }
     }
 

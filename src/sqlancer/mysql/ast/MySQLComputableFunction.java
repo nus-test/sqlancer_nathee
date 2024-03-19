@@ -41,7 +41,7 @@ public class MySQLComputableFunction implements MySQLExpression {
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#function_bit-count">Bit Functions
          *      and Operators</a>
          */
-        // BIT_COUNT(1, "BIT_COUNT") {
+        // BIT_COUNT(1, "BIT_COUNT") { // E02
 
         //     @Override
         //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
@@ -110,7 +110,7 @@ public class MySQLComputableFunction implements MySQLExpression {
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/control-flow-functions.html#function_if">Flow Control
          *      Functions</a>
          */
-        // IF(3, "IF") {
+        // IF(3, "IF") { // E14
 
         //     @Override
         //     public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
@@ -131,7 +131,7 @@ public class MySQLComputableFunction implements MySQLExpression {
         /**
          * @see <a href="https://dev.mysql.com/doc/refman/8.0/en/control-flow-functions.html#function_ifnull">IFNULL</a>
          */
-        // IFNULL(2, "IFNULL") {
+        // IFNULL(2, "IFNULL") { // E14
 
         //     @Override
         //     public MySQLConstant apply(MySQLConstant[] args, MySQLExpression... origArgs) {
@@ -145,7 +145,7 @@ public class MySQLComputableFunction implements MySQLExpression {
         //     }
 
         // },
-        // LEAST(2, "LEAST", true) {
+        // LEAST(2, "LEAST", true) { // E03
 
         //     @Override
         //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
@@ -153,7 +153,7 @@ public class MySQLComputableFunction implements MySQLExpression {
         //     }
 
         // },
-        // GREATEST(2, "GREATEST", true) {
+        // GREATEST(2, "GREATEST", true) { // E03
         //     @Override
         //     public MySQLConstant apply(MySQLConstant[] evaluatedArgs, MySQLExpression... args) {
         //         return aggregate(evaluatedArgs, (max, cur) -> cur.isLessThan(max).asBooleanNotNull() ? max : cur);

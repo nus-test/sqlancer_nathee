@@ -147,18 +147,18 @@ public final class PostgresCommon {
         case INT:
             // if (Randomly.getBoolean() && allowSerial) {
             //     serial = true;
-            //     sb.append(Randomly.fromOptions("serial", "bigserial"));
+            //     sb.append(Randomly.fromOptions("serial", "bigserial")); // T01
             // } else {
-                sb.append(Randomly.fromOptions(/*"smallint", "integer", */"bigint"));
+                sb.append(Randomly.fromOptions(/*"smallint", "integer", */"bigint")); // T01
             // }
             break;
         case TEXT:
             // if (Randomly.getBoolean()) {
-            //     sb.append("TEXT");
+            //     sb.append("TEXT"); // T02
             // } else {
             // } else if (Randomly.getBoolean()) {
                 // TODO: support CHAR (without VAR)
-                // if (PostgresProvider.generateOnlyKnown || Randomly.getBoolean()) {
+                // if (PostgresProvider.generateOnlyKnown || Randomly.getBoolean()) { // T02
                     sb.append("VAR");
                 // }
                 sb.append("CHAR");
@@ -166,42 +166,42 @@ public final class PostgresCommon {
                 sb.append(ThreadLocalRandom.current().nextInt(1, 255));
                 sb.append(")");
             // } else {
-            //     sb.append("name");
+            //     sb.append("name"); // T03
             // }
             // if (Randomly.getBoolean() && !PostgresProvider.generateOnlyKnown) {
-            //     sb.append(" COLLATE ");
+            //     sb.append(" COLLATE "); // CT02
             //     sb.append('"');
             //     sb.append(Randomly.fromList(opClasses));
             //     sb.append('"');
             // }
             break;
         // case DECIMAL:
-        //     sb.append("DECIMAL");
+        //     sb.append("DECIMAL"); // T07
         //     break;
         case FLOAT:
-            // sb.append("REAL");
+            // sb.append("REAL"); // T07
             // break;
         case REAL:
-            // sb.append("FLOAT");
-            sb.append("DOUBLE PRECISION");
+            // sb.append("FLOAT"); // T07
+            sb.append("DOUBLE PRECISION"); // T04
             break;
         // case RANGE:
-        //     sb.append(Randomly.fromOptions("int4range", "int4range")); // , "int8range", "numrange"
+        //     sb.append(Randomly.fromOptions("int4range", "int4range")); // , "int8range", "numrange" // T03
         //     break;
         // case MONEY:
-        //     sb.append("money");
+        //     sb.append("money"); // T03
         //     break;
 //        case BIT:
-//            sb.append("BIT");
+//            sb.append("BIT"); // T03
 //            // if (Randomly.getBoolean()) {
-//            // sb.append(" VARYING");
+//            // sb.append(" VARYING"); // T03
 //            // }
 //            // sb.append("(");
 //            // sb.append(Randomly.getNotCachedInteger(1, 500));
 //            // sb.append(")");
 //            break;
         // case INET:
-        //     sb.append("inet");
+        //     sb.append("inet"); // T03
         //     break;
         default:
             throw new AssertionError(type);
@@ -210,7 +210,7 @@ public final class PostgresCommon {
     }
 
     public enum TableConstraints {
-        CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY//, EXCLUDE
+        CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY//, EXCLUDE // CT10
     }
 
     private enum StorageParameters {
@@ -301,13 +301,13 @@ public final class PostgresCommon {
             sb.append("UNIQUE(");
             sb.append(randomNonEmptyColumnSubset.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
             sb.append(")");
-            // appendIndexParameters(sb, globalState, errors);
+            // appendIndexParameters(sb, globalState, errors); // CT10
             break;
         case PRIMARY_KEY:
             sb.append("PRIMARY KEY(");
             sb.append(randomNonEmptyColumnSubset.stream().map(c -> c.getName()).collect(Collectors.joining(", ")));
             sb.append(")");
-            // appendIndexParameters(sb, globalState, errors);
+            // appendIndexParameters(sb, globalState, errors); // CT10
             break;
         case FOREIGN_KEY:
             sb.append("FOREIGN KEY (");
@@ -324,7 +324,7 @@ public final class PostgresCommon {
             sb.append(")");
             // if (Randomly.getBoolean()) {
             //     sb.append(" ");
-            //     sb.append(Randomly.fromOptions("MATCH FULL", "MATCH SIMPLE"));
+            //     sb.append(Randomly.fromOptions("MATCH FULL", "MATCH SIMPLE")); // CT09
             // }
             if (Randomly.getBoolean()) {
                 sb.append(" ON DELETE ");
@@ -336,7 +336,7 @@ public final class PostgresCommon {
                 errors.add("invalid ON UPDATE action for foreign key constraint containing generated column");
                 deleteOrUpdateAction(sb);
             }
-            // if (Randomly.getBoolean()) {
+            // if (Randomly.getBoolean()) { // CT06
             //     sb.append(" ");
             //     if (Randomly.getBoolean()) {
             //         sb.append("DEFERRABLE");
@@ -349,8 +349,7 @@ public final class PostgresCommon {
             //     }
             // }
             break;
-            break;
-        // case EXCLUDE:
+        // case EXCLUDE: // CT10
         //     sb.append("EXCLUDE ");
         //     sb.append("(");
         //     // TODO [USING index_method ]
@@ -418,7 +417,7 @@ public final class PostgresCommon {
             sb.append(Randomly.fromOptions("ASC", "DESC"));
         }
         // if (Randomly.getBoolean()) {
-        //     sb.append(" NULLS ");
+        //     sb.append(" NULLS "); // S05
         //     sb.append(Randomly.fromOptions("FIRST", "LAST"));
         // }
     }

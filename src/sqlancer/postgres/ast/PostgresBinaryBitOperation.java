@@ -13,7 +13,7 @@ public class PostgresBinaryBitOperation extends BinaryOperatorNode<PostgresExpre
         CONCATENATION("||"), //
         BITWISE_AND("&"), //
         BITWISE_OR("|"), //
-        // BITWISE_XOR("#"), //
+        // BITWISE_XOR("#"), // // E02
         BITWISE_SHIFT_LEFT("<<"), //
         BITWISE_SHIFT_RIGHT(">>");
 
@@ -40,7 +40,7 @@ public class PostgresBinaryBitOperation extends BinaryOperatorNode<PostgresExpre
 
 //    @Override
 //    public PostgresDataType getExpressionType() {
-//        return PostgresDataType.BIT;
+//        return PostgresDataType.BIT; // T03
 //    }
 
 }

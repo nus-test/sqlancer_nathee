@@ -34,18 +34,18 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
     }
 
     enum Action implements AbstractAction<MySQLGlobalState> {
-        // SHOW_TABLES((g) -> new SQLQueryAdapter("SHOW TABLES")), //
+        // SHOW_TABLES((g) -> new SQLQueryAdapter("SHOW TABLES")), // // ST03
         INSERT(MySQLInsertGenerator::insertRow), //
-        // SET_VARIABLE(MySQLSetGenerator::set), //
-        // REPAIR(MySQLRepair::repair), //
-        // OPTIMIZE(MySQLOptimize::optimize), //
-        // CHECKSUM(MySQLChecksum::checksum), //
-        // CHECK_TABLE(MySQLCheckTable::check), //
-        // ANALYZE_TABLE(MySQLAnalyzeTable::analyze), //
-        /* FLUSH(MySQLFlush::create), RESET(MySQLReset::create), */CREATE_INDEX(MySQLIndexGenerator::create), //
+        // SET_VARIABLE(MySQLSetGenerator::set), // // ST03
+        // REPAIR(MySQLRepair::repair), // // ST03
+        // OPTIMIZE(MySQLOptimize::optimize), // // ST03
+        // CHECKSUM(MySQLChecksum::checksum), // // ST03
+        // CHECK_TABLE(MySQLCheckTable::check), // // ST03
+        // ANALYZE_TABLE(MySQLAnalyzeTable::analyze), // // ST03
+        /* FLUSH(MySQLFlush::create), RESET(MySQLReset::create), */CREATE_INDEX(MySQLIndexGenerator::create), // // ST03
         ALTER_TABLE(MySQLAlterTable::create), //
-        // TRUNCATE_TABLE(MySQLTruncateTableGenerator::generate), //
-        // SELECT_INFO((g) -> new SQLQueryAdapter(
+        // TRUNCATE_TABLE(MySQLTruncateTableGenerator::generate), // // ST01
+        // SELECT_INFO((g) -> new SQLQueryAdapter( // ST04
         //         "select TABLE_NAME, ENGINE from information_schema.TABLES where table_schema = '" + g.getDatabaseName()
         //                 + "'")), //
         CREATE_TABLE((g) -> {
@@ -76,7 +76,7 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         case DROP_INDEX:
             nrPerformed = 0; //r.getInteger(0, 2);
             break;
-        // case SHOW_TABLES:
+        // case SHOW_TABLES: // ST03
         //     nrPerformed = r.getInteger(0, 1);
         //     break;
         case CREATE_TABLE:
@@ -85,38 +85,38 @@ public class MySQLProvider extends SQLProviderAdapter<MySQLGlobalState, MySQLOpt
         case INSERT:
             nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
-        // case REPAIR:
+        // case REPAIR: // ST03
         //     nrPerformed = r.getInteger(0, 1);
         //     break;
-        // case SET_VARIABLE:
+        // case SET_VARIABLE: // ST03
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
         case CREATE_INDEX:
             nrPerformed = r.getInteger(0, 5);
             break;
-        // case FLUSH:
+        // case FLUSH: // ST03
         //     nrPerformed = Randomly.getBooleanWithSmallProbability() ? r.getInteger(0, 1) : 0;
         //     break;
-        // case OPTIMIZE:
+        // case OPTIMIZE: // ST03
         //     // seems to yield low CPU utilization
         //     nrPerformed = Randomly.getBooleanWithSmallProbability() ? r.getInteger(0, 1) : 0;
         //     break;
-        // case RESET:
+        // case RESET: // ST03
         //     // affects the global state, so do not execute
         //     nrPerformed = globalState.getOptions().getNumberConcurrentThreads() == 1 ? r.getInteger(0, 1) : 0;
         //     break;
-        // case CHECKSUM:
-        // case CHECK_TABLE:
-        // case ANALYZE_TABLE:
+        // case CHECKSUM: // ST03
+        // case CHECK_TABLE: // ST03
+        // case ANALYZE_TABLE: // ST03
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
         case ALTER_TABLE:
             nrPerformed = 0; //r.getInteger(0, 5);
             break;
-        // case TRUNCATE_TABLE:
+        // case TRUNCATE_TABLE: // ST01
         //     nrPerformed = r.getInteger(0, 2);
         //     break;
-        // case SELECT_INFO:
+        // case SELECT_INFO: // ST04
         //     nrPerformed = r.getInteger(0, 10);
         //     break;
         case UPDATE:

@@ -53,13 +53,13 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
     }
 
     public enum Action implements AbstractAction<SQLite3GlobalState> {
-        // PRAGMA(SQLite3PragmaGenerator::insertPragma), // 0
+        // PRAGMA(SQLite3PragmaGenerator::insertPragma), // 0 // ST03
         CREATE_INDEX(SQLite3IndexGenerator::insertIndex), // 1
         CREATE_VIEW(SQLite3ViewGenerator::generate), // 2
         CREATE_TRIGGER(SQLite3CreateTriggerGenerator::create), // 3
         CREATE_TABLE(SQLite3TableGenerator::createRandomTableStatement), // 4
-        // CREATE_VIRTUALTABLE(SQLite3CreateVirtualFTSTableGenerator::createRandomTableStatement), // 5
-        // CREATE_RTREETABLE(SQLite3CreateVirtualRtreeTabelGenerator::createRandomTableStatement), // 6
+        // CREATE_VIRTUALTABLE(SQLite3CreateVirtualFTSTableGenerator::createRandomTableStatement), // 5 // ST01
+        // CREATE_RTREETABLE(SQLite3CreateVirtualRtreeTabelGenerator::createRandomTableStatement), // 6 // ST01
         INSERT(SQLite3InsertGenerator::insertRow), // 7
         DELETE(SQLite3DeleteGenerator::deleteContent), // 8
         ALTER(SQLite3AlterTable::alterTable), // 9
@@ -67,17 +67,17 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         DROP_INDEX(SQLite3DropIndexGenerator::dropIndex), // 11
         DROP_TABLE(SQLite3DropTableGenerator::dropTable), // 12
         DROP_VIEW(SQLite3ViewGenerator::dropView), // 13
-        // VACUUM(SQLite3VacuumGenerator::executeVacuum), // 14
-        // REINDEX(SQLite3ReindexGenerator::executeReindex), // 15
-        // ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16
+        // VACUUM(SQLite3VacuumGenerator::executeVacuum), // 14 // ST03
+        // REINDEX(SQLite3ReindexGenerator::executeReindex), // 15 // ST01
+        // ANALYZE(SQLite3AnalyzeGenerator::generateAnalyze), // 16 // ST03
         EXPLAIN(SQLite3ExplainGenerator::explain), // 17
-        // CHECK_RTREE_TABLE((g) -> {
+        // CHECK_RTREE_TABLE((g) -> { // ST04
         //     SQLite3Table table = g.getSchema().getRandomTableOrBailout(t -> t.getName().startsWith("r"));
         //     String format = String.format("SELECT rtreecheck('%s');", table.getName());
         //     return new SQLQueryAdapter(format, ExpectedErrors.from("The database file is locked"));
         // }), // 18
-        // VIRTUAL_TABLE_ACTION(SQLite3VirtualFTSTableCommandGenerator::create), // 19
-        // MANIPULATE_STAT_TABLE(SQLite3StatTableGenerator::getQuery), // 20
+        // VIRTUAL_TABLE_ACTION(SQLite3VirtualFTSTableCommandGenerator::create), // 19 // ST02
+        // MANIPULATE_STAT_TABLE(SQLite3StatTableGenerator::getQuery), // 20 // ST02
         TRANSACTION_START(SQLite3TransactionGenerator::generateBeginTransaction) {
             @Override
             public boolean canBeRetried() {
@@ -136,34 +136,34 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
         case DROP_TABLE:
             nrPerformed = 0; //r.getInteger(0, 0);
             break;
-        // case VACUUM:
-        // case CHECK_RTREE_TABLE:
+        // case VACUUM: // ST03
+        // case CHECK_RTREE_TABLE: // ST04
         //     nrPerformed = r.getInteger(0, 3);
         //     break;
         case INSERT:
             nrPerformed = r.getInteger(0, globalState.getOptions().getMaxNumberInserts());
             break;
-        // case MANIPULATE_STAT_TABLE:
+        // case MANIPULATE_STAT_TABLE: // ST02
         //     nrPerformed = r.getInteger(0, 5);
         //     break;
         case CREATE_INDEX:
             nrPerformed = r.getInteger(0, 5);
             break;
-        // case VIRTUAL_TABLE_ACTION:
+        // case VIRTUAL_TABLE_ACTION: // ST02
         case UPDATE:
             nrPerformed = r.getInteger(0, 30);
             break;
-        // case PRAGMA:
+        // case PRAGMA: // ST03
         //     nrPerformed = r.getInteger(0, 20);
         //     break;
         case CREATE_TABLE:
-        // case CREATE_VIRTUALTABLE:
-        // case CREATE_RTREETABLE:
+        // case CREATE_VIRTUALTABLE: // ST01
+        // case CREATE_RTREETABLE: // ST01
         //     nrPerformed = 0;
         //     break;
         case TRANSACTION_START:
-        // case REINDEX:
-        // case ANALYZE:
+        // case REINDEX: // ST01
+        // case ANALYZE: // ST03
         case ROLLBACK_TRANSACTION:
         case COMMIT:
         default:
@@ -195,7 +195,7 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             } while (globalState.getSchema().getDatabaseTables().size() < nrTablesToCreate);
             assert globalState.getSchema().getTables().getTables().size() == nrTablesToCreate;
             checkTablesForGeneratedColumnLoops(globalState);
-            // if (globalState.getDbmsSpecificOptions().testDBStats && Randomly.getBooleanWithSmallProbability()) {
+            // if (globalState.getDbmsSpecificOptions().testDBStats && Randomly.getBooleanWithSmallProbability()) { // ST01
             //     SQLQueryAdapter tableQuery = new SQLQueryAdapter(
             //             "CREATE VIRTUAL TABLE IF NOT EXISTS stat USING dbstat(main)");
             //     globalState.executeStatement(tableQuery);
@@ -244,12 +244,12 @@ public class SQLite3Provider extends SQLProviderAdapter<SQLite3GlobalState, SQLi
             String tableName = DBMSCommon.createTableName(i);
             tableQuery = SQLite3TableGenerator.createTableStatement(tableName, globalState);
             break;
-        // case FTS:
+        // case FTS: // ST01
         //     String ftsTableName = "v" + DBMSCommon.createTableName(i);
         //     tableQuery = SQLite3CreateVirtualFTSTableGenerator.createTableStatement(ftsTableName,
         //             globalState.getRandomly());
         //     break;
-        // case RTREE:
+        // case RTREE: // ST01
         //     String rTreeTableName = "rt" + i;
         //     tableQuery = SQLite3CreateVirtualRtreeTabelGenerator.createTableStatement(rTreeTableName, globalState);
         //     break;

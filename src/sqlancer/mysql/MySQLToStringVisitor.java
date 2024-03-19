@@ -26,7 +26,7 @@ import sqlancer.mysql.ast.MySQLUnaryPostfixOperation;
 
 public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> implements MySQLVisitor {
 
-    public static boolean fullyQualifiedNames = true;
+    public static boolean fullyQualifiedNames = true; // CI01
     int ref;
 
     @Override
@@ -45,7 +45,7 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
             sb.append(Randomly.fromOptions("ALL ", ""));
             break;
         // case DISTINCTROW:
-        //     sb.append("DISTINCTROW ");
+        //     sb.append("DISTINCTROW "); // S06
         //     break;
         default:
             throw new AssertionError();
@@ -128,7 +128,7 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
 
     @Override
     public void visit(MySQLColumnReference column) {
-        if (fullyQualifiedNames) {
+        if (fullyQualifiedNames) { // CI01
             sb.append(column.getColumn().getFullQualifiedName());
         } else {
             sb.append(column.getColumn().getName());
@@ -150,7 +150,7 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
             break;
         case IS_NULL:
             // if (Randomly.getBoolean()) {
-            //     sb.append("UNKNOWN");
+            //     sb.append("UNKNOWN"); // E01
             // } else {
                 sb.append("NULL");
             // }
@@ -198,7 +198,7 @@ public class MySQLToStringVisitor extends ToStringVisitor<MySQLExpression> imple
         sb.append(" (");
         visit(op.getRight());
         sb.append(")");
-        if (op.getOp().getTextRepresentation() == "LIKE") {
+        if (op.getOp().getTextRepresentation() == "LIKE") { // E13
             sb.append(" ESCAPE '\\'");
         }
     }

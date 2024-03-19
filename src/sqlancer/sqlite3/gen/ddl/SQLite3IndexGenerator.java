@@ -76,7 +76,7 @@ public class SQLite3IndexGenerator {
             sb.append(" UNIQUE");
         }
         sb.append(" INDEX");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // CI04
         //     sb.append(" IF NOT EXISTS");
         // } else {
             errors.add("already exists");
@@ -85,27 +85,27 @@ public class SQLite3IndexGenerator {
         sb.append(SQLite3Common.getFreeIndexName(globalState.getSchema()));
         sb.append(" ON ");
         sb.append(t.getName());
-        sb.append("((");
+        sb.append("(("); // CI02
         for (int i = 0; i < columns.size(); i++) {
             if (i != 0) {
                 sb.append(",");
             }
             List<SQLite3DataType> validOptions = new ArrayList<>(Arrays.asList(SQLite3DataType.values()));
-            validOptions.remove(SQLite3DataType.NULL);
+            validOptions.remove(SQLite3DataType.NULL); // CI02
             SQLite3TypedExpressionGenerator gen = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly();
-            gen.allowNullValue(false);
+            gen.allowNullValue(false); // CI02
             SQLite3Expression expr = gen.generateExpression(Randomly.fromList(validOptions));
             SQLite3ToStringVisitor visitor = new SQLite3ToStringVisitor();
             visitor.fullyQualifiedNames = false;
             visitor.visit(expr);
             sb.append(visitor.get());
-            // if (Randomly.getBoolean()) {
+            // if (Randomly.getBoolean()) { // CI04
             //     sb.append(SQLite3Common.getRandomCollate());
             // }
             appendPotentialOrdering(sb);
         }
         sb.append("))");
-        // if (Randomly.getBoolean()) {
+        // if (Randomly.getBoolean()) { // CI04
         //     sb.append(" WHERE ");
         //     SQLite3Expression expr = ((SQLite3TypedExpressionGenerator) new SQLite3TypedExpressionGenerator(globalState).setColumns(columns)).deterministicOnly()
         //             .generateExpression(Randomly.fromOptions(SQLite3DataType.values()));

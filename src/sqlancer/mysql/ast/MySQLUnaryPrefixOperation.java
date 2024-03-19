@@ -10,7 +10,7 @@ public class MySQLUnaryPrefixOperation extends UnaryOperatorNode<MySQLExpression
         implements MySQLExpression {
 
     public enum MySQLUnaryPrefixOperator implements Operator {
-        NOT(/*"!", */"NOT") {
+        NOT(/*"!", */"NOT") { // E01
             @Override
             public MySQLConstant applyNotNull(MySQLConstant expr) {
                 return MySQLConstant.createIntConstant(expr.asBooleanNotNull() ? 0 : 1);

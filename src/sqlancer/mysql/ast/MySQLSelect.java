@@ -11,7 +11,7 @@ public class MySQLSelect extends SelectBase<MySQLExpression> implements MySQLExp
     private List<String> modifiers = Collections.emptyList();
 
     public enum SelectType {
-        DISTINCT, ALL/*, DISTINCTROW*/;
+        DISTINCT, ALL/*, DISTINCTROW*/; // S06
     }
 
     public void setSelectType(SelectType fromOptions) {

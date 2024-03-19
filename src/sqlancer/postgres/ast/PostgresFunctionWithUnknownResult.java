@@ -9,36 +9,36 @@ import sqlancer.postgres.gen.PostgresExpressionGenerator;
 
 public enum PostgresFunctionWithUnknownResult {
 
-//    ABBREV("abbrev", PostgresDataType.TEXT, PostgresDataType.INET),
-//    BROADCAST("broadcast", PostgresDataType.INET, PostgresDataType.INET),
-//    FAMILY("family", PostgresDataType.INT, PostgresDataType.INET),
-//    HOSTMASK("hostmask", PostgresDataType.INET, PostgresDataType.INET),
-//    MASKLEN("masklen", PostgresDataType.INT, PostgresDataType.INET),
-//    NETMASK("netmask", PostgresDataType.INET, PostgresDataType.INET),
-//    SET_MASKLEN("set_masklen", PostgresDataType.INET, PostgresDataType.INET, PostgresDataType.INT),
-//    TEXT("text", PostgresDataType.TEXT, PostgresDataType.INET),
-//    INET_SAME_FAMILY("inet_same_family", PostgresDataType.BOOLEAN, PostgresDataType.INET, PostgresDataType.INET),
+//    ABBREV("abbrev", PostgresDataType.TEXT, PostgresDataType.INET), // E05
+//    BROADCAST("broadcast", PostgresDataType.INET, PostgresDataType.INET), // E05
+//    FAMILY("family", PostgresDataType.INT, PostgresDataType.INET), // E05
+//    HOSTMASK("hostmask", PostgresDataType.INET, PostgresDataType.INET), // E05
+//    MASKLEN("masklen", PostgresDataType.INT, PostgresDataType.INET), // E05
+//    NETMASK("netmask", PostgresDataType.INET, PostgresDataType.INET), // E05
+//    SET_MASKLEN("set_masklen", PostgresDataType.INET, PostgresDataType.INET, PostgresDataType.INT), // E05
+//    TEXT("text", PostgresDataType.TEXT, PostgresDataType.INET), // E05
+//    INET_SAME_FAMILY("inet_same_family", PostgresDataType.BOOLEAN, PostgresDataType.INET, PostgresDataType.INET), // E05
 
     // https://www.postgresql.org/docs/devel/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL-TABLE
     // PG_RELOAD_CONF("pg_reload_conf", PostgresDataType.BOOLEAN), // too much output
     // PG_ROTATE_LOGFILE("pg_rotate_logfile", PostgresDataType.BOOLEAN), prints warning
 
     // https://www.postgresql.org/docs/devel/functions-info.html#FUNCTIONS-INFO-SESSION-TABLE
-    // CURRENT_DATABASE("current_database", PostgresDataType.TEXT), // name
+    // CURRENT_DATABASE("current_database", PostgresDataType.TEXT), // name // E06
     // CURRENT_QUERY("current_query", PostgresDataType.TEXT), // can generate false positives
-    // CURRENT_SCHEMA("current_schema", PostgresDataType.TEXT), // name
+    // CURRENT_SCHEMA("current_schema", PostgresDataType.TEXT), // name // E06
     // CURRENT_SCHEMAS("current_schemas", PostgresDataType.TEXT, PostgresDataType.BOOLEAN),
-    // INET_CLIENT_PORT("inet_client_port", PostgresDataType.INT),
+    // INET_CLIENT_PORT("inet_client_port", PostgresDataType.INT), // E06
     // INET_SERVER_PORT("inet_server_port", PostgresDataType.INT),
-    // PG_BACKEND_PID("pg_backend_pid", PostgresDataType.INT),
-    // PG_CURRENT_LOGFILE("pg_current_logfile", PostgresDataType.TEXT),
-    // PG_IS_OTHER_TEMP_SCHEMA("pg_is_other_temp_schema", PostgresDataType.BOOLEAN),
-    // PG_JIT_AVAILABLE("pg_jit_available", PostgresDataType.BOOLEAN),
-    // PG_NOTIFICATION_QUEUE_USAGE("pg_notification_queue_usage", PostgresDataType.REAL),
-    // PG_TRIGGER_DEPTH("pg_trigger_depth", PostgresDataType.INT), VERSION("version", PostgresDataType.TEXT),
+    // PG_BACKEND_PID("pg_backend_pid", PostgresDataType.INT), // E06
+    // PG_CURRENT_LOGFILE("pg_current_logfile", PostgresDataType.TEXT), // E06
+    // PG_IS_OTHER_TEMP_SCHEMA("pg_is_other_temp_schema", PostgresDataType.BOOLEAN), // E06
+    // PG_JIT_AVAILABLE("pg_jit_available", PostgresDataType.BOOLEAN), // E06
+    // PG_NOTIFICATION_QUEUE_USAGE("pg_notification_queue_usage", PostgresDataType.REAL), // E06
+    // PG_TRIGGER_DEPTH("pg_trigger_depth", PostgresDataType.INT), VERSION("version", PostgresDataType.TEXT), // E06
 
     //
-    // TO_CHAR("to_char", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
+    // TO_CHAR("to_char", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) { // E14
     //     @Override
     //     public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
     //             int depth) {
@@ -49,10 +49,10 @@ public enum PostgresFunctionWithUnknownResult {
     // },
 
     // String functions
-    // ASCII("ascii", PostgresDataType.INT, PostgresDataType.TEXT),
-    // BTRIM("btrim", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // CHR("chr", PostgresDataType.TEXT, PostgresDataType.INT),
-    // CONVERT_FROM("convert_from", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) {
+    // ASCII("ascii", PostgresDataType.INT, PostgresDataType.TEXT), // E07
+    // BTRIM("btrim", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // CHR("chr", PostgresDataType.TEXT, PostgresDataType.INT), // E07
+    // CONVERT_FROM("convert_from", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT) { // E07
     //     @Override
     //     public PostgresExpression[] getArguments(PostgresDataType returnType, PostgresExpressionGenerator gen,
     //             int depth) {
@@ -64,32 +64,32 @@ public enum PostgresFunctionWithUnknownResult {
     // concat
     // segfault
     // BIT_LENGTH("bit_length", PostgresDataType.INT, PostgresDataType.TEXT),
-    // INITCAP("initcap", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // LEFT("left", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
+    // INITCAP("initcap", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // LEFT("left", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT), // E07
     LOWER("lower", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // MD5("md5", PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // MD5("md5", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
     UPPER("upper", PostgresDataType.TEXT, PostgresDataType.TEXT),
     // PG_CLIENT_ENCODING("pg_client_encoding", PostgresDataType.TEXT),
-    // QUOTE_LITERAL("quote_literal", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // QUOTE_IDENT("quote_ident", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // REGEX_REPLACE("regex_replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // QUOTE_LITERAL("quote_literal", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // QUOTE_IDENT("quote_ident", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // REGEX_REPLACE("regex_replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
     // REPEAT("repeat", PostgresDataType.TEXT, PostgresDataType.TEXT,
     // PostgresDataType.INT),
     REPLACE("replace", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // REVERSE("reverse", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // RIGHT("right", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
-    // RPAD("rpad", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT),
+    // REVERSE("reverse", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // RIGHT("right", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT), // E07
+    // RPAD("rpad", PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.TEXT), // E07
     RTRIM("rtrim", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // SPLIT_PART("split_part", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT),
-    // STRPOS("strpos", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // SUBSTR("substr", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.INT),
-    // TO_ASCII("to_ascii", PostgresDataType.TEXT, PostgresDataType.TEXT),
-    // TO_HEX("to_hex", PostgresDataType.INT, PostgresDataType.TEXT),
-    // TRANSLATE("translate", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT),
+    // SPLIT_PART("split_part", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT), // E07
+    // STRPOS("strpos", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // SUBSTR("substr", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.INT, PostgresDataType.INT), // E07
+    // TO_ASCII("to_ascii", PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
+    // TO_HEX("to_hex", PostgresDataType.INT, PostgresDataType.TEXT), // E07
+    // TRANSLATE("translate", PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT, PostgresDataType.TEXT), // E07
     // mathematical functions
     // https://www.postgresql.org/docs/9.5/functions-math.html
     ABS("abs", PostgresDataType.REAL, PostgresDataType.REAL),
-    // CBRT("cbrt", PostgresDataType.REAL, PostgresDataType.REAL), CEILING("ceiling", PostgresDataType.REAL), //
+    // CBRT("cbrt", PostgresDataType.REAL, PostgresDataType.REAL), CEILING("ceiling", PostgresDataType.REAL), // // E08
     DEGREES("degrees", PostgresDataType.REAL), EXP("exp", PostgresDataType.REAL), LN("ln", PostgresDataType.REAL),
     LOG("log", PostgresDataType.REAL), LOG2("log", PostgresDataType.REAL, PostgresDataType.REAL),
     PI("pi", PostgresDataType.REAL), POWER("power", PostgresDataType.REAL, PostgresDataType.REAL),
@@ -100,48 +100,48 @@ public enum PostgresFunctionWithUnknownResult {
     // trigonometric functions - complete
     // https://www.postgresql.org/docs/12/functions-math.html#FUNCTIONS-MATH-TRIG-TABLE
     ACOS("acos", PostgresDataType.REAL), //
-    // ACOSD("acosd", PostgresDataType.REAL), //
+    // ACOSD("acosd", PostgresDataType.REAL), // // E08
     ASIN("asin", PostgresDataType.REAL), //
-    // ASIND("asind", PostgresDataType.REAL), //
+    // ASIND("asind", PostgresDataType.REAL), // // E08
     ATAN("atan", PostgresDataType.REAL), //
-    // ATAND("atand", PostgresDataType.REAL), //
+    // ATAND("atand", PostgresDataType.REAL), // // E08
     ATAN2("atan2", PostgresDataType.REAL, PostgresDataType.REAL), //
-    // ATAN2D("atan2d", PostgresDataType.REAL, PostgresDataType.REAL), //
+    // ATAN2D("atan2d", PostgresDataType.REAL, PostgresDataType.REAL), // // E08
     COS("cos", PostgresDataType.REAL), //
-    // COSD("cosd", PostgresDataType.REAL), //
+    // COSD("cosd", PostgresDataType.REAL), // // E08
     COT("cot", PostgresDataType.REAL), //
-    // COTD("cotd", PostgresDataType.REAL), //
+    // COTD("cotd", PostgresDataType.REAL), // // E08
     SIN("sin", PostgresDataType.REAL), //
-    // SIND("sind", PostgresDataType.REAL), //
+    // SIND("sind", PostgresDataType.REAL), // // E08
     TAN("tan", PostgresDataType.REAL); //
-    // TAND("tand", PostgresDataType.REAL), //
+    // TAND("tand", PostgresDataType.REAL), // // E08
 
     // hyperbolic functions - complete
     // https://www.postgresql.org/docs/12/functions-math.html#FUNCTIONS-MATH-HYP-TABLE
-    // SINH("sinh", PostgresDataType.REAL), //
-    // COSH("cosh", PostgresDataType.REAL), //
-    // TANH("tanh", PostgresDataType.REAL), //
-    // ASINH("asinh", PostgresDataType.REAL), //
-    // ACOSH("acosh", PostgresDataType.REAL), //
-    // ATANH("atanh", PostgresDataType.REAL), //
+    // SINH("sinh", PostgresDataType.REAL), // // E08
+    // COSH("cosh", PostgresDataType.REAL), // // E08
+    // TANH("tanh", PostgresDataType.REAL), // // E08
+    // ASINH("asinh", PostgresDataType.REAL), // // E08
+    // ACOSH("acosh", PostgresDataType.REAL), // // E08
+    // ATANH("atanh", PostgresDataType.REAL), // // E08
 
     // https://www.postgresql.org/docs/devel/functions-binarystring.html
-    // GET_BIT("get_bit", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
-    // GET_BYTE("get_byte", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT),
+    // GET_BIT("get_bit", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT), // E14
+    // GET_BYTE("get_byte", PostgresDataType.INT, PostgresDataType.TEXT, PostgresDataType.INT), // E14
 
     // range functions
     // https://www.postgresql.org/docs/devel/functions-range.html#RANGE-FUNCTIONS-TABLE
-//    RANGE_LOWER("lower", PostgresDataType.INT, PostgresDataType.RANGE), //
-//    RANGE_UPPER("upper", PostgresDataType.INT, PostgresDataType.RANGE), //
-//    RANGE_ISEMPTY("isempty", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), //
-//    RANGE_LOWER_INC("lower_inc", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), //
-//    RANGE_UPPER_INC("upper_inc", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), //
-//    RANGE_LOWER_INF("lower_inf", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), //
-//    RANGE_UPPER_INF("upper_inf", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), //
-//    RANGE_MERGE("range_merge", PostgresDataType.RANGE, PostgresDataType.RANGE, PostgresDataType.RANGE), //
+//    RANGE_LOWER("lower", PostgresDataType.INT, PostgresDataType.RANGE), // // E09
+//    RANGE_UPPER("upper", PostgresDataType.INT, PostgresDataType.RANGE), // // E09
+//    RANGE_ISEMPTY("isempty", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), // // E09
+//    RANGE_LOWER_INC("lower_inc", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), // // E09
+//    RANGE_UPPER_INC("upper_inc", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), // // E09
+//    RANGE_LOWER_INF("lower_inf", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), // // E09
+//    RANGE_UPPER_INF("upper_inf", PostgresDataType.BOOLEAN, PostgresDataType.RANGE), // // E09
+//    RANGE_MERGE("range_merge", PostgresDataType.RANGE, PostgresDataType.RANGE, PostgresDataType.RANGE), // // E09
 
     // https://www.postgresql.org/docs/devel/functions-admin.html#FUNCTIONS-ADMIN-DBSIZE
-    // GET_COLUMN_SIZE("get_column_size", PostgresDataType.INT, PostgresDataType.TEXT);
+    // GET_COLUMN_SIZE("get_column_size", PostgresDataType.INT, PostgresDataType.TEXT); // E14
     // PG_DATABASE_SIZE("pg_database_size", PostgresDataType.INT, PostgresDataType.INT);
     // PG_SIZE_BYTES("pg_size_bytes", PostgresDataType.INT, PostgresDataType.TEXT);
 

@@ -191,7 +191,7 @@ public final class Randomly {
 
     public long getInteger() {
         if (smallBiasProbability()) {
-        	long nextLong = Randomly.fromOptions(-1L, (long) (Integer.MAX_VALUE), Long.MIN_VALUE, 1L, 0L);
+        	long nextLong = Randomly.fromOptions(-1L, (long) (Integer.MAX_VALUE), Long.MIN_VALUE, 1L, 0L); // E10
             return nextLong;
         } else {
             if (cacheProbability()) {
@@ -239,7 +239,7 @@ public final class Randomly {
 
             @Override
             public String getString(Randomly r) {
-                // if (smallBiasProbability()) {
+                // if (smallBiasProbability()) { // E10
                 //     return Randomly.fromOptions("TRUE", "FALSE", "0.0", "-0.0", "1e500", "-1e500");
                 // }
                 if (cacheProbability()) {
@@ -414,7 +414,7 @@ public final class Randomly {
     public double getDouble() {
         if (smallBiasProbability()) {
             return Randomly.fromOptions(0.0, -0.0, Double.MAX_VALUE, -Double.MAX_VALUE/*, Double.POSITIVE_INFINITY,
-                    Double.NEGATIVE_INFINITY*/);
+                    Double.NEGATIVE_INFINITY*/); // E10
         } else if (cacheProbability()) {
             Double d = getFromDoubleCache();
             if (d != null) {
@@ -471,7 +471,7 @@ public final class Randomly {
     }
 
     public static long getPositiveOrZeroNonCachedInteger() {
-        return getNextLong(0, Integer.MAX_VALUE);
+        return getNextLong(0, Integer.MAX_VALUE); // E10
     }
 
     public static long getNotCachedInteger(int lower, int upper) {

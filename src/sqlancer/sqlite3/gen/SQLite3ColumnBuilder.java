@@ -23,7 +23,7 @@ public class SQLite3ColumnBuilder {
     private boolean allowNotNull = true;
 
     private enum Constraints {
-        GENERATED_AS, NOT_NULL, UNIQUE, PRIMARY_KEY//, CHECK
+        GENERATED_AS, NOT_NULL, UNIQUE, PRIMARY_KEY//, CHECK // CT02
     }
 
     public boolean isContainsAutoIncrement() {
@@ -45,12 +45,12 @@ public class SQLite3ColumnBuilder {
         }
         sb.append(columnName);
         sb.append(" ");
-        String dataType = Randomly.fromOptions("BIGINT"/*, "TEXT"*/, "VARCHAR(255)"/*, "BLOB"*/, "DOUBLE PRECISION"/*, "REAL"*//*, "INTEGER"*/);
+        String dataType = Randomly.fromOptions("BIGINT"/*, "TEXT"*/, "VARCHAR(255)"/*, "BLOB"*/, "DOUBLE PRECISION"/*, "REAL"*//*, "INTEGER"*/); // T01, T02, T03, T04, T05, T07
         sb.append(dataType);
         SQLite3Column target = columns.stream().filter(p -> p.getName().contentEquals(columnName)).collect(Collectors.toList()).get(0);
         if (Randomly.getBooleanWithRatherLowProbability()) {
             List<Constraints> constraints = Randomly.subset(Constraints.values());
-            constraints = constraints.stream().sorted(Constraints::compareTo).collect(Collectors.toList()); //Sort options in correct order
+            constraints = constraints.stream().sorted(Constraints::compareTo).collect(Collectors.toList()); //Sort options in correct order // CT02
             if (!Randomly.getBooleanWithSmallProbability()
                     || globalState.getDbmsSpecificOptions().testGeneratedColumns) {
                 constraints.remove(Constraints.GENERATED_AS);
@@ -68,7 +68,7 @@ public class SQLite3ColumnBuilder {
                                     .filter(p -> !p.getName().contentEquals(columnName)).collect(Collectors.toList()))
                             .generateExpression(target.getType())));
                     sb.append(")");
-                    sb.append(" STORED"); // STORED is added since default is VIRTUAL which is not commonly supported
+                    sb.append(" STORED"); // STORED is added since default is VIRTUAL which is not commonly supported // CT08
                     break;
                 case PRIMARY_KEY:
                     // only one primary key is allow if not specified as table constraint
@@ -78,17 +78,17 @@ public class SQLite3ColumnBuilder {
                         boolean hasOrdering = Randomly.getBoolean();
                         // if (hasOrdering) {
                         //     if (Randomly.getBoolean()) {
-                        //         sb.append(" ASC");
+                        //         sb.append(" ASC"); // CT03
                         //     } else {
-                        //         sb.append(" DESC");
+                        //         sb.append(" DESC"); // CT03
                         //     }
                         // }
                         // if (Randomly.getBoolean()) {
-                        //     insertOnConflictClause();
+                        //     insertOnConflictClause(); // CT04
                         // }
                         // if (!hasOrdering && dataType.equals("INTEGER") && Randomly.getBoolean()) {
                         //     containsAutoIncrement = true;
-                        //     sb.append(" AUTOINCREMENT");
+                        //     sb.append(" AUTOINCREMENT"); // CT03
                         // }
                     }
                     break;
@@ -96,7 +96,7 @@ public class SQLite3ColumnBuilder {
                     if (allowUnique) {
                         sb.append(" UNIQUE");
                         // if (Randomly.getBoolean()) {
-                        //     insertOnConflictClause();
+                        //     insertOnConflictClause(); // CT04
                         // }
                     }
                     break;
@@ -104,11 +104,11 @@ public class SQLite3ColumnBuilder {
                     if (allowNotNull) {
                         sb.append(" NOT NULL");
                         // if (Randomly.getBoolean()) {
-                        //     insertOnConflictClause();
+                        //     insertOnConflictClause(); // CT04
                         // }
                     }
                     break;
-                // case CHECK:
+                // case CHECK: // CT02
                 //     if (allowCheck) {
                 //         sb.append(SQLite3Common.getCheckConstraint(globalState, columns));
                 //     }
@@ -123,7 +123,7 @@ public class SQLite3ColumnBuilder {
             sb.append(SQLite3Visitor.asString(SQLite3TypedExpressionGenerator.getRandomLiteralValue(globalState, target.getType())));
         }
         // if (Randomly.getBooleanWithSmallProbability()) {
-        //     String randomCollate = SQLite3Common.getRandomCollate();
+        //     String randomCollate = SQLite3Common.getRandomCollate(); // CT02
         //     sb.append(randomCollate);
         // }
         return sb.toString();
