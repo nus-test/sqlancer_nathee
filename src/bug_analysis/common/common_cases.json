@@ -1,0 +1,100 @@
+[
+  {
+    "date": "25/5/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=e8bedb2a18",
+      "fix": "https://www.sqlite.org/src/info/67a68af5578f08d2"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": [
+      "SELECT '' - 2851427734582196970; -- actual: -2851427734582196736, expected: -2851427734582196970"
+    ],
+    "title": "Incorrect result when subtracting a large integer number from a TEXT value"
+  },
+  {
+    "date": "10/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=412bba9b22",
+      "fix": "https://www.sqlite.org/src/info/57050162294efec9"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": ["SELECT -'.'; -- expected: 0, actual: 0.0"],
+    "title": "CAST('.' AS NUMERIC) computes 0.0 rather than 0"
+  },
+  {
+    "date": "11/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=1819598c09",
+      "fix": "https://www.sqlite.org/docsrc/info/e0f700bb6c8142c5"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT -'1.0'; -- expected: -1, actual: -1.0"],
+    "title": "-'1.0' computes -1.0 rather than -1"
+  },
+  {
+    "date": "25/06/2019",
+    "dbms": "MySQL",
+    "links": { "bugtracker": "https://bugs.mysql.com/bug.php?id=95975" },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT \"a\" IN (0); -- expected: 0, actual: 1"],
+    "title": "Unexpected result for IN operator and constants"
+  },
+  {
+    "comment": "This bug was reproduced to occur in \"v11 and quite a large number of branches before that\". The bug was fixed \"somewhat accidentally\" for v12, but backporting the relevant patch was declared to be too invasive.",
+    "date": "02/07/2019",
+    "dbms": "PostgreSQL",
+    "links": {
+      "email": "https://www.postgresql.org/message-id/CA%2Bu7OA4CV21mUfwjQj3va7MWvqB2EAdJT31%3Duf_yArBRVzQjYw%40mail.gmail.com"
+    },
+    "oracle": "error",
+    "reporter": "Manuel Rigger",
+    "status": "verified",
+    "test": [
+      "CREATE TABLE t0(c0 boolean UNIQUE);",
+      "CREATE INDEX i0 ON t0((nullif(FALSE, TRUE)));",
+      "INSERT INTO t0(c0) VALUES(TRUE);",
+      "SELECT * FROM t0 WHERE nullif(FALSE, TRUE) OR t0.c0; -- expected: row is fetched, actual: ERROR:  index key does not match expected index column"
+    ],
+    "title": "SELECT results in \"ERROR: index key does not match expected index column\""
+  },
+  {
+    "date": "24/08/2020",
+    "dbms": "SQLite",
+    "links": {
+      "bugreports": "https://www.sqlite.org/src/tktview?name=f3ff147288",
+      "fix": "https://www.sqlite.org/src/info/4236103379df0b3d"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed",
+    "test": ["SELECT (1 IN (2 IS TRUE)); -- expected: {1}, actual: {0}"],
+    "title": "Incorrect result for IN expression with right-hand IS TRUE sub-expression"
+  },
+  {
+    "date": "27/08/2020",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=be31cf009c",
+      "fix": "https://www.sqlite.org/docsrc/info/153857859d220dbd"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT 1 % '1E1'; -- expected: {1.0}, actual: {0.0}"],
+    "title": "Unexpected result for % and '1E1'"
+  }
+]

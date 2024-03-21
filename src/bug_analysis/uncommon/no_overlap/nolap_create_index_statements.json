@@ -1,0 +1,277 @@
+[
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX index_0 ON test(c0 LIKE '');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX index_1 ON test(c0 GLOB c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX IF NOT EXISTS index_0 ON test(c1 == FALSE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX IF NOT EXISTS index_1 ON test(c0 || FALSE) WHERE c1;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX index_0 ON test(TYPEOF(c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX index_0 ON test(LENGTH(-c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX IF NOT EXISTS i0 ON t0(1) WHERE c0 NOT NULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(1); -- UNIQUE constraint failed: index 'i0'"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(1); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(\"C3\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(ABS(c0)); -- integer overflow (expected)"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(1); -- malformed database schema (i0) - index i0 already exists"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0('1' IN ());"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(c1, 0 | c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(c1, c1 + 1 DESC);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(NULL > c0) WHERE (NULL NOT NULL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c1 NOTNULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c0 NOT NULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(0 || c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(c1 IN (c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE c0 >= c1;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(c2, 0 BETWEEN '' AND c1 COLLATE BINARY, CASE '' WHEN c3 THEN 0 WHEN 0 THEN 0 WHEN '' THEN 0 WHEN 0 THEN c0 ELSE c1 END);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE c0 GLOB c0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i1 ON t0(0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i2 ON t0(0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE NULL IN (c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c0 ISNULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(0, 0, 0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i1 ON t0(0, 0, 0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i2 ON t0(0, 0, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i3 ON t0(0, 0, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE UNIQUE INDEX i4 ON t0(c0, 0, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i5 ON t0(0, CASE WHEN 1 THEN 1 WHEN c2 THEN c1 END, 0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI02",
+    "statement": "CREATE INDEX i0 ON t0(0 LIKE COALESCE(c0, 0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX index_0 ON t0(c0) WHERE (~c0) NOT NULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(NULL > c0) WHERE (NULL NOT NULL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c1 NOTNULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c0 NOT NULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE c0 >= c1;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0(c1) WHERE c0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE UNIQUE INDEX e ON t0(CAST(0.0 AS INT)) WHERE 0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE c0 GLOB c0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(0) WHERE NULL IN (c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(1) WHERE c0 ISNULL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(c1) WHERE c0 GLOB 3;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX index_0 ON test(c1 COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX index_0 ON test(c0 COLLATE NOCASE);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CI04",
+    "statement": "CREATE UNIQUE INDEX i0 ON t0((1 / t0.c0)) WHERE ('-H') >= (t0.c1::TEXT) COLLATE \"C\";"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(c2, 0 BETWEEN '' AND c1 COLLATE BINARY, CASE '' WHEN c3 THEN 0 WHEN 0 THEN 0 WHEN '' THEN 0 WHEN 0 THEN c0 ELSE c1 END);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0((c0 NOTNULL) COLLATE BINARY);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX i0 ON t0(c0 COLLATE BINARY);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE UNIQUE INDEX IF NOT EXISTS index_0 ON test(c1 == FALSE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX IF NOT EXISTS index_1 ON test(c0 || FALSE) WHERE c1;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CI04",
+    "statement": "CREATE INDEX IF NOT EXISTS i0 ON t0(1) WHERE c0 NOT NULL;"
+  }
+]

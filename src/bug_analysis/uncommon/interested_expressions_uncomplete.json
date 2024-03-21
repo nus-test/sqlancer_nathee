@@ -1,0 +1,231 @@
+[ 
+  {
+    "date": "24/06/2019",
+    "dbms": "MySQL",
+    "links": { "bugtracker": "https://bugs.mysql.com/bug.php?id=95960" },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed",
+    "test": [
+      "SELECT '\\n1' & 1; -- expected: 1, actual: 0",
+      "SELECT '\\n1' | 0; -- expected: 1, actual: 0",
+      "SELECT '\\n1' ^ 1; -- expected: 0, actual: 1"
+    ],
+    "title": "The logical operators &, |, and ^ do not ignore newlines in TEXT"
+  },
+  {
+    "date": "22/06/2019",
+    "dbms": "MySQL",
+    "links": { "bugtracker": "https://bugs.mysql.com/bug.php?id=95927" },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed",
+    "test": ["SELECT FALSE XOR '0.5'; -- expected: 1, actual: 0"],
+    "title": "XOR operator returns incorrect result for strings with a floating-point number"
+  },
+  
+  {
+    "comment": "This bug was fixed 11 years after it was introduced.",
+    "date": "03/08/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=71e183cab6",
+      "fix": "https://www.sqlite.org/src/info/d465c3ee"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0 (c0, c1);",
+      "CREATE INDEX i0 ON t0(c1, c1 + 1 DESC);",
+      "INSERT INTO t0(c0) VALUES (1);",
+      "SELECT MIN(t0.c1), t0.c0 FROM t0 WHERE t0.c1 ISNULL; -- expected: NULL | 1, actual: NULL | NULL"
+    ],
+    "title": "MIN() malfunctions for a query with ISNULL condition"
+  },
+  {
+    "date": "08/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=b92e5e8ec2",
+      "fix": "https://www.sqlite.org/src/info/9d75e1ccc72e9f53"
+    },
+    "oracle": "error",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 AS (1), c1);",
+      "CREATE TABLE t1(c0);",
+      "SELECT * FROM t0, t1 WHERE t0.c0 == 0; -- out of memory"
+    ],
+    "title": "Query on table without rows and generated column results in \"out of memory\" error"
+  },
+  {
+    "comment": "This bug uncovered that the compiler somtimes confuses x IS TRUE with x IS FALSE, and the other way around.",
+    "date": "19/5/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=d3e7f2ba5b",
+      "fix": "https://www.sqlite.org/src/info/99eba69b3a64741c"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "INSERT INTO t0(c0) VALUES ('val');",
+      "SELECT * FROM t0 WHERE (((0 IS NOT FALSE) OR NOT (0 IS FALSE OR (t0.c0 IN (-1)))) IS 0); -- fetches no row"
+    ],
+    "title": "Nested boolean formula with IN operator computes an incorrect result"
+  },
+  {
+    "date": "10/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=c31034044b",
+      "fix": "https://www.sqlite.org/src/info/7833feecfe745e23"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c1);",
+      "INSERT INTO t0(c0) VALUES(0);",
+      "CREATE VIEW v0(c0) AS SELECT t1.c1 FROM t0 LEFT JOIN t1;",
+      "SELECT * FROM v0 WHERE v0.c0 NOTNULL NOTNULL; -- expected: row is fetched, actual: no row is fetched"
+    ],
+    "title": "LEFT JOIN in view malfunctions with NOTNULL"
+  },
+  {
+    "date": "05/03/2020",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=fa146dcfe6",
+      "fix": "https://www.sqlite.org/docsrc/info/e751b0c91a80dd31"
+    },
+    "oracle": "TLP (aggregate)",
+    "reporter": "Manuel Rigger",
+    "status": "fixed (in documentation)",
+    "test": [
+      "SELECT HEX(MIN(a)) FROM (SELECT CHAR(0, 1) COLLATE NOCASE as a UNION SELECT CHAR(0, 0) as a); -- 0000",
+      "SELECT HEX(MIN(a)) FROM (SELECT CHAR(0, 0) COLLATE NOCASE as a UNION SELECT CHAR(0, 1) as a); -- 0001"
+    ],
+    "title": "Unexpected result for MIN on string that contains a null character"
+  },
+  {
+    "date": "17/09/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=587791f926",
+      "fix": "https://www.sqlite.org/src/info/3fb40f518086c1e8"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 PRIMARY KEY, c1);",
+      "INSERT INTO t0(c0) VALUES (x'bb'), (0);",
+      "SELECT COUNT(*) FROM t0 WHERE INSTR(x'aabb', t0.c0) ORDER BY t0.c0, t0.c1; -- 1",
+      "SELECT * FROM t0 WHERE INSTR(x'aabb', t0.c0) ORDER BY t0.c0, t0.c1; -- no row is fetched"
+    ],
+    "title": "Row is not fetched when using WHERE clause with INSTR()"
+  },
+  {
+    "date": "4/11/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://sqlite.org/src/tktview?name=02aa2bd02f",
+      "fix": "https://sqlite.org/src/info/ea20068e6d97c934"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c0);",
+      "CREATE VIEW v0(c0) AS SELECT t0.c0 FROM t1 LEFT JOIN t0;",
+      "INSERT INTO t1(c0) VALUES (0);",
+      "SELECT * FROM v0 WHERE (v0.c0, x'') != (NULL, 0); -- unexpected: row is not fetched"
+    ],
+    "title": "Row value comparison malfunctions on view with left join"
+  },
+  {
+    "date": "16/09/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=0f0428096f",
+      "fix": "https://www.sqlite.org/src/info/6fe0367f9a337b7c"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE);",
+      "INSERT INTO t0 VALUES (-1);",
+      "SELECT * FROM t0 WHERE t0.c0 GLOB '-*'; -- unexpected: row is not fetched"
+    ],
+    "title": "GLOB unexpectedly does not match"
+  },
+  {
+    "date": "22/08/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=7e07a3dbf5",
+      "fix": "https://www.sqlite.org/src/info/44578865fa7baf97"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0 (c0);",
+      "INSERT INTO t0(c0) VALUES ('a');",
+      "SELECT * FROM t0 WHERE LIKELY(t0.rowid) <= '0'; -- unexpected: row is not fetched"
+    ],
+    "title": "LIKELY() seems to cause unexpected affinity conversion for rowid"
+  },
+  {
+    "date": "10/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=533010b8ca",
+      "fix": "https://www.sqlite.org/src/info/71643deb"
+    },
+    "oracle": "error",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t1 (c0);",
+      "CREATE INDEX i0 ON t1((LIKELIHOOD(c0, 100) IN ())); -- unexpected: no error",
+      "ALTER TABLE t1 RENAME COLUMN c0 TO c1; -- error occurs only here: second argument to likelihood() must be a constant between 0.0 and 1.0"
+    ],
+    "title": "Illegal argument to LIKELIHOOD() does not result in error when combined with \"IN ()\""
+  },
+  {
+    "date": "10/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview/533010b8cacebe82533a8cd4e230fbb819565115",
+      "fix": "https://www.sqlite.org/src/info/04bd5cb73287f926"
+    },
+    "oracle": "error",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE INDEX i0 ON t0(((LIKELIHOOD(1, 2)) AND ((1 IN ())))); -- unexpected: no error",
+      "ALTER TABLE t0 RENAME TO t1; -- -- error occurs only here: second argument to likelihood() must be a constant between 0.0 and 1.0"
+    ],
+    "title": "Another case of Illegal argument to LIKELIHOOD() does not result in error when combined with \"IN ()\""
+  }
+]

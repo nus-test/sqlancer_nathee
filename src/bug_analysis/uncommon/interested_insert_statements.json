@@ -1,0 +1,137 @@
+[
+  {
+    "dbms": "MySQL",
+    "category": "I01",
+    "statement": "INSERT IGNORE INTO t0(c2) VALUES(\"a\");"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "I01",
+    "statement": "INSERT IGNORE INTO t0(c3) VALUES(\"a\"), (1);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "I01",
+    "statement": "INSERT IGNORE INTO t0(c0) VALUES(\"\\n123\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO test(c0) VALUES (NULL) ON CONFLICT DO NOTHING; -- results in an error"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0) VALUES (1) ON CONFLICT(c0) DO UPDATE SET c1=excluded.c0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0, c2) VALUES (0, NULL) ON CONFLICT(c2, c1, c0) DO NOTHING;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT OR FAIL INTO t0(c2) VALUES (0), (NULL) ON CONFLICT(c2) DO UPDATE SET c1 = c0; -- sqlite3.c:108474: sqlite3FinishCoding: Assertion `!pParse->isMultiWrite || sqlite3VdbeAssertMayAbort(v, pParse->mayAbort)' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0) VALUES(0) ON CONFLICT(c0) DO UPDATE SET c0 = 3; -- sqlite3.c:98717: codeVectorCompare: Assertion `0' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO test(c0) VALUES (NULL) ON CONFLICT DO NOTHING; -- results in an error"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0, c2) VALUES (0, NULL) ON CONFLICT(c2, c1, c0) DO NOTHING;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0) VALUES (1) ON CONFLICT(c0) DO UPDATE SET c1=excluded.c0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT OR FAIL INTO t0(c2) VALUES (0), (NULL) ON CONFLICT(c2) DO UPDATE SET c1 = c0; -- sqlite3.c:108474: sqlite3FinishCoding: Assertion `!pParse->isMultiWrite || sqlite3VdbeAssertMayAbort(v, pParse->mayAbort)' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I02",
+    "statement": "INSERT INTO t0(c0) VALUES(0) ON CONFLICT(c0) DO UPDATE SET c0 = 3; -- sqlite3.c:98717: codeVectorCompare: Assertion `0' failed."
+  },
+  {
+    "dbms": "MySQL",
+    "category": "I03",
+    "statement": "INSERT INTO t0(c0) VALUES(DEFAULT), (\"\");"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "I03",
+    "statement": "INSERT INTO t0(c0) VALUES(DEFAULT), (\"a\");"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "I03",
+    "statement": "INSERT INTO t0(c0) VALUES (DEFAULT), (\"a\"), (\"a\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO test(c0, c1) VALUES ('a', TRUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO test(c0, c1) VALUES ('a', FALSE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO test(c0) VALUES (NULL); -- does not result in an error"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO test(c0) VALUES (0.1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO test(c0) VALUES (FALSE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR IGNORE INTO t0(c0) VALUES (1), (2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR REPLACE INTO t0(c0) VALUES(0), (0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR REPLACE INTO t0(c0, c1) VALUES (2, 1), (1, 0); -- segfault"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR FAIL INTO t0(c0, c1) VALUES (0, 1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR FAIL INTO t0(c0, c1) VALUES (0, 2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "I04",
+    "statement": "INSERT OR FAIL INTO t0(c2) VALUES (0), (NULL) ON CONFLICT(c2) DO UPDATE SET c1 = c0; -- sqlite3.c:108474: sqlite3FinishCoding: Assertion `!pParse->isMultiWrite || sqlite3VdbeAssertMayAbort(v, pParse->mayAbort)' failed."
+  }
+]

@@ -1,0 +1,199 @@
+[
+  {
+    "statements": ["CREATE INDEX index_0 ON test(c1 COLLATE NOCASE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX index_0 ON test(c0 LIKE '');"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX index_1 ON test(c0 GLOB c1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE UNIQUE INDEX IF NOT EXISTS index_0 ON test(c1 == FALSE);",
+      "CREATE INDEX IF NOT EXISTS index_1 ON test(c0 || FALSE) WHERE c1;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX index_0 ON test(c0 COLLATE NOCASE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX index_0 ON test(TYPEOF(c0));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX index_0 ON test(LENGTH(-c0));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX index_0 ON t0(c0) WHERE (~c0) NOT NULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX IF NOT EXISTS i0 ON t0(1) WHERE c0 NOT NULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(1);",
+      "CREATE UNIQUE INDEX i0 ON t0(1); -- UNIQUE constraint failed: index 'i0'",
+      "CREATE UNIQUE INDEX i0 ON t0(1); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0(\"C3\");"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(ABS(c0)); -- integer overflow (expected)",
+      "CREATE INDEX i0 ON t0(1); -- malformed database schema (i0) - index i0 already exists"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0('1' IN ());"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t1((LIKELIHOOD(c0, 100) IN ())); -- unexpected: no error"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(((LIKELIHOOD(1, 2)) AND ((1 IN ())))); -- unexpected: no error"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0((ABS(t0.c0))); -- unexpected: ERROR 3752 (22003): Value is out of range for functional index 'i0'"
+    ],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0((t0.c0 || 1));"], "dbms": "MySQL" },
+  {
+    "statements": ["CREATE INDEX i0 ON t0((nullif(FALSE, TRUE)));"],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE UNIQUE INDEX i0 ON t0(c0);"], "dbms": "PostgreSQL" },
+  { "statements": ["CREATE INDEX i0 ON t0(c0);"], "dbms": "PostgreSQL" },
+  {
+    "statements": [
+      "CREATE UNIQUE INDEX i0 ON t0((1 / t0.c0)) WHERE ('-H') >= (t0.c1::TEXT) COLLATE \"C\";",
+      "ALTER TABLE t0 ALTER c1 TYPE TEXT; -- could not create unique index \"i0\" DETAIL:  Key ((1 / c0))=(0) is duplicated."
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX i0 ON t0(c1, 0 | c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(c1, c1 + 1 DESC);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(NULL > c0) WHERE (NULL NOT NULL);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(CAST(c0 AS NUMERIC));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(1) WHERE c0 NOT NULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(1) WHERE c1 NOTNULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(1) WHERE c0 NOT NULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX i0 ON t0(0 || c1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0(+c0, c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE INDEX i0 ON t0(c1 IN (c0));"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(0) WHERE c0 >= c1;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX i0 ON t0(c1) WHERE c0;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE UNIQUE INDEX e ON t0(CAST(0.0 AS INT)) WHERE 0;"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0(0 DESC);"], "dbms": "SQLite" },
+  { "statements": ["CREATE INDEX i0 ON t0(0 DESC);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(c2, 0 BETWEEN '' AND c1 COLLATE BINARY, CASE '' WHEN c3 THEN 0 WHEN 0 THEN 0 WHEN '' THEN 0 WHEN 0 THEN c0 ELSE c1 END);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(0) WHERE c0 GLOB c0;",
+      "CREATE UNIQUE INDEX i1 ON t0(0);",
+      "CREATE UNIQUE INDEX i2 ON t0(0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(0) WHERE NULL IN (c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(c0 bpchar_ops);"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(bit_length('')); -- Segmentation fault"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(1) WHERE c0 ISNULL;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE UNIQUE INDEX i0 ON t0(0, 0, 0);",
+      "CREATE UNIQUE INDEX i1 ON t0(0, 0, 0);",
+      "CREATE UNIQUE INDEX i2 ON t0(0, 0, c1);",
+      "CREATE UNIQUE INDEX i3 ON t0(0, 0, c1);",
+      "CREATE UNIQUE INDEX i4 ON t0(c0, 0, c2);",
+      "CREATE INDEX i5 ON t0(0, CASE WHEN 1 THEN 1 WHEN c2 THEN c1 END, 0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(c1) WHERE c0 GLOB 3;"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0((c0 NOTNULL) COLLATE BINARY);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(0 LIKE COALESCE(c0, 0));"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0(c2);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE INDEX i0 ON t0(c0 COLLATE BINARY);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0(c0(1));"], "dbms": "MySQL" }
+]

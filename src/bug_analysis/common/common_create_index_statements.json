@@ -1,0 +1,29 @@
+[
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t1((LIKELIHOOD(c0, 100) IN ())); -- unexpected: no error"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0(((LIKELIHOOD(1, 2)) AND ((1 IN ())))); -- unexpected: no error"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE INDEX i0 ON t0((ABS(t0.c0))); -- unexpected: ERROR 3752 (22003): Value is out of range for functional index 'i0'"
+    ],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE INDEX i0 ON t0((t0.c0 || 1));"], "dbms": "MySQL" },
+  {
+    "statements": ["CREATE INDEX i0 ON t0((nullif(FALSE, TRUE)));"],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE UNIQUE INDEX i0 ON t0(c0);"], "dbms": "PostgreSQL" },
+  { "statements": ["CREATE INDEX i0 ON t0(c0);"], "dbms": "PostgreSQL" },
+  { "statements": ["CREATE INDEX i0 ON t0(c2);"], "dbms": "SQLite" },
+  { "statements": ["CREATE INDEX i0 ON t0(c0(1));"], "dbms": "MySQL" }
+]

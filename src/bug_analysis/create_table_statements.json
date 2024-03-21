@@ -1,0 +1,502 @@
+[
+  {
+    "statements": ["CREATE TABLE test (c1 TEXT PRIMARY KEY) WITHOUT ROWID;"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE test (c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0, c1 REAL);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0, c1 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0 REAL);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0 NOT NULL);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0 REAL);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE test (c0 REAL);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0 INTEGER, PRIMARY KEY (c0)) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0 UNIQUE, c1 UNIQUE, FOREIGN KEY(c0) REFERENCES t0(c1));"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c0 INTEGER PRIMARY KEY);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INTEGER PRIMARY KEY);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t1 (c0, c1 REAL PRIMARY KEY);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE IF NOT EXISTS t0 (c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0 PRIMARY KEY DESC, c1 UNIQUE DEFAULT NULL) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t1 (c0, c1); CREATE TABLE t2 (c0 INT UNIQUE);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0 (c0);", "CREATE TABLE t1 (c1 REAL);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE IF NOT EXISTS t0 (c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0, c1, PRIMARY KEY (c0, c1));",
+      "CREATE TABLE t1 (c0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c1, c2);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE IF NOT EXISTS t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0 (c0 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT PRIMARY KEY COLLATE NOCASE);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t1 (c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 COLLATE NOCASE);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 COLLATE RTRIM, c1 BLOB UNIQUE, PRIMARY KEY (c0, c1)) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT UNIQUE, c1 INT, c2 INT UNIQUE) ENGINE = MyISAM;"
+    ],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0 (c3 TEXT);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT UNIQUE, c1 INT, c2 INT, c3 INT UNIQUE) ENGINE = MyISAM;"
+    ],
+    "dbms": "MySQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT UNIQUE) ENGINE = HEAP;"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT UNSIGNED);"], "dbms": "MySQL" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT PRIMARY KEY UNIQUE);"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TINYINT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "MySQL" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT) ENGINE = MyISAM;"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 BIGINT UNSIGNED);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "MySQL" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT);",
+      "CREATE TABLE t1(c0 INT) ENGINE = MEMORY;"
+    ],
+    "dbms": "MySQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT UNIQUE, c1 INT UNIQUE);"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT, c1 TEXT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "MySQL" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT PRIMARY KEY, c1 INT);",
+      "CREATE TABLE t1(c0 INT) INHERITS (t0);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 boolean UNIQUE);"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": [
+      "CREATE TEMP TABLE t0(c0 INT GENERATED ALWAYS AS IDENTITY) PARTITION BY HASH((t0.c0));"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "PostgreSQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "PostgreSQL" },
+  {
+    "statements": ["CREATE TABLE t0(c0 BOOLEAN, c1 BOOLEAN, UNIQUE(c1));"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INTEGER , c1 BOOLEAN);"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 boolean);",
+      "CREATE TABLE t1(c0 boolean);",
+      "CREATE TABLE t2(c0 boolean) INHERITS(t0, t1);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE TABLE t0 (c0 REAL, c1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0, c1, c2, PRIMARY KEY (c0, c1));",
+      "CREATE TABLE t1 (c2);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t1 (c1 , c2, c3, c4 , PRIMARY KEY (c4, c3));"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0 (c0, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0, c1 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0 (c0, c1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0, c1 NOT NULL DEFAULT 1, c2, PRIMARY KEY (c0, c1));"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 INTEGER PRIMARY KEY, c1 TEXT);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TEXT UNIQUE, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0 (c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 INT UNIQUE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0 (c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 REAL UNIQUE, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 REAL, c1 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 REAL UNIQUE);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 TEXT, c1 REAL, c2, PRIMARY KEY(c2, c0, c1));"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 COLLATE NOCASE, c1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 COLLATE NOCASE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 PRIMARY KEY, c1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 integer, c1 integer GENERATED ALWAYS AS (t0.c0) STORED);",
+      "CREATE TABLE t1(LIKE t0 INCLUDING DEFAULTS);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c1);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 COLLATE NOCASE, c1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 COLLATE NOCASE, c1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TEXT PRIMARY KEY);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0, c1, c2 UNIQUE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0, c1 UNIQUE);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0, c1 TEXT GENERATED ALWAYS AS (1) UNIQUE);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INTEGER PRIMARY KEY GENERATED ALWAYS AS(1), c1 UNIQUE GENERATED ALWAYS AS(1), c2 UNIQUE);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TEMP TABLE t0(c0, c1 AS(1) CHECK(NULL) UNIQUE NOT NULL, c2 CHECK(1.0) PRIMARY KEY) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 AS(1));"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 AS(1), c1);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 AS(TYPEOF(c1)), c1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0, c1, c2 AS(1), PRIMARY KEY(c0) FOREIGN KEY(c2) REFERENCES t0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0, c1 a UNIQUE AS (1), c2, c3, FOREIGN KEY(c3) REFERENCES t0(c1));"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 CHECK(ABS(-9223372036854775808)));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 NOT NULL AS(c1), c1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0 GENERATED ALWAYS AS (1), c1 UNIQUE, c2 UNIQUE);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 AS ((c4, 9, c4) < ('a', c1, 1)), c1 AS (1) NOT NULL, c2, c3 CHECK  ((x'56', 0) = (c1, 0)), c4 NOT NULL);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0, c1 AS(c0 + c2), c2 AS(c1) CHECK(c2));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0, c1 UNIQUE COLLATE NOCASE, PRIMARY KEY(c1, c1)) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TEMP TABLE t0(c1 INT PRIMARY KEY) ON COMMIT DELETE ROWS;"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 CHAR(2) COLLATE \"C\", c1 CHAR(2) COLLATE \"POSIX\");"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 boolean, c1 boolean, c2 boolean);"],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "PostgreSQL" },
+  { "statements": ["CREATE TABLE t0(c0 int);"], "dbms": "PostgreSQL" },
+  {
+    "statements": ["CREATE TEMP TABLE t0(c0 int) ON COMMIT DELETE ROWS;"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 TEXT COLLATE \"POSIX\");"],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TEMP TABLE t0(c0, c1 INTEGER PRIMARY KEY AUTOINCREMENT CHECK (c0), c2 BLOB NOT NULL CHECK (LTRIM(1)) UNIQUE DEFAULT '0000000000000');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 AS (1), c1);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0 (c0, c1 NOT NULL GENERATED ALWAYS AS (c0 = 0));"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 AS (0 = UNLIKELY(c1)) UNIQUE, c1 TEXT);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 AS(1 >= 1), c1 UNIQUE AS(TYPEOF(c0)), c2);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0, c1 AS(1));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0, c1 UNIQUE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 REAL AS(1) UNIQUE, c1 INT);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 REAL, c1);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 CHECK(c1 IN(c1)), c1 INT);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 TEXT, CHECK(c0 IN (c0)));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT, CHECK(CASE c0 WHEN c0 THEN 0 END));"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0 UNIQUE);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0);", "CREATE TABLE t1(c0);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 TEXT, CHECK(c0 BETWEEN 0 AND +c0));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 UNIQUE AS(0), c1, c2);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 PRIMARY KEY, c1, c2 UNIQUE) WITHOUT ROWID;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 NOT NULL DEFAULT '', c1 AS(c0) NOT NULL);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 NOT NULL DEFAULT 1, c1 AS(c0) UNIQUE);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 INT AS(2) UNIQUE, c1 TEXT UNIQUE, FOREIGN KEY(c0) REFERENCES t0(c1));"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 UNIQUE ON CONFLICT REPLACE, c1, c2);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["CREATE TABLE t0(c0 CHECK(((0, 0) > (0, c0))));"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 TEXT PRIMARY KEY, c1 INT UNIQUE REFERENCES t0 CHECK(CAST(c1 AS INT) BETWEEN 0 AND CASE WHEN 1 THEN c0 END));"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0);"], "dbms": "SQLite" },
+  { "statements": ["CREATE TABLE t0(c0, c1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "CREATE TABLE t0(c0 REAL, c1 REAL GENERATED ALWAYS AS (c0));"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "SQLite" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT);", "CREATE TABLE t1(c0 DOUBLE);"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT UNSIGNED);"], "dbms": "MySQL" },
+  {
+    "statements": ["CREATE TABLE t0(c0 INT, c1 INT UNIQUE);"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["CREATE TABLE t0(c0 INT UNIQUE);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 FLOAT UNIQUE);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 TEXT);"], "dbms": "MySQL" },
+  { "statements": ["CREATE TABLE t0(c0 INT);"], "dbms": "SQLite" }
+]

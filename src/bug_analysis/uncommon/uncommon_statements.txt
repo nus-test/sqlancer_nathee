@@ -1,0 +1,62 @@
+CREATE STATISTICS s1 ON c0, c1 FROM t0;
+CREATE STATISTICS s0 ON c0, c2 FROM t0;
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(a);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0, order=DESC);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0, prefix=1);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0, order=DESC);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0, tokenize = "ascii", prefix = 1);
+CREATE VIRTUAL TABLE vt0 USING fts4;
+CREATE VIRTUAL TABLE vt0 USING fts4(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, a, b);
+CREATE VIRTUAL TABLE rt1 USING rtree(c0, a, b);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2 INT);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2, +c3 NOT NULL);
+CREATE VIRTUAL TABLE vt0 USING rtree;
+CREATE VIRTUAL TABLE vt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE t1 USING fts4;
+CREATE VIRTUAL TABLE t0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0, languageid="lid");
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE t0 USING fts5(c0);
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE vt1 USING fts5(c1, c2, prefix = 1, tokenize = "porter ascii");
+CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0, prefix = 71, tokenize = "porter ascii", prefix = 9);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE vt1 USING fts4(c0);
+CREATE VIRTUAL TABLE t0 USING rtree(c0, c1, c2);
+CREATE VIRTUAL TABLE vt0 USING fts4(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);
+CREATE VIRTUAL TABLE vt1 USING fts5(c0);
+CREATE VIRTUAL TABLE vt0 USING fts5(c0);
+CREATE VIRTUAL TABLE stat USING dbstat;
+CREATE VIRTUAL TABLE stat USING dbstat;
+REINDEX; -- Error: UNIQUE constraint failed
+REINDEX; -- Error: UNIQUE constraint failed: index 'index_0'
+REINDEX; -- UNIQUE constraint failed: index 'index_0'
+REINDEX; -- UNIQUE constraint failed: index 'index_0'
+REINDEX;
+REINDEX TABLE CONCURRENTLY t0;
+REINDEX; -- unexpected: UNIQUE constraint failed: index 'i0'
+REINDEX; -- UNIQUE constraint failed: t0.c0
+REINDEX;
+REINDEX; -- unexpected: UNIQUE constraint failed
+REINDEX;
+REINDEX TABLE CONCURRENTLY t0; -- unexpected: ERROR:  index "t0_pkey_ccnew" already contains data
+REINDEX; -- UNIQUE constraint failed: t0.c0
+REINDEX; -- segfault
+[{"dbms": "PostgreSQL", "category": "ST01", "statement": "CREATE STATISTICS s1 ON c0, c1 FROM t0;"}, {"dbms": "PostgreSQL", "category": "ST01", "statement": "CREATE STATISTICS s0 ON c0, c2 FROM t0;"}]

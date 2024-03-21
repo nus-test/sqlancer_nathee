@@ -1,0 +1,177 @@
+[
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT01",
+    "statement": "CREATE TABLE t1(LIKE t0 INCLUDING DEFAULTS);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 INT PRIMARY KEY COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE RTRIM, c1 BLOB UNIQUE, PRIMARY KEY (c0, c1)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE NOCASE, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE NOCASE, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 COLLATE NOCASE, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0, c1 UNIQUE COLLATE NOCASE, PRIMARY KEY(c1, c1)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 CHAR(2) COLLATE \"C\", c1 CHAR(2) COLLATE \"POSIX\");"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT02",
+    "statement": "CREATE TABLE t0(c0 TEXT COLLATE \"POSIX\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT03",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 INTEGER PRIMARY KEY AUTOINCREMENT CHECK (c0), c2 BLOB NOT NULL CHECK (LTRIM(1)) UNIQUE DEFAULT '0000000000000');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT04",
+    "statement": "CREATE TABLE t0(c0 UNIQUE ON CONFLICT REPLACE, c1, c2);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0 INT GENERATED ALWAYS AS IDENTITY) PARTITION BY HASH((t0.c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 AS(1) CHECK(NULL) UNIQUE NOT NULL, c2 CHECK(1.0) PRIMARY KEY) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c1 INT PRIMARY KEY) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0 int) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 INTEGER PRIMARY KEY AUTOINCREMENT CHECK (c0), c2 BLOB NOT NULL CHECK (LTRIM(1)) UNIQUE DEFAULT '0000000000000');"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c1 INT PRIMARY KEY) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0 int) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c1 INT PRIMARY KEY) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT05",
+    "statement": "CREATE TEMP TABLE t0(c0 int) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT07",
+    "statement": "CREATE TEMP TABLE t0(c0 INT GENERATED ALWAYS AS IDENTITY) PARTITION BY HASH((t0.c0));"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT08",
+    "statement": "CREATE TABLE t0(c0 integer, c1 integer GENERATED ALWAYS AS (t0.c0) STORED);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT10",
+    "statement": "CREATE TABLE t1(c0 INT) INHERITS (t0);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "CT10",
+    "statement": "CREATE TABLE t2(c0 boolean) INHERITS(t0, t1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE test (c1 TEXT PRIMARY KEY) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE t0 (c0 INTEGER, PRIMARY KEY (c0)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE t0 (c0 PRIMARY KEY DESC, c1 UNIQUE DEFAULT NULL) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE t0(c0 COLLATE RTRIM, c1 BLOB UNIQUE, PRIMARY KEY (c0, c1)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 AS(1) CHECK(NULL) UNIQUE NOT NULL, c2 CHECK(1.0) PRIMARY KEY) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE t0(c0, c1 UNIQUE COLLATE NOCASE, PRIMARY KEY(c1, c1)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "CT10",
+    "statement": "CREATE TABLE t0(c0 PRIMARY KEY, c1, c2 UNIQUE) WITHOUT ROWID;"
+  }
+]

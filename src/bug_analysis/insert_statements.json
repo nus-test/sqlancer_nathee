@@ -1,0 +1,618 @@
+[
+  {
+    "statements": [
+      "INSERT INTO test(c1) VALUES ('A');",
+      "INSERT INTO test(c1) VALUES ('a');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO test(c0, c1) VALUES ('1', '1');",
+      "INSERT INTO test(c0, c1) VALUES ('0', '1');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT OR IGNORE INTO test(c0, c1) VALUES ('a', TRUE);",
+      "INSERT OR IGNORE INTO test(c0, c1) VALUES ('a', FALSE);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO test(c0) VALUES ('+/');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO test(c0) VALUES (NULL) ON CONFLICT DO NOTHING; -- results in an error",
+      "INSERT OR IGNORE INTO test(c0) VALUES (NULL); -- does not result in an error"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT OR IGNORE INTO test(c0) VALUES (0.1);",
+      "INSERT OR IGNORE INTO test(c0) VALUES (FALSE);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO test(c0) VALUES (0.0), ('10:');"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (NULL);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT OR FAIL INTO t0(c0, c1) VALUES (0, 1);",
+      "INSERT OR FAIL INTO t0(c0, c1) VALUES (0, 2);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t1(c0) VALUES (0);",
+      "INSERT INTO t0(c0) VALUES ('a');"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('./');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t1(c0, c1) VALUES (TRUE, 9223372036854775807), (TRUE, 0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(NULL);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES (1), (2), (3), (4), (5);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t1(c0, c1) VALUES (0, 0), (0, NULL);",
+      "INSERT INTO t2(c0) VALUES (1);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t1(c1) VALUES (8366271098608253588);",
+      "INSERT INTO t0(c0) VALUES ('a');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT OR IGNORE INTO t0(c0) VALUES (1), (2);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t1 VALUES (2);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c1, c2) VALUES  ('a', 1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('val');"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES (-9223372036854775808);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('1.0');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES (' 1-');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('a');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('.1%');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0 VALUES (123, 3), (' ', 1), ('\t', 2), ('', 4);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES(DEFAULT), (\"\");",
+      "INSERT IGNORE INTO t0(c2) VALUES(\"a\");"
+    ],
+    "dbms": "MySQL"
+  },
+  { "statements": ["INSERT INTO t0(c3) VALUES ('0');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES(DEFAULT), (\"a\");",
+      "INSERT IGNORE INTO t0(c3) VALUES(\"a\"), (1);"
+    ],
+    "dbms": "MySQL"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES (DEFAULT), (\"a\"), (\"a\");"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(4294967294);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(NULL);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(1);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(1);"], "dbms": "MySQL" },
+  {
+    "statements": ["INSERT IGNORE INTO t0(c0) VALUES(\"\\n123\");"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0.9);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(NULL);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(-1);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(\"0.5\");"], "dbms": "MySQL" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES(0);",
+      "INSERT INTO t1(c0) VALUES(-1);"
+    ],
+    "dbms": "MySQL"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES(1), (2), (3);"],
+    "dbms": "MySQL"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES(-1, \"a\");"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (\"a\");"], "dbms": "MySQL" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0, c1) VALUES(0, 0);",
+      "INSERT INTO t1(c0, c1) VALUES(0, 1);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(TRUE);"], "dbms": "PostgreSQL" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES('b'), ('a');",
+      "INSERT INTO t0(c0) VALUES (NULL);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(TRUE);"], "dbms": "PostgreSQL" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0, c1) VALUES(1369652450, FALSE), (414515746, TRUE), (897778963, FALSE);"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES (4750228396194493326), (0);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c2) VALUES (0), (1), (3), (4), (5), (6), (7), (8), (9), (10), (11);",
+      "INSERT INTO t0(c1) VALUES ('a');",
+      "INSERT INTO t1(c2) VALUES (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t1(c3) VALUES (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (NULL), (1), (0);",
+      "INSERT INTO t1(c1) VALUES (0), (0), (NULL), (0), (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES (NULL, 1);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (1);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES ('a', 1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES (-1, 0);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('0');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c1) VALUES (0);",
+      "INSERT INTO t0(c0) VALUES (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0), (1);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (NULL);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES ('a', -1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c2) VALUES (NULL), (NULL), (NULL), (NULL), (NULL), (NULL), (NULL), (NULL), (NULL), (NULL), (NULL);",
+      "INSERT INTO t0(c2) VALUES ('a');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO t0(c0, c1) VALUES (1, 'a');"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (-1);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('a');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (1);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (NULL);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c1) VALUES (NULL);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (NULL);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0, c1) VALUES (1, 2),  (2, 1);",
+      "INSERT INTO t0(c0) VALUES (1) ON CONFLICT(c0) DO UPDATE SET c1=excluded.c0;"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES(2.07093491255203046E18);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c0, c2) VALUES (0, NULL) ON CONFLICT(c2, c1, c0) DO NOTHING;"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES('');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('B');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES (-1);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES (x'bb'), (0);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t1(c0) VALUES(NULL);"], "dbms": "PostgreSQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (NULL);",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES('365062398'), (0), (0);",
+      "INSERT INTO vt1(vt1, rank) VALUES('pgsz', '38');",
+      "INSERT INTO vt1(vt1) VALUES('integrity-check');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (NULL);",
+      "INSERT INTO vt0(vt0) VALUES('rebuild');",
+      "INSERT INTO vt0(vt0) VALUES('rebuild');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(vt0, rank) VALUES('pgsz', '70000');",
+      "INSERT INTO vt0(c0) VALUES (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0);",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(vt0, rank) VALUES('crisismerge', 2000);",
+      "INSERT INTO vt0(vt0, rank) VALUES('automerge', 0);",
+      "INSERT INTO vt0(c0) VALUES (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0),(0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0), (0);",
+      "INSERT INTO vt0(vt0) VALUES('rebuild'); -- database or disk is full"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t1 VALUES (1);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (0), (0);",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); --database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (0);",
+      "INSERT INTO vt0(vt0) VALUES('optimize');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (x'00');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "CREATE TRIGGER tr0 AFTER DELETE ON t0 BEGIN INSERT INTO t0 VALUES(0); END;",
+      "INSERT OR REPLACE INTO t0(c0) VALUES(0), (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (0);",
+      "INSERT INTO vt0(c0) VALUES (0);",
+      "INSERT INTO vt0(vt0) VALUES('merge=1,4'); -- unexpected: does not terminate"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES('a', 'A');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES('a', 'A');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES ('');"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES('a');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c2) VALUES(-1572226132);",
+      "INSERT INTO t0(c0) VALUES(1), (1);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (x'd1');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected error: database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "BEGIN INSERT INTO t0(c1) VALUES(1);",
+      "INSERT INTO t0(c1) VALUES(0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (1);",
+      "INSERT INTO t0(c0) VALUES (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO t0 VALUES(NULL); -- Segmentation fault"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c2) VALUES (0), (1);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c1) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0 VALUES (0, 0), ('', 0);"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO vt0 VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t1(c0) VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t1(c0) VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c1) VALUES (1);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0 VALUES (0, 0, 0), (0, 0, 0); -- unexpected: Segmentation fault"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c1) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (1), (0);",
+      "INSERT INTO vt0(c0) VALUES (0), (0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES('', '');"], "dbms": "PostgreSQL" },
+  {
+    "statements": ["INSERT INTO t0 VALUES(FALSE, FALSE, FALSE);"],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (1);",
+      "INSERT INTO t1(c0) VALUES (1);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO rt0(c2) VALUES(NULL);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO rt0(c0) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO rt1(c0) VALUES (x'00');",
+      "INSERT INTO rt0(c0) VALUES ('a');"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO rt0(c2) VALUES(NULL);",
+      "INSERT INTO t0 VALUES(0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO rt0(c2) VALUES(0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO rt0(c1) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO rt0(c3) VALUES(NULL); -- unexpected: inserting NULL succeeds"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT OR REPLACE INTO t0(c0, c1) VALUES (2, 1), (1, 0); -- segfault"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c1) VALUES (1), (0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (x'46f0');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES(0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES(0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c1) VALUES(0), (0);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(NULL);"], "dbms": "SQLite" },
+  { "statements": ["INSERT INTO t0 VALUES('');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (x'3078');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (0), (1);",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (''), (0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO vt0(vt0) VALUES('integrity-check');",
+      "INSERT INTO vt0(vt0, rank) VALUES('usermerge', 2); -- sqlite3.c:213961: fts5StructureRead: Assertion `p->iStructVersion!=0' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c1) VALUES('0'); -- sqlite3.c:86300: sqlite3VdbeExec: Assertion `flags3==pIn3->flags' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0 VALUES('0'); -- sqlite3.c:86300: sqlite3VdbeExec: Assertion `flags3==pIn3->flags' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (x'00');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (0), (0); -- sqlite3.c:75871: sqlite3VdbeMemAboutToChange: Assertion `(mFlags&MEM_Str)==0 || (pMem->n==pX->n && pMem->z==pX->z)' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0 VALUES (0), (1);",
+      "INSERT INTO rt0(c0) VALUES (0), (1);"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt1 VALUES (x'e4', '+\u452c+');",
+      "INSERT INTO vt1(vt1) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES (0);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO rt0(c0) VALUES (0), (1), (2);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(c0) VALUES (x'e9');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- sqlite3.c:213028: sqlite3Fts5HashScanNext: Assertion `!sqlite3Fts5HashScanEof(p)' failed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0(vt0, rank) VALUES('pgsz', '37');",
+      "INSERT INTO vt0(c0, c1) VALUES (0.66077, 1957391816);",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt1(c0) VALUES(0);",
+      "INSERT INTO vt1(c0) VALUES (0), (0);",
+      "INSERT INTO vt1(c0) VALUES (0);",
+      "INSERT INTO vt1(vt1) VALUES('automerge=1');"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c1) VALUES(0);"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT OR FAIL INTO t0(c2) VALUES (0), (NULL) ON CONFLICT(c2) DO UPDATE SET c1 = c0; -- sqlite3.c:108474: sqlite3FinishCoding: Assertion `!pParse->isMultiWrite || sqlite3VdbeAssertMayAbort(v, pParse->mayAbort)' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES ('\ufeff');",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c1) VALUES(0.16334143182538696), (0); -- sqlite3.c:75926: sqlite3VdbeMemAboutToChange: Assertion `(mFlags&MEM_Real)==0 || pMem->u.r==pX->u.r' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (0);",
+      "INSERT INTO t0(c0, c2) VALUES(4, 0), (9, 0);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO vt1(c0) VALUES ('');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES(0) ON CONFLICT(c0) DO UPDATE SET c0 = 3; -- sqlite3.c:98717: codeVectorCompare: Assertion `0' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "INSERT INTO vt0 VALUES (SUBSTR(x'37', ''));",
+      "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0 VALUES('0');"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "INSERT INTO t0(c0) VALUES (x'00');",
+      "INSERT INTO t0(c0) VALUES (1);"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES (1);"], "dbms": "SQLite" },
+  {
+    "statements": ["INSERT INTO t0(c0) VALUES ('\uc706'), (1);"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["INSERT INTO t0 VALUES(0);", "INSERT INTO t1 VALUES('-0');"],
+    "dbms": "MySQL"
+  },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c1) VALUES(1);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES(0);"], "dbms": "MySQL" },
+  { "statements": ["INSERT INTO t0(c0) VALUES (0);"], "dbms": "SQLite" }
+]

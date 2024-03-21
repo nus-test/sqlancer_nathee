@@ -1,0 +1,478 @@
+[
+  {
+    "date": "18/5/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://sqlite.org/src/info/787fa716be3a7f650c",
+      "fix": "https://sqlite.org/src/info/778b1224a318d013"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Severe",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0 (c0, c1, PRIMARY KEY (c0, c1));",
+      "CREATE TABLE t1 (c0);",
+      "INSERT INTO t1 VALUES (2);",
+      "SELECT * FROM t0, t1 WHERE (t0.c1 >= 1 OR t0.c1 < 1) AND t0.c0 IN (1, t1.c0) ORDER BY 1; -- results in a segfault"
+    ],
+    "title": "Query results in a SEGFAULT"
+  },
+  {
+    "date": "25/5/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=e8bedb2a18",
+      "fix": "https://www.sqlite.org/src/info/67a68af5578f08d2"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": [
+      "SELECT '' - 2851427734582196970; -- actual: -2851427734582196736, expected: -2851427734582196970"
+    ],
+    "title": "Incorrect result when subtracting a large integer number from a TEXT value"
+  },
+  {
+    "date": "10/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=412bba9b22",
+      "fix": "https://www.sqlite.org/src/info/57050162294efec9"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": ["SELECT -'.'; -- expected: 0, actual: 0.0"],
+    "title": "CAST('.' AS NUMERIC) computes 0.0 rather than 0"
+  },
+  {
+    "date": "11/06/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=1819598c09",
+      "fix": "https://www.sqlite.org/docsrc/info/e0f700bb6c8142c5"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT -'1.0'; -- expected: -1, actual: -1.0"],
+    "title": "-'1.0' computes -1.0 rather than -1"
+  },
+  {
+    "date": "25/06/2019",
+    "dbms": "MySQL",
+    "links": { "bugtracker": "https://bugs.mysql.com/bug.php?id=95975" },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT \"a\" IN (0); -- expected: 0, actual: 1"],
+    "title": "Unexpected result for IN operator and constants"
+  },
+  {
+    "comment": "This bug was reproduced to occur in \"v11 and quite a large number of branches before that\". The bug was fixed \"somewhat accidentally\" for v12, but backporting the relevant patch was declared to be too invasive.",
+    "date": "02/07/2019",
+    "dbms": "PostgreSQL",
+    "links": {
+      "email": "https://www.postgresql.org/message-id/CA%2Bu7OA4CV21mUfwjQj3va7MWvqB2EAdJT31%3Duf_yArBRVzQjYw%40mail.gmail.com"
+    },
+    "oracle": "error",
+    "reporter": "Manuel Rigger",
+    "status": "verified",
+    "test": [
+      "CREATE TABLE t0(c0 boolean UNIQUE);",
+      "CREATE INDEX i0 ON t0((nullif(FALSE, TRUE)));",
+      "INSERT INTO t0(c0) VALUES(TRUE);",
+      "SELECT * FROM t0 WHERE nullif(FALSE, TRUE) OR t0.c0; -- expected: row is fetched, actual: ERROR:  index key does not match expected index column"
+    ],
+    "title": "SELECT results in \"ERROR: index key does not match expected index column\""
+  },
+  {
+    "date": "02/07/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=41866dc373",
+      "fix": "https://www.sqlite.org/src/info/faaaae4940b5f4f7"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE, c1);",
+      "INSERT INTO t0(c0, c1) VALUES (NULL, 1);",
+      "SELECT MIN(t0.c0), t0.c1 FROM t0; -- expected: NULL | 1, actual: NULL | NULL"
+    ],
+    "title": "MIN() malfunctions for UNIQUE column"
+  },
+  {
+    "date": "15/08/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=256741a16b",
+      "fix": "https://www.sqlite.org/src/info/4f5b2d938194fab7"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "INSERT INTO t0(c0) VALUES (0);",
+      "SELECT * FROM t0 WHERE EXISTS (SELECT MIN(c0)  OVER (), CUME_DIST() OVER () FROM t0) BETWEEN 1 AND 1;"
+    ],
+    "title": "Null pointer dereference caused by window functions in result-set of EXISTS(SELECT ...)"
+  },
+  {
+    "date": "09/09/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=a7debbe0ad",
+      "fix": "https://www.sqlite.org/src/info/b9ec72203c19c2b9"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "INSERT INTO t0(c0) VALUES('');",
+      "CREATE VIEW v2(c0, c1) AS SELECT 'B' COLLATE NOCASE, 'a' FROM t0 ORDER BY t0.c0;",
+      "SELECT SUM(count) FROM (SELECT v2.c1 BETWEEN v2.c0 AND v2.c1 as count FROM v2); -- expected: 0, actual: 1"
+    ],
+    "title": "BETWEEN issue in view"
+  },
+  {
+    "date": "11/09/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=18458b1ad6",
+      "fix": "https://www.sqlite.org/src/info/36997c4ade2ef3a2"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 COLLATE NOCASE);",
+      "INSERT INTO t0(c0) VALUES ('B');",
+      "CREATE VIEW v0(c0, c1) AS SELECT DISTINCT t0.c0, 'a' FROM t0;",
+      "SELECT v0.c1 >= v0.c0 FROM v0; -- actual: 1, expected: 0"
+    ],
+    "title": "COLLATE issue in view"
+  },
+  {
+    "date": "07/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=b2d4edaffd",
+      "fix": "https://www.sqlite.org/src/info/3cde82c86b963fa7"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "INSERT INTO t0(c0) VALUES (0);",
+      "CREATE VIEW v0(c0) AS SELECT t0.rowid FROM t0 ORDER BY 1;",
+      "SELECT COUNT(*) FROM v0 WHERE ABS('1') = v0.c0; -- expected: 1, actual: 0"
+    ],
+    "title": "Comparison on view malfunctions"
+  },
+  {
+    "date": "09/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=a976c487d1",
+      "fix": "https://www.sqlite.org/src/info/eb7ed90b8a65748f"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c1);",
+      "CREATE TABLE t1(c0);",
+      "CREATE VIEW v0 AS SELECT c1 FROM t1 LEFT JOIN t0;",
+      "INSERT INTO t1 VALUES (1);",
+      "SELECT * FROM v0 WHERE NOT(v0.c1 IS FALSE); -- expected: row is fetched, actual: no row is fetched"
+    ],
+    "title": "LEFT JOIN in view malfunctions"
+  },
+  {
+    "date": "22/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=b47e3627ec",
+      "fix": "https://www.sqlite.org/src/info/90f7c477354d67d2"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 COLLATE NOCASE, c1);",
+      "INSERT INTO t0 VALUES('a', 'A');",
+      "SELECT * FROM t0 WHERE (+ t0.c1, 1) >= (t0.c0, 1); -- expected: row is not fetched, actual: row is fetched"
+    ],
+    "title": "Comparison of row values results in incorrect result"
+  },
+  {
+    "date": "22/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=b47e3627ec",
+      "fix": "https://www.sqlite.org/src/info/c7da1c01f1f239e6"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 COLLATE NOCASE, c1);",
+      "INSERT INTO t0 VALUES('a', 'A');",
+      "SELECT * FROM t0 WHERE (+ t0.c1, 1) >= (t0.c0, 1); -- expected: row is not fetched, actual: row is fetched"
+    ],
+    "title": "Comparison of row values results in incorrect result (incomplete fix)"
+  },
+  {
+    "date": "23/10/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=135c9da751",
+      "fix": "https://www.sqlite.org/src/info/978b2d20cf95d0b7"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE);",
+      "INSERT INTO t0(c0) VALUES('a');",
+      "SELECT * FROM t0 WHERE (t0.c0, 0) < ('B' COLLATE NOCASE, 0); -- unexpected: row is not fetched"
+    ],
+    "title": "Comparison of row values with COLLATE NOCASE yields incorrect result"
+  },
+  {
+    "date": "6/11/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://sqlite.org/src/tktview?name=ce22a07731",
+      "fix": "https://sqlite.org/src/info/36c11ad51fe9ab1b"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0 (c0 GENERATED ALWAYS AS (1), c1 UNIQUE, c2 UNIQUE);",
+      "INSERT INTO t0(c1) VALUES (1);",
+      "SELECT * FROM t0 WHERE 0 = t0.c2 OR t0.c1 BETWEEN t0.c2 AND 1; -- unexpected: row is fetched"
+    ],
+    "title": "NULL WHERE condition unexpectedly results in row being fetched"
+  },
+  {
+    "date": "7/11/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugtracker": "https://www.sqlite.org/src/tktview?name=299b50ba81",
+      "fix": "https://www.sqlite.org/src/info/104a2beb57037f93"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Important",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0, c1 AS(c0 + c2), c2 AS(c1) CHECK(c2));",
+      "UPDATE t0 SET c0 = NULL; -- Segmentation fault"
+    ],
+    "title": "UPDATE on table with two generated columns and CHECK clause results in segfault"
+  },
+  {
+    "date": "16/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=3b84b42943",
+      "fix": "https://www.sqlite.org/src/info/0271491438ad2a98"
+    },
+    "oracle": "NoREC",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c0, c1 AS(1));",
+      "INSERT INTO t0 VALUES(0);",
+      "SELECT t1.c1 IS TRUE FROM t0 LEFT JOIN t1; -- expected: 0, actual: 1"
+    ],
+    "title": "LEFT JOIN malfunctions with generated column"
+  },
+  {
+    "date": "20/12/2019",
+    "dbms": "SQLite",
+    "links": { "fix": "https://www.sqlite.org/src/info/3cc2b5709e66ef60" },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c0, c1 UNIQUE);",
+      "INSERT INTO t0(c0) VALUES(NULL);",
+      "SELECT COUNT(*) FROM t0, t1 WHERE (SELECT AVG(0) FILTER(WHERE t1.c1)); -- segmentation fault"
+    ],
+    "title": "FILTER clause in window function causes a segfault"
+  },
+  {
+    "date": "22/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://sqlite.org/src/tktview?name=f00d096cae",
+      "fix": "https://sqlite.org/src/info/8c856404b4e98d29"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE);",
+      "INSERT INTO t0 VALUES(0);",
+      "SELECT * FROM t0 WHERE (0, t0.c0) IN(SELECT DENSE_RANK() OVER(), LAG(0) OVER() FROM t0); -- sqlite3.c:87244: sqlite3VdbeExec: Assertion `memIsValid(pRec)' failed."
+    ],
+    "title": "Debug assertion sqlite3VdbeExec: Assertion `memIsValid(pRec)' failed"
+  },
+  {
+    "date": "22/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://sqlite.org/src/tktview?name=d9ed4ebef1",
+      "fix": "https://www.sqlite.org/src/info/0b1dbd60f5db3abe"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE);",
+      "SELECT * FROM t0 WHERE(c0, 0) IN(SELECT FIRST_VALUE(0) OVER(), 0); -- Segmentation fault"
+    ],
+    "title": "SELECT on window function causes a segfault"
+  },
+  {
+    "date": "23/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=3ab4a9f02c",
+      "fix": "https://www.sqlite.org/src/info/0b1dbd60"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE);",
+      "SELECT * FROM t0 WHERE (t0.c0, 1) IN(SELECT NTILE(1) OVER(), 0 FROM t0); -- sqlite3.c:90197: sqlite3VdbeExec: Assertion `pC!=0' failed."
+    ],
+    "title": "Debug assertion sqlite3VdbeExec: Assertion `pC!=0' failed"
+  },
+  {
+    "date": "23/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://sqlite.org/src/tktview?name=dfd66334cf",
+      "fix": "https://sqlite.org/src/info/2f17974912ec5e99"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Critical",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "CREATE TABLE t1(c0);",
+      "SELECT * FROM t0 LEFT JOIN t1 WHERE (t1.c0 BETWEEN 0 AND 0) > ('' AND t0.c0); -- sqlite3.c:103271: impliesNotNullRow: Assertion `pWalker->eCode==0' failed."
+    ],
+    "title": "Debug assertion impliesNotNullRow: Assertion `pWalker->eCode==0' failed"
+  },
+  {
+    "date": "26/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=ec8abb025e",
+      "fix": "https://www.sqlite.org/src/info/e54560495926fbb8"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 UNIQUE AS(0), c1, c2);",
+      "INSERT INTO t0(c1) VALUES(0);",
+      "UPDATE t0 SET c1 = 0, c2 = 0 WHERE(c0) >= 0; -- sqlite3.c:72305: sqlite3BtreeInsert: Assertion `pCur->curFlags & BTCF_ValidNKey' failed."
+    ],
+    "title": "Debug assertion sqlite3BtreeInsert: Assertion `pCur->curFlags & BTCF_ValidNKey' failed"
+  },
+  {
+    "date": "28/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://sqlite.org/src/tktview?name=36ffedcb9a",
+      "fix": "https://sqlite.org/src/info/597896ed0ae9e296"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0);",
+      "SELECT (0, 0) IN(SELECT MIN(c0), NTILE(0) OVER()) FROM t0; -- sqlite3.c:103486: exprSrcCount: Assertion `0' failed."
+    ],
+    "title": "Debug assertion exprSrcCount: Assertion `0' failed"
+  },
+  {
+    "comment": "Since we reported this bug 18 minutes after it was introduced, Richard Hipp sent a post titled '18 minutes 41 seconds' to the SQLite mailing list (see https://www.sqlite.org/src/info/f481636f1a0333c6)",
+    "date": "30/12/2019",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=892575cdba",
+      "fix": "https://www.sqlite.org/src/info/f481636f1a0333c6"
+    },
+    "oracle": "crash",
+    "reporter": "Manuel Rigger",
+    "severity": "Minor",
+    "status": "fixed",
+    "test": [
+      "CREATE TABLE t0(c0 CHECK(((0, 0) > (0, c0))));",
+      "INSERT INTO t0(c0) VALUES(0) ON CONFLICT(c0) DO UPDATE SET c0 = 3; -- sqlite3.c:98717: codeVectorCompare: Assertion `0' failed."
+    ],
+    "title": "Debug assertion codeVectorCompare: Assertion `0' failed"
+  },
+  {
+    "date": "24/08/2020",
+    "dbms": "SQLite",
+    "links": {
+      "bugreports": "https://www.sqlite.org/src/tktview?name=f3ff147288",
+      "fix": "https://www.sqlite.org/src/info/4236103379df0b3d"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed",
+    "test": ["SELECT (1 IN (2 IS TRUE)); -- expected: {1}, actual: {0}"],
+    "title": "Incorrect result for IN expression with right-hand IS TRUE sub-expression"
+  },
+  {
+    "date": "27/08/2020",
+    "dbms": "SQLite",
+    "links": {
+      "bugreport": "https://www.sqlite.org/src/tktview?name=be31cf009c",
+      "fix": "https://www.sqlite.org/docsrc/info/153857859d220dbd"
+    },
+    "oracle": "PQS",
+    "reporter": "Manuel Rigger",
+    "status": "fixed (in documentation)",
+    "test": ["SELECT 1 % '1E1'; -- expected: {1.0}, actual: {0.0}"],
+    "title": "Unexpected result for % and '1E1'"
+  }
+]

@@ -1,0 +1,637 @@
+[
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 TINYINT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNSIGNED);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 BIGINT UNSIGNED);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "SELECT * FROM t0 WHERE CAST(COALESCE(t0.c0, -1) AS UNSIGNED); -- expected: row is selected, actual: no row is selected"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "SELECT * FROM t0 WHERE CAST(IFNULL(t0.c0, -1) AS UNSIGNED); -- expected: row is selected, actual: no row is selected"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "SELECT t0.c0 IN (1, CAST(t0.c0 AS UNSIGNED)) from t0; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "SELECT * FROM t0, t1 WHERE (CAST(t1.c0 AS UNSIGNED)) > (IFNULL(\"u\", t0.c0)); -- expected: row is fetched, actual: no row is fetched"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNSIGNED);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "SELECT 1e500 >= 1,  CAST(1e500 AS INT) >= CAST(1 AS INT), ROUND(1e500) >= ROUND(1); -- 1|1|0"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t1 (c0, c1); CREATE TABLE t2 (c0 INT UNIQUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT PRIMARY KEY COLLATE NOCASE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "SELECT ((CAST(1 as INT)) COLLATE BINARY) == '1'; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "SELECT LIKELY(CAST(1 AS INT)) = '1'; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "SELECT UNLIKELY(CAST(1 AS INT)) = '1'; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "SELECT LIKELIHOOD(CAST(1 AS INT), 0.5) = '1'; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE COLLATE NOCASE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE, c1 INT, c2 INT UNIQUE) ENGINE = MyISAM;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE, c1 INT, c2 INT, c3 INT UNIQUE) ENGINE = MyISAM;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE) ENGINE = HEAP;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNSIGNED);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT PRIMARY KEY UNIQUE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT) ENGINE = MyISAM;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t1(c0 INT) ENGINE = MEMORY;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE, c1 INT UNIQUE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT, c1 TEXT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT PRIMARY KEY, c1 INT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t1(c0 INT) INHERITS (t0);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TEMP TABLE t0(c0 INT GENERATED ALWAYS AS IDENTITY) PARTITION BY HASH((t0.c0));"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE VIEW v0(c0, c1) AS SELECT t0.c1, t0.c0 FROM t0 WHERE CAST(t0.rowid AS INT) = 1;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE UNIQUE INDEX e ON t0(CAST(0.0 AS INT)) WHERE 0;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TEMP TABLE t0(c1 INT PRIMARY KEY) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 int);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TEMP TABLE t0(c0 int) ON COMMIT DELETE ROWS;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 REAL AS(1) UNIQUE, c1 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 CHECK(c1 IN(c1)), c1 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT, CHECK(CASE c0 WHEN c0 THEN 0 END));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT AS(2) UNIQUE, c1 TEXT UNIQUE, FOREIGN KEY(c0) REFERENCES t0(c1));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 TEXT PRIMARY KEY, c1 INT UNIQUE REFERENCES t0 CHECK(CAST(c1 AS INT) BETWEEN 0 AND CASE WHEN 1 THEN c0 END));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE VIEW v0(c0) AS SELECT CAST(0 AS INT) FROM t0;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNSIGNED);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT, c1 INT UNIQUE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT UNIQUE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0 (c0 INTEGER, PRIMARY KEY (c0)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t1(c0 INTEGER PRIMARY KEY);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INTEGER PRIMARY KEY);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INTEGER , c1 BOOLEAN);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INTEGER PRIMARY KEY, c1 TEXT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 integer, c1 integer GENERATED ALWAYS AS (t0.c0) STORED);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TABLE t0(c0 INTEGER PRIMARY KEY GENERATED ALWAYS AS(1), c1 UNIQUE GENERATED ALWAYS AS(1), c2 UNIQUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 INTEGER PRIMARY KEY AUTOINCREMENT CHECK (c0), c2 BLOB NOT NULL CHECK (LTRIM(1)) UNIQUE DEFAULT '0000000000000');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T01",
+    "statement": "CREATE VIEW v0(c0) AS SELECT CAST(t0.c0 AS INTEGER) FROM t0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE test (c1 TEXT PRIMARY KEY) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE test (c0, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0 (c0 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "SELECT (1 IN (CAST('1' as TEXT) COLLATE NOCASE)); -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "SELECT * FROM t0 WHERE CAST(t0.c0 AS TEXT) = 'A'; -- expected: no row is fetched, actual: a"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0 (c3 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 INT, c1 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE VIEW v0(c0) AS SELECT LOWER(CAST('1e500' AS TEXT)) FROM t0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 INTEGER PRIMARY KEY, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT UNIQUE, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 REAL, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT, c1 REAL, c2, PRIMARY KEY(c2, c0, c1));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT PRIMARY KEY);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0, c1 TEXT GENERATED ALWAYS AS (1) UNIQUE);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT COLLATE \"POSIX\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "SELECT * FROM rt1, rt0 WHERE rt0.c0 = CAST(rt1.c0 AS TEXT); -- unexpected: row is fetched"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 AS (0 = UNLIKELY(c1)) UNIQUE, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "SELECT * FROM t0 WHERE (1 BETWEEN CAST(t0.c0 AS TEXT) AND t0.c0); -- unexpected: row is fetched"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT, CHECK(c0 IN (c0)));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "SELECT * FROM t0 WHERE CAST(SUBSTR(c0, 0) AS TEXT) > 0; -- sqlite3.c:81076: sqlite3MemCompare: Assertion `pMem1->enc==pMem2->enc || pMem1->db->mallocFailed' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT, CHECK(c0 BETWEEN 0 AND +c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 INT AS(2) UNIQUE, c1 TEXT UNIQUE, FOREIGN KEY(c0) REFERENCES t0(c1));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT PRIMARY KEY, c1 INT UNIQUE REFERENCES t0 CHECK(CAST(c1 AS INT) BETWEEN 0 AND CASE WHEN 1 THEN c0 END));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 TEXT);"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "T02",
+    "statement": "CREATE TABLE t0(c0 CHAR(2) COLLATE \"C\", c1 CHAR(2) COLLATE \"POSIX\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T03",
+    "statement": "CREATE TABLE t0(c0 COLLATE RTRIM, c1 BLOB UNIQUE, PRIMARY KEY (c0, c1)) WITHOUT ROWID;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T03",
+    "statement": "SELECT CAST(+ t0.c0 AS BLOB) LIKE 0 FROM t0; -- expected: 0, actual: 1"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T03",
+    "statement": "CREATE TEMP TABLE t0(c0, c1 INTEGER PRIMARY KEY AUTOINCREMENT CHECK (c0), c2 BLOB NOT NULL CHECK (LTRIM(1)) UNIQUE DEFAULT '0000000000000');"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T04",
+    "statement": "CREATE TABLE t1(c0 DOUBLE);"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 FLOAT UNIQUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE test (c0, c1 REAL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE test (c0 REAL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE test (c0 REAL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE test (c0 REAL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t1 (c0, c1 REAL PRIMARY KEY);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t1 (c1 REAL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT * FROM t1 WHERE (t1.c1 = CAST(8366271098608253588 AS REAL)); -- fetches row"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT * FROM t0, t1 WHERE (t1.c1 = CAST(8366271098608253588 AS REAL)); -- fetches no row"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT * FROM t0, t1 WHERE (t1.c1 >= CAST(8366271098608253588 AS REAL) AND t1.c1 <= CAST(8366271098608253588 AS REAL)); -- fetches row"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0 (c0 REAL, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL UNIQUE, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL, c1 TEXT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL UNIQUE);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 TEXT, c1 REAL, c2, PRIMARY KEY(c2, c0, c1));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT * FROM t0 WHERE (t0.c0, TRUE) > (CAST('' AS REAL), FALSE); -- unexpected: row is not fetched"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL AS(1) UNIQUE, c1 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE TABLE t0(c0 REAL, c1 REAL GENERATED ALWAYS AS (c0));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT CAST('-' AS NUMERIC); -- unexpected: computes 0.0 rather than 0"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT CAST(c0 AS NUMERIC) FROM t0; -- expected: 1, actual: 1.0"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT CAST('8.2250617031974513E18' AS NUMERIC); -- expected: 8225061703197451300, unexpected: 8.22506170319745e+18"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT CAST('-0.0' AS NUMERIC); -- expected: 0, unexpected: 0.0"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "CREATE INDEX i0 ON t0(CAST(c0 AS NUMERIC));"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "T07",
+    "statement": "SELECT * FROM t0 INDEXED BY i0 WHERE CAST(t0.c0 AS NUMERIC) > LOWER(t0.c1) GROUP BY t0.rowid; -- expected: row is fetched, actual: no row is fetched"
+  }
+]

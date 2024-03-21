@@ -1,0 +1,99 @@
+[
+  {
+    "statements": [
+      "UPDATE t1 SET c0 = NULL;",
+      "UPDATE OR REPLACE t1 SET c1 = 1;"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["UPDATE t0 SET c0 = 'a';"], "dbms": "PostgreSQL" },
+  {
+    "statements": [
+      "UPDATE t1 SET c0 = TRUE; -- ERROR:  attribute \"c0\" of relation \"t2\"does not match parent's type"
+    ],
+    "dbms": "PostgreSQL"
+  },
+  {
+    "statements": ["UPDATE OR REPLACE t0 SET c0 = 'a', c1 = '';"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["UPDATE t1 SET c2 = 0;", "UPDATE t1 SET c3 = 1;"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["UPDATE t0 SET c2 = x'';"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "UPDATE vt0 SET a = 399905135; -- unexpected: database disk image is malformed"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["UPDATE vt0 SET c1 = 'T,D&p^y/7#3*v<b<4j7|f';"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["UPDATE vt0 SET c0 = NULL;"], "dbms": "SQLite" },
+  {
+    "statements": ["UPDATE t0 SET c2 = 0; -- Segmentation fault"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["UPDATE t0 SET c1 = c0; -- unexpected: Segmentation fault"],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["UPDATE t0 SET c0 = NULL; -- Segmentation fault"],
+    "dbms": "SQLite"
+  },
+  { "statements": ["UPDATE vt0 SET c0=NULL;"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "UPDATE t0 SET c0 = (SELECT 1 FROM t0); -- unexpected: database table is locked"
+    ],
+    "dbms": "SQLite"
+  },
+  { "statements": ["UPDATE vt0 SET lid = 1;"], "dbms": "SQLite" },
+  {
+    "statements": [
+      "UPDATE t0 SET c1=0; -- sqlite3.c:75871: sqlite3VdbeMemAboutToChange: Assertion `(mFlags&MEM_Str)==0 || (pMem->n==pX->n && pMem->z==pX->z)' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "UPDATE t0 SET c0 = 0; -- sqlite3.c:86323: sqlite3VdbeExec: Assertion `pIn1!=pIn3' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "UPDATE t0 SET c0 = 0; -- sqlite3.c:86402: sqlite3VdbeExec: Assertion `pIn1!=pIn3' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "UPDATE rt0 SET c0 = 0 WHERE(SELECT ROW_NUMBER() OVER() FROM rt0); -- database table is locked"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "UPDATE vt1 SET c0 = 0;",
+      "UPDATE vt0 SET c0 = 0;",
+      "UPDATE vt1 SET c0 = 0;",
+      "UPDATE vt1 SET c0 = 0;"
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": [
+      "UPDATE t0 SET c1 = 0, c2 = 0 WHERE(c0) >= 0; -- sqlite3.c:72305: sqlite3BtreeInsert: Assertion `pCur->curFlags & BTCF_ValidNKey' failed."
+    ],
+    "dbms": "SQLite"
+  },
+  {
+    "statements": ["UPDATE t0 SET c2 = c0;", "UPDATE t0 SET c0 = 0;"],
+    "dbms": "SQLite"
+  }
+]

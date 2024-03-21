@@ -1,0 +1,805 @@
+[
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST01",
+    "statement": "CREATE STATISTICS s1 ON c0, c1 FROM t0;"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST01",
+    "statement": "CREATE STATISTICS s0 ON c0, c2 FROM t0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(a);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0, order=DESC);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0, prefix=1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0, order=DESC);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0, tokenize = \"ascii\", prefix = 1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, a, b);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt1 USING rtree(c0, a, b);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2 INT);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2, +c3 NOT NULL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING rtree;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE t1 USING fts4;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE t0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0, languageid=\"lid\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE t0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt1 USING fts5(c1, c2, prefix = 1, tokenize = \"porter ascii\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE rt0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0, prefix = 71, tokenize = \"porter ascii\", prefix = 9);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt1 USING fts4(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE t0 USING rtree(c0, c1, c2);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts4(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0, c1);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt1 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE vt0 USING fts5(c0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE stat USING dbstat;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "CREATE VIRTUAL TABLE stat USING dbstat;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- Error: UNIQUE constraint failed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- Error: UNIQUE constraint failed: index 'index_0'"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- UNIQUE constraint failed: index 'index_0'"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- UNIQUE constraint failed: index 'index_0'"
+  },
+  { "dbms": "SQLite", "category": "ST01", "statement": "REINDEX;" },
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST01",
+    "statement": "REINDEX TABLE CONCURRENTLY t0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- unexpected: UNIQUE constraint failed: index 'i0'"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- UNIQUE constraint failed: t0.c0"
+  },
+  { "dbms": "SQLite", "category": "ST01", "statement": "REINDEX;" },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- unexpected: UNIQUE constraint failed"
+  },
+  { "dbms": "SQLite", "category": "ST01", "statement": "REINDEX;" },
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST01",
+    "statement": "REINDEX TABLE CONCURRENTLY t0; -- unexpected: ERROR:  index \"t0_pkey_ccnew\" already contains data"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- UNIQUE constraint failed: t0.c0"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST01",
+    "statement": "REINDEX; -- segfault"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c1, c0, c2) VALUES(1, DEFAULT, DEFAULT), (DEFAULT, \"a\", \"a\");"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c1, c0, c3) VALUES(1, 2, 3), (1, \"a\", \"a\");"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0 VALUES('a', 'B');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT OR REPLACE INTO t0(c0) VALUES(0), (0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c0, c1, c2) VALUES(2, 0, 0xffffffffa249bbac); -- unexpected: SEGFAULT"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c1) VALUES (0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c2, c0) VALUES (0, 0), (x'9b', NULL);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c3, c2, c0) VALUES (0, 0, 0), (0, 0, 0); -- Segmentation fault"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0 VALUES(0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c1) VALUES(NULL); -- Segmentation fault"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT OR REPLACE INTO t0(c0, c1) VALUES (2, 1), (1, 0); -- segfault"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c0) VALUES(NULL); -- sqlite3.c:85112: sqlite3VdbeExec: Assertion `memIsValid(&aMem[pOp->p1])' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0 VALUES(NULL); -- sqlite3.c:87334: sqlite3VdbeExec: Assertion `memIsValid(pRec)' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "REPLACE INTO t0(c0, c1) VALUES(0.7675826647230917, 0), (0, x''); -- sqlite3.c:75952: sqlite3VdbeMemAboutToChange: Assertion `(mFlags&MEM_Real)==0 || pMem->u.r==pX->u.r' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0, rank) VALUES('automerge', 0);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt1(vt1) VALUES('automerge=1');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0, rank) VALUES('crisismerge', 2000);"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0, rank) VALUES('usermerge', 2); -- sqlite3.c:213961: fts5StructureRead: Assertion `p->iStructVersion!=0' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt1(vt1) VALUES('integrity-check');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); --database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected error: database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt1(vt1) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- sqlite3.c:213028: sqlite3Fts5HashScanNext: Assertion `!sqlite3Fts5HashScanEof(p)' failed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- unexpected: database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('integrity-check'); -- database disk image is malformed"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('merge=1,4'); -- unexpected: does not terminate"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('optimize');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('rebuild');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('rebuild');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0) VALUES('rebuild'); -- database or disk is full"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt1(vt1, rank) VALUES('pgsz', '38');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0, rank) VALUES('pgsz', '70000');"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST02",
+    "statement": "INSERT INTO vt0(vt0, rank) VALUES('pgsz', '37');"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "SET SESSION sort_buffer_size = 18446744073709551615;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "SET GLOBAL rbr_exec_mode = STRICT; -- unexpected: ERROR 1228 (HY000): Variable 'rbr_exec_mode' is a SESSION variable and can't be used with SET GLOBAL"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "SET GLOBAL key_cache_division_limit = 100; -- unexpected: fails nondeterministically with ERROR 1210 (HY000): Incorrect arguments to SET"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "REPAIR TABLE t0 QUICK EXTENDED USE_FRM;"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "SELECT * FROM t0; -- unexpected: Table 'to' is marked as crashed and last (automatic?) repair failed"
+  },
+  { "dbms": "PostgreSQL", "category": "ST03", "statement": "ANALYZE;" },
+  { "dbms": "PostgreSQL", "category": "ST03", "statement": "ANALYZE t0;" },
+  { "dbms": "SQLite", "category": "ST03", "statement": "ANALYZE;" },
+  { "dbms": "SQLite", "category": "ST03", "statement": "ANALYZE t1;" },
+  { "dbms": "SQLite", "category": "ST03", "statement": "ANALYZE t0;" },
+  { "dbms": "SQLite", "category": "ST03", "statement": "ANALYZE;" },
+  { "dbms": "PostgreSQL", "category": "ST03", "statement": "ANALYZE;" },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA case_sensitive_like=false;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA legacy_file_format=true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys=true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA reverse_unordered_selects=true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA reverse_unordered_selects=true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA reverse_unordered_selects=true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA journal_mode=OFF;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA main.cache_size=0;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA reverse_unordered_selects = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA reverse_unordered_selects = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA recursive_triggers = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA recursive_triggers = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA temp.recursive_triggers = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA temp_store = MEMORY;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA legacy_file_format = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA legacy_file_format = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA integrity_check; -- unexpected: integer overflow"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA integrity_check;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA cache_size = 100000;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA integrity_check; -- hangs"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF-16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF-16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA locking_mode = EXCLUSIVE;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA journal_mode = PERSIST;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF-16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA locking_mode = EXCLUSIVE;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA journal_mode = WAL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA locking_mode = NORMAL;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA integrity_check;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA journal_mode = MEMORY; -- sqlite3.c:51926: assert_pager_state: Assertion `pPager->changeCountDone==0 || pPager->eLock>=RESERVED_LOCK' failed."
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF-16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA recursive_triggers = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA foreign_keys = true;"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF16';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF16be';"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "PRAGMA encoding = 'UTF-16';"
+  },
+  { "dbms": "SQLite", "category": "ST03", "statement": "VACUUM;" },
+  { "dbms": "PostgreSQL", "category": "ST03", "statement": "VACUUM FULL;" },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "VACUUM; -- table vacuum_db.t0 has 0 columns but 1 values were supplied"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "VACUUM; -- table vacuum_db.t0 has 1 columns but 2 values were supplied"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "VACUUM; -- table vacuum_db.t0 has 1 columns but 2 values were supplied"
+  },
+  {
+    "dbms": "SQLite",
+    "category": "ST03",
+    "statement": "VACUUM; -- unexpected: database disk image is malformed"
+  },
+  { "dbms": "SQLite", "category": "ST03", "statement": "VACUUM;" },
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST03",
+    "statement": "DISCARD TEMP; -- unexpected: ERROR: cache lookup failed for type 0"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST03",
+    "statement": "CHECK TABLE t0 FOR UPGRADE; -- results in a segfault when executed with multiple threads"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST04",
+    "statement": "select COLUMN_KEY, COLUMN_NAME from information_schema.columns where table_schema = 'a' and TABLE_NAME = 't0'; -- unexpected: c0 is still shown as PRI"
+  },
+  {
+    "dbms": "MySQL",
+    "category": "ST04",
+    "statement": "select * from information_schema.TABLES; -- unexpected (when executed with multiple threads): Duplicate entry 'triggerbug21-t0' for key 'PRIMARY'"
+  },
+  {
+    "dbms": "PostgreSQL",
+    "category": "ST04",
+    "statement": "SELECT * FROM information_schema.tables; -- server process (PID 2461) was terminated by signal 11: Segmentation fault"
+  }
+]
